@@ -3,7 +3,7 @@ import {Link, Route, Redirect, Switch} from 'react-router-dom';
 import Chess from 'chess.js/chess.min.js';
 import Chessboard from './chessboard';
 import Notebook from './notebook';
-import {GameStorage, LineStorage} from './storage';
+import {GameStorage, LineStorage, SettingsStorage} from './storage';
 import Modal from './Modal';
 import './detail.css';
 
@@ -12,6 +12,7 @@ class DetailLine extends React.Component{
 		super(props);
 		this.gameStorage = new GameStorage();
 		this.lineStorage = new LineStorage();
+		this.settingsStorage = new SettingsStorage();
 		const gameId = +this.props.match.params.gameId;
 		const game = this.gameStorage.loadGame(gameId);
 		this.state = {
@@ -163,16 +164,16 @@ class DetailLine extends React.Component{
 			moves = chess.moves({square: this.state.selectedCell, verbose: true});
 			selectableCells = selectableCells.concat(moves.map(move => move.to));
 		}
-
+		const settings = this.settingsStorage.load('Settings');
 		return (
 			<section className="Detail">
 				<header>
 					<div>
 						<Link to="/" className="button left">
-							<div><img alt="back" src="/assets/back.svg"/></div>
+							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
 						</Link>
-						<button className="button right" onClick={this.onToggleSide.bind(this)}>
-							<div><img alt="Reverse" src="/assets/swap.svg"/></div>
+						<button className="button right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)}>
+							<div><img alt="Reverse" src={process.env.PUBLIC_URL+"/assets/swap.svg"}/></div>
 						</button>
 						<h1>{game.title}</h1>
 					</div>
@@ -181,7 +182,7 @@ class DetailLine extends React.Component{
 					<div>
 						<div className="column column-2">
 							<Chessboard
-								side={this.state.side}
+								side={settings.rotateChessboard ? chess.turn() : this.state.side}
 								fen={line.fen}
 								onClick={this.onClickCell.bind(this)}
 								onDrop={this.onDropCell.bind(this)}
@@ -206,9 +207,7 @@ class DetailLine extends React.Component{
 									className="piece"
 									key={piece}
 									onClick={this.onConfirmPromotion.bind(this, piece)}>
-									<img
-										alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece}
-										src={`/pieces/${this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece}.svg`}/>
+									<img alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece} src={process.env.PUBLIC_URL+"/pieces/"+(this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece)+".svg"}/>
 								</div>
 							)
 					}
@@ -287,7 +286,7 @@ class DetailAll extends React.Component{
 				<header>
 					<div>
 						<Link to="/" className="button left">
-							<div><img alt="back" src="/assets/back.svg"/></div>
+							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
 						</Link>
 						<h1>Detail</h1>
 					</div>
@@ -296,17 +295,17 @@ class DetailAll extends React.Component{
 					<div>
 						<button className="button left"
 							onClick={this.onClickExitEdit.bind(this)}>
-							<div><img alt="back" src="/assets/back.svg"/></div>
+							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
 						</button>
 						<button className="button left" onClick={this.onToggleEditAll.bind(this)}>
 							<div>
 								{games.length === this.state.editList.length?
-								<img alt="checked" src="/assets/box_checked.svg"/>:
-								<img alt="checked" src="/assets/box.svg"/>}
+								<img alt="checked" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/>:
+								<img alt="checked" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
 							</div>
 						</button>
 						<button className="button right" onClick={this.onClickDeleteGames.bind(this)}>
-							<div><img alt="delete" src="/assets/trash.svg"/></div>
+							<div><img alt="delete" src={process.env.PUBLIC_URL+"/assets/trash.svg"}/></div>
 						</button>
 						<h1>
 							{this.state.editList.length} selected
@@ -324,8 +323,8 @@ class DetailAll extends React.Component{
 											<button className="button right" onClick={this.onToggleEditGame.bind(this, game.id)}>
 												<div>
 													{this.state.editList.find(id => id === game.id) ?
-													<img alt="checked" src="/assets/box_checked.svg"/> :
-													<img alt="checked" src="/assets/box.svg"/>}
+													<img alt="checked" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/> :
+													<img alt="checked" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
 												</div>
 											</button>
 											<Link to={`${this.props.match.url}/${game.id}`}>

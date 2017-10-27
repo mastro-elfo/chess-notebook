@@ -30,6 +30,7 @@ export default class Settings extends React.Component {
 	}
 
 	onClickToggleRotateChessboard(){
+		this.storage.saveKey('rotateChessboard', !this.state.rotateChessboard);
 		this.setState({
 			rotateChessboard: !this.state.rotateChessboard
 		});
@@ -41,7 +42,7 @@ export default class Settings extends React.Component {
 				<header>
 					<div>
 						<Link to="/" className="button left">
-							<div><img alt="back" src="/assets/back.svg"/></div>
+							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
 						</Link>
 						<h1>Settings</h1>
 					</div>
@@ -54,7 +55,7 @@ export default class Settings extends React.Component {
 								<label>
 									<button className="button right" onClick={this.onClickToggleRotateChessboard.bind(this)}>
 										<div>
-											{this.state.rotateChessboard ? <img alt="" src="/assets/box_checked.svg"/> : <img alt="" src="/assets/box.svg"/>}
+											{this.state.rotateChessboard ? <img alt="" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/> : <img alt="" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
 										</div>
 									</button>
 									<span>Rotate chessboard</span>
@@ -66,7 +67,7 @@ export default class Settings extends React.Component {
 						<ul className="list">
 							<li>
 								<button className="button right" onClick={this.onClickClearStorage.bind(this)}>
-									<div><img alt="clear" src="/assets/delete.svg"/></div>
+									<div><img alt="clear" src={process.env.PUBLIC_URL+"/assets/delete.svg"}/></div>
 								</button>
 								<label>
 									<span>Local storage</span>
@@ -81,7 +82,7 @@ export default class Settings extends React.Component {
 								<label>
 									<Link to="/info">
 										<div>
-											<img className="right" alt="info" src="/assets/forward.svg"/>
+											<img className="right" alt="info" src={process.env.PUBLIC_URL+"/assets/forward.svg"}/>
 											<span>Info</span>
 										</div>
 									</Link>

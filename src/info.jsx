@@ -8,7 +8,7 @@ export default class Info extends React.Component {
 				<header>
 					<div>
 						<Link to="/settings" className="button left">
-							<div><img alt="back" src="/assets/back.svg"/></div>
+							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
 						</Link>
 						<h1>Info</h1>
 					</div>

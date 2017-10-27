@@ -9,13 +9,13 @@ export default class Dashboard extends React.Component {
 				<header>
 					<div>
 						<Link to="/new-game" className="button right">
-							<div><img alt="New" src="/assets/plus.svg"/></div>
+							<div><img alt="New" src={process.env.PUBLIC_URL+"/assets/plus.svg"}/></div>
 						</Link>
 						<Link to="/detail" className="button right">
-							<div><img alt="Details" src="/assets/menu.svg"/></div>
+							<div><img alt="Details" src={process.env.PUBLIC_URL+"/assets/menu.svg"}/></div>
 						</Link>
 						<Link to="/settings" className="button right">
-							<div><img alt="Settings" src="/assets/gear.svg"/></div>
+							<div><img alt="Settings" src={process.env.PUBLIC_URL+"/assets/gear.svg"}/></div>
 						</Link>
 						<h1>Dashboard</h1>
 					</div>

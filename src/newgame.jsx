@@ -130,13 +130,13 @@ export default class New extends React.Component {
 				<header>
 					<div>
 						<Link to="/" className="button left">
-							<div><img alt="back" src="/assets/back.svg"/></div>
+							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
 						</Link>
 						<button className="button right" onClick={this.onClickPlayGame}>
-							<div><img alt="Play" src="/assets/play.svg"/></div>
+							<div><img alt="Play" src={process.env.PUBLIC_URL+"/assets/play.svg"}/></div>
 						</button>
 						<button className="button right" onClick={this.onClickResetPosition.bind(this)}>
-							<div><img alt="Reset" src="/assets/rew.svg"/></div>
+							<div><img alt="Reset" src={process.env.PUBLIC_URL+"/assets/rew.svg"}/></div>
 						</button>
 						<h1>New</h1>
 					</div>
