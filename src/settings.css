@@ -1,0 +1,12 @@
+.Settings .list li {
+	position: relative;
+}
+
+/*.Settings .list .button {
+	position: absolute;
+	top: 50%;
+	right: 0.5em;
+	height: 2em;
+	width: 4em;
+	margin-top: -1em;
+}*/

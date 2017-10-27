@@ -1,0 +1,60 @@
+.Newgame .list li {
+    padding: 1em;
+}
+
+.Newgame .list span {
+    display: block;
+    font-variant: small-caps;
+    margin-bottom: 0.5em;
+}
+
+.Newgame .list input {
+    font: inherit;
+    display: block;
+    width: 100%;
+    border: none;
+    letter-spacing: inherit;
+	border: none;
+	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.Newgame .list textarea {
+    resize: none;
+    display: block;
+    width: 100%;
+    font: inherit;
+    letter-spacing: inherit;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.Newgame .list select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Column */
+.Newgame .column {
+	height: calc(100vh - 5.5rem);
+	float: left;
+}
+
+.Newgame .column-2 {
+	width: 50%
+}
+
+.Newgame .column-4 {
+	width: 25%
+}
+
+.Newgame .Pool .Piece {
+	height: 2em;
+	width: 2em;
+}
+
+.Newgame .whitePool .Pool {
+	float: right;
+}

@@ -1,0 +1,81 @@
+.App section > header > div,
+.App section > nav > div,
+.App section > main > div {
+	max-width: 1200px;
+	width: 100%;
+	margin: 0 auto;
+	box-sizing: border-box;
+	position: relative;
+}
+
+/* Header */
+.App section > header {
+	position: relative;
+	height: 3rem;
+	line-height: 3rem;
+	background: hsl(120, 50%, 50%);
+	/*background: linear-gradient(hsl(120, 50%, 50%), hsl(120, 50%, 50%) 90%, hsl(120, 50%, 30%) 90%);*/
+}
+
+.App section > header:after {
+	content: "";
+	position: absolute;
+	bottom: -0.5rem;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 0.5rem;
+	background: linear-gradient(rgba(0,0,0,0.5), transparent);
+	background: hsl(120, 50%, 30%);
+	z-index: 1;
+}
+
+.App section > header .button {
+	width: 3rem;
+	height: 3rem;
+	margin-right: 0.5rem;
+}
+
+.App section > header h1 {
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.App section > header.edit {
+	display: none;
+	color: #333;
+	background: white;
+}
+
+.App section.edit > header {
+	display: none;
+}
+
+.App section.edit > header.edit {
+	display: block;
+}
+
+.App section.edit > header.edit:after {
+	background: hsl(120, 0%, 30%);
+}
+/* /Header */
+
+/* Main */
+.App section > main {
+	clear: both;
+	position: relative;
+	padding-top: 2rem;
+}
+/* /Main */
+
+/* Add padding */
+.App section > header h1,
+.App section > main > div > h2,
+.App section > main > div > p,
+.App section > main > div > ul > li {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
