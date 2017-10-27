@@ -135,7 +135,7 @@ export default class New extends React.Component {
 						<button className="button right" onClick={this.onClickPlayGame}>
 							<div><img alt="Play" src={process.env.PUBLIC_URL+"/assets/play.svg"}/></div>
 						</button>
-						<button className="button right" onClick={this.onClickResetPosition.bind(this)}>
+						<button className="button right" disabled={this.state.position === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'} onClick={this.onClickResetPosition.bind(this)}>
 							<div><img alt="Reset" src={process.env.PUBLIC_URL+"/assets/rew.svg"}/></div>
 						</button>
 						<h1>New</h1>
