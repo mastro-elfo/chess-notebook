@@ -42,6 +42,7 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	font-weight: normal;
 }
 
 .App section > header.edit {
