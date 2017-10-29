@@ -25,21 +25,135 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.2730208"
-     inkscape:cx="20.311611"
-     inkscape:cy="-9.1901298"
+     inkscape:zoom="4"
+     inkscape:cx="10.427785"
+     inkscape:cy="18.497155"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1283"
-     inkscape:window-height="713"
-     inkscape:window-x="83"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
+     inkscape:window-width="785"
+     inkscape:window-height="449"
+     inkscape:window-x="182"
+     inkscape:window-y="238"
+     inkscape:window-maximized="0"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-nodes="true"
      showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:guide-bbox="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:snap-smooth-nodes="true">
+    <sodipodi:guide
+       position="4.9999998,4.9999998"
+       orientation="1,0"
+       id="guide856"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="4.9999998,4.9999998"
+       orientation="0,1"
+       id="guide858"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="0,0"
+       orientation="1,0"
+       id="guide860"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="0,0"
+       orientation="0,1"
+       id="guide862"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="0,1.5"
+       orientation="0,1"
+       id="guide864"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="1.5,0"
+       orientation="1,0"
+       id="guide866"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="0.74999998,0"
+       orientation="1,0"
+       id="guide868"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="0,0.74999998"
+       orientation="0,1"
+       id="guide870"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="0.74999998,5.9999998"
+       orientation="0,1"
+       id="guide872"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="5.9999998,0.74999998"
+       orientation="1,0"
+       id="guide874"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="0.37499999,0"
+       orientation="1,0"
+       id="guide878"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="0,0.37499999"
+       orientation="0,1"
+       id="guide880"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="4.9999998,5.7499998"
+       orientation="0,1"
+       id="guide882"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="4.9999998,4.2499999"
+       orientation="0,1"
+       id="guide884"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="8.9999997,4.9999998"
+       orientation="1,0"
+       id="guide886"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="9.9999997,4.9999998"
+       orientation="1,0"
+       id="guide890"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+  </sodipodi:namedview>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -57,16 +171,17 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-26.566109,-83.628899)">
-    <g
-       aria-label="←"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:0.2049541px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="text4504"
-       transform="matrix(1.2909394,0,0,1.2909394,3.4306211,-25.639394)">
-      <path
-         d="m 17.856867,88.748154 v -0.465088 l 2.030884,-2.030884 0.620117,0.620117 -1.20406,1.204061 h 6.299356 v 0.8785 h -6.299356 l 1.20406,1.20406 -0.620117,0.620118 z"
-         style="fill:#333333;fill-opacity:1;stroke-width:0.2049541px"
-         id="path4506"
-         inkscape:connector-curvature="0" />
-    </g>
+    <path
+       style="fill:#333333;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 29.770187,85.093365 -3.005204,3.005204 c -0.265165,0.265165 -0.265165,0.795495 0,1.06066 l 0.53033,0.53033 2.474874,2.474874 c 0,0 0.707107,0.707107 1.237437,0.176777 0.53033,-0.53033 -0.176777,-1.237437 -0.176777,-1.237437 l -2.474873,-2.474874 2.474873,-2.474874 c 0,0 0.707107,-0.707107 0.176777,-1.237437 -0.53033,-0.53033 -1.237437,0.176777 -1.237437,0.176777 z"
+       id="path876"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccczccczc" />
+    <path
+       style="fill:#333333;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 28.066109,87.878899 v 1.5 h 7.5 c 0,0 1,0 1,-0.75 0,-0.75 -1,-0.75 -1,-0.75 z"
+       id="path888"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccczcc" />
   </g>
 </svg>
