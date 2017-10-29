@@ -53,7 +53,7 @@ export default class Settings extends React.Component {
 						<ul className="list">
 							<li>
 								<label>
-									<button className="button right" onClick={this.onClickToggleRotateChessboard.bind(this)}>
+									<button className="button" onClick={this.onClickToggleRotateChessboard.bind(this)}>
 										<div>
 											{this.state.rotateChessboard ? <img alt="" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/> : <img alt="" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
 										</div>
@@ -66,7 +66,7 @@ export default class Settings extends React.Component {
 						<h2>Memory</h2>
 						<ul className="list">
 							<li>
-								<button className="button right" onClick={this.onClickClearStorage.bind(this)}>
+								<button className="button" onClick={this.onClickClearStorage.bind(this)}>
 									<div><img alt="clear" src={process.env.PUBLIC_URL+"/assets/delete.svg"}/></div>
 								</button>
 								<label>
@@ -81,10 +81,12 @@ export default class Settings extends React.Component {
 							<li>
 								<label>
 									<Link to="/info">
-										<div>
-											<img className="right" alt="info" src={process.env.PUBLIC_URL+"/assets/forward.svg"}/>
-											<span>Info</span>
-										</div>
+										<button className="button">
+											<div>
+												<img alt="info" src={process.env.PUBLIC_URL+"/assets/forward.svg"}/>
+											</div>
+										</button>
+										<span>Info</span>
 									</Link>
 								</label>
 							</li>
