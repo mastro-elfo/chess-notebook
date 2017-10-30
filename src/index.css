@@ -47,14 +47,6 @@ ul.list li:last-child {
 	text-align: center;
 }
 
-button.button:focus {
-	outline: 0;
-}
-
-button.button::-moz-focus-inner {
-	border: 0;
-}
-
 .button.right:first-of-type {
 	margin-right: 0;
 }
