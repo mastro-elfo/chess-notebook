@@ -137,7 +137,7 @@ export default class New extends React.Component {
 	}
 
 	onPastePGN(pgn) {
-		pgn = pgn.replace(/Sent from my .*$/, '').replace(/ \[| 1\./g, '$1'); // Should improve this
+		pgn = pgn.replace(/Sent from my .*$/, '').replace(/ (\[)| (1\.)/g, '$1'); // Should improve this
 		let chess = new Chess();
 		if(chess.load_pgn(pgn)) {
 			const fen = chess.fen().split(' ');
