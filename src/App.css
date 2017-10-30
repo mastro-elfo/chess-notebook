@@ -72,11 +72,6 @@
 }
 
 .App section > main > div > h2 {
-	/*font-weight: lighter;
-	color: silver;
-	background: #333;
-	border: 1px solid silver;*/
-
 	font-weight: normal;
 	color: #888;
 	border-bottom: 1px solid;
