@@ -316,7 +316,7 @@ export default class New extends React.Component {
 					</div>
 				</main>
 				<Modal show={this.state.openFromPGNDialog} onCancel={this.onCancelFromPGNDialog.bind(this)}>
-					<div className="title">Load game from PGN</div>
+					<div className="title">Load from PGN</div>
 					<div>
 						<textarea placeholder="Paste the PGN here" onChange={(e)=>this.onPastePGN(e.target.value) || (e.target.value = '')}></textarea>
 					</div>

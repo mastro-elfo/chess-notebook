@@ -59,3 +59,11 @@
 .Newgame .whitePool .Pool {
 	float: right;
 }
+
+.Newgame .Modal textarea {
+	resize: none;
+	display: block;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
