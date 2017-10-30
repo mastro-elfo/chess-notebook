@@ -14,7 +14,7 @@
    viewBox="0 0 100.0007 100"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
    sodipodi:docname="icon.svg"
    inkscape:export-filename="/home/francesco/Documenti/tmp/chess-notebook/public/icon.png"
    inkscape:export-xdpi="65.019997"
@@ -94,17 +94,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994952"
-     inkscape:cx="113.93922"
-     inkscape:cy="187.17389"
+     inkscape:cx="263.21618"
+     inkscape:cy="160.03624"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-nodes="true"
-     inkscape:window-width="1285"
-     inkscape:window-height="744"
-     inkscape:window-x="81"
-     inkscape:window-y="24"
+     inkscape:window-width="1283"
+     inkscape:window-height="713"
+     inkscape:window-x="83"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:snap-others="false" />
   <metadata
@@ -173,12 +173,12 @@
        transform="scale(1,-1)" />
     <g
        aria-label="⁈"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#40bf40;fill-opacity:1;stroke:none;stroke-width:0.02968931px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#40bf40;fill-opacity:1;stroke:#ffffff;stroke-width:0.11221157;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
        id="text4487"
        transform="matrix(8.9117369,0,0,8.9117369,-516.67929,-890.8795)">
       <path
          d="m 67.788401,113.5029 h 1.049032 v 1.31258 h -1.049032 z m 1.018026,-0.75964 h -0.98702 v -0.79582 q 0,-0.52193 0.144694,-0.85783 0.144694,-0.33589 0.609782,-0.78031 l 0.465088,-0.45992 q 0.294556,-0.27389 0.423747,-0.51677 0.134358,-0.24288 0.134358,-0.49609 0,-0.45992 -0.341064,-0.74414 -0.335897,-0.28422 -0.894002,-0.28422 -0.408244,0 -0.873332,0.18087 -0.45992,0.18086 -0.961182,0.5271 v -0.97152 q 0.485759,-0.29456 0.981852,-0.43925 0.501262,-0.14469 1.033529,-0.14469 0.950846,0 1.524455,0.50126 0.578776,0.50126 0.578776,1.32291 0,0.39274 -0.186035,0.74931 -0.186035,0.3514 -0.651123,0.79582 l -0.454753,0.44442 q -0.242879,0.24288 -0.346232,0.3824 -0.09819,0.13436 -0.139526,0.26355 -0.03101,0.10852 -0.04651,0.26355 -0.0155,0.15503 -0.0155,0.42375 z m 2.909383,0.75964 h 1.049032 v 1.31258 H 71.71581 Z m 0,-6.40271 h 1.049032 v 3.38481 l -0.103353,1.84485 H 71.82433 L 71.71581,110.485 Z"
-         style="fill:#40bf40;fill-opacity:1;stroke-width:0.02968931px"
+         style="fill:#40bf40;fill-opacity:1;stroke-width:0.11221157;stroke:#ffffff;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
          id="path4489"
          inkscape:connector-curvature="0" />
     </g>
