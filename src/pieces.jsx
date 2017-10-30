@@ -1,15 +1,15 @@
-import kingWhite from './pieces/K.svg';
-import queenWhite from './pieces/Q.svg';
-import rookWhite from './pieces/R.svg';
-import knightWhite from './pieces/N.svg';
-import bishopWhite from './pieces/B.svg';
-import pawnWhite from './pieces/P.svg';
-import kingBlack from './pieces/k.svg';
-import queenBlack from './pieces/q.svg';
-import rookBlack from './pieces/r.svg';
-import knightBlack from './pieces/n.svg';
-import bishopBlack from './pieces/b.svg';
-import pawnBlack from './pieces/p.svg';
+import kingWhite from './pieces/kingWhite.svg';
+import queenWhite from './pieces/queenWhite.svg';
+import rookWhite from './pieces/rookWhite.svg';
+import knightWhite from './pieces/knightWhite.svg';
+import bishopWhite from './pieces/bishopWhite.svg';
+import pawnWhite from './pieces/pawnWhite.svg';
+import kingBlack from './pieces/kingBlack.svg';
+import queenBlack from './pieces/queenBlack.svg';
+import rookBlack from './pieces/rookBlack.svg';
+import knightBlack from './pieces/knightBlack.svg';
+import bishopBlack from './pieces/bishopBlack.svg';
+import pawnBlack from './pieces/pawnBlack.svg';
 
 export const PIECES = {
 	'K': kingWhite, 'k': kingBlack,
