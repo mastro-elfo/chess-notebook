@@ -4,6 +4,7 @@ import Chess from 'chess.js/chess.js';
 import Chessboard, {Pool} from './chessboard';
 import {GameStorage} from './storage';
 import Modal from './Modal';
+import {ICONS} from './icons';
 import './newgame.css';
 
 export default class New extends React.Component {
@@ -177,16 +178,16 @@ export default class New extends React.Component {
 				<header>
 					<div>
 						<Link to="/" className="button left" title="Back to dashboard">
-							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
+							<div><img alt="back" src={ICONS['back']}/></div>
 						</Link>
 						<button className="button right" onClick={this.onClickPlayGame} title="Play this position">
-							<div><img alt="Play" src={process.env.PUBLIC_URL+"/assets/play.svg"}/></div>
+							<div><img alt="Play" src={ICONS['play']}/></div>
 						</button>
 						<button className="button right" disabled={this.state.position === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'} onClick={this.onClickResetPosition.bind(this)} title="Reset to start position">
-							<div><img alt="Reset" src={process.env.PUBLIC_URL+"/assets/rew.svg"}/></div>
+							<div><img alt="Reset" src={ICONS['rew']}/></div>
 						</button>
 						<button className="button right" title="Load from PGN" onClick={this.onClickOpenFromPGNDialog.bind(this)}>
-							<div><img alt="pgn" src={process.env.PUBLIC_URL+"/assets/pgn.svg"}/></div>
+							<div><img alt="pgn" src={ICONS['pgn']}/></div>
 						</button>
 						<h1>New</h1>
 					</div>

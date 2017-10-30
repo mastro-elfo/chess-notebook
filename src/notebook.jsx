@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {LineStorage} from './storage';
+import {ICONS} from './icons';
 import './notebook.css';
 
 export default class Notebook extends React.Component {
@@ -62,13 +63,13 @@ export default class Notebook extends React.Component {
 				<div className="Notebook">
 					<div className="buttons">
 						<button className="button left" title="Back to first move" disabled={line.play} onClick={this.onClickBackToFirstMove.bind(this)}>
-							<div><img alt="Back to first move" src={process.env.PUBLIC_URL+"/assets/rew.svg"}/></div>
+							<div><img alt="Back to first move" src={ICONS['rew']}/></div>
 						</button>
 						<button className="button left" title="Up one level" disabled={!parent} onClick={this.onClickUpOneLevel.bind(this)}>
-							<div><img alt="Up one level" src={process.env.PUBLIC_URL+"/assets/top.svg"}/></div>
+							<div><img alt="Up one level" src={ICONS['top']}/></div>
 						</button>
 						<button className="button left" title="Play this move" disabled={line.play} onClick={this.onClickPlayThisMove.bind(this)}>
-							<div><img alt="Play this move" src={process.env.PUBLIC_URL+"/assets/play.svg"}/></div>
+							<div><img alt="Play this move" src={ICONS['play']}/></div>
 						</button>
 					</div>
 
@@ -202,15 +203,15 @@ class Sublines extends React.Component {
 					{this.state.edit &&
 						[
 							<button key="cancelEdit" className="button left" onClick={this.onClickCancelEdit.bind(this)}>
-								<div><img alt="cancel" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
+								<div><img alt="cancel" src={ICONS['back']}/></div>
 							</button>,
 							<button key="toggleAll" className="button left" onClick={this.onClickToggleAll.bind(this)}>
 								<div>
-									{children.length && this.state.selected.length === children.length ? <img alt="" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/> : <img alt="" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
+									{children.length && this.state.selected.length === children.length ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
 								</div>
 							</button>,
 							<button key="delete" className="button right" onClick={this.onClickDelete.bind(this)}>
-								<div><img alt="delete" src={process.env.PUBLIC_URL+"/assets/trash.svg"}/></div>
+								<div><img alt="delete" src={ICONS['trash']}/></div>
 							</button>,
 							<span key="title">{this.state.selected.length} selected</span>
 						]
@@ -244,7 +245,7 @@ class Sublines extends React.Component {
 			<div key={i} className="line">
 				<button className="button right" onClick={this.onClickToggle.bind(this, child.id)}>
 					<div>
-						{isSelected ? <img alt="x" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/> : <img alt="x" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
+						{isSelected ? <img alt="x" src={ICONS['boxChecked']}/> : <img alt="x" src={ICONS['box']}/>}
 					</div>
 				</button>
 				<div className="slider">

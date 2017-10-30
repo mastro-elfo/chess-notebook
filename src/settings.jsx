@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {SettingsStorage} from './storage';
+import {ICONS} from './icons';
 import './settings.css';
 
 export default class Settings extends React.Component {
@@ -42,7 +43,7 @@ export default class Settings extends React.Component {
 				<header>
 					<div>
 						<Link to="/" className="button left">
-							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
+							<div><img alt="back" src={ICONS['back']}/></div>
 						</Link>
 						<h1>Settings</h1>
 					</div>
@@ -55,7 +56,7 @@ export default class Settings extends React.Component {
 								<label>
 									<button className="button" onClick={this.onClickToggleRotateChessboard.bind(this)}>
 										<div>
-											{this.state.rotateChessboard ? <img alt="" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/> : <img alt="" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
+											{this.state.rotateChessboard ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
 										</div>
 									</button>
 									<span>Rotate chessboard</span>
@@ -67,7 +68,7 @@ export default class Settings extends React.Component {
 						<ul className="list">
 							<li>
 								<button className="button" onClick={this.onClickClearStorage.bind(this)}>
-									<div><img alt="clear" src={process.env.PUBLIC_URL+"/assets/delete.svg"}/></div>
+									<div><img alt="clear" src={ICONS['delete']}/></div>
 								</button>
 								<label>
 									<span>Local storage</span>
@@ -83,7 +84,7 @@ export default class Settings extends React.Component {
 									<Link to="/info">
 										<button className="button">
 											<div>
-												<img alt="info" src={process.env.PUBLIC_URL+"/assets/forward.svg"}/>
+												<img alt="info" src={ICONS['forward']}/>
 											</div>
 										</button>
 										<span>Info</span>

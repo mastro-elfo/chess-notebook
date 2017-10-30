@@ -5,6 +5,8 @@ import Chessboard from './chessboard';
 import Notebook from './notebook';
 import {GameStorage, LineStorage, SettingsStorage} from './storage';
 import Modal from './Modal';
+import {ICONS} from './icons';
+import {PIECES} from  './pieces';
 import './detail.css';
 
 class DetailLine extends React.Component{
@@ -170,10 +172,10 @@ class DetailLine extends React.Component{
 				<header>
 					<div>
 						<Link to="/" className="button left">
-							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
+							<div><img alt="back" src={ICONS['back']}/></div>
 						</Link>
 						<button className="button right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)}>
-							<div><img alt="Reverse" src={process.env.PUBLIC_URL+"/assets/swap.svg"}/></div>
+							<div><img alt="Reverse" src={ICONS['swap']}/></div>
 						</button>
 						<h1>{game.title}</h1>
 					</div>
@@ -203,13 +205,13 @@ class DetailLine extends React.Component{
 					<div className="title">Choose a piece…</div>
 					{
 						'qrnb'.split('').map(piece =>
-								<div
-									className="piece"
-									key={piece}
-									onClick={this.onConfirmPromotion.bind(this, piece)}>
-									<img alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece} src={process.env.PUBLIC_URL+"/pieces/"+(this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece)+".svg"}/>
-								</div>
-							)
+							<div
+								className="piece"
+								key={piece}
+								onClick={this.onConfirmPromotion.bind(this, piece)}>
+								<img alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece} src={PIECES[(this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece)]}/>
+							</div>
+						)
 					}
 				</Modal>
 			</section>
@@ -286,7 +288,7 @@ class DetailAll extends React.Component{
 				<header>
 					<div>
 						<Link to="/" className="button left">
-							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
+							<div><img alt="back" src={ICONS['back']}/></div>
 						</Link>
 						<h1>Detail</h1>
 					</div>
@@ -295,17 +297,17 @@ class DetailAll extends React.Component{
 					<div>
 						<button className="button left"
 							onClick={this.onClickExitEdit.bind(this)}>
-							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
+							<div><img alt="back" src={ICONS['back']}/></div>
 						</button>
 						<button className="button left" onClick={this.onToggleEditAll.bind(this)}>
 							<div>
 								{games.length === this.state.editList.length?
-								<img alt="checked" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/>:
-								<img alt="checked" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
+								<img alt="checked" src={ICONS['boxChecked']}/>:
+								<img alt="checked" src={ICONS['box']}/>}
 							</div>
 						</button>
 						<button className="button right" onClick={this.onClickDeleteGames.bind(this)}>
-							<div><img alt="delete" src={process.env.PUBLIC_URL+"/assets/trash.svg"}/></div>
+							<div><img alt="delete" src={ICONS['trash']}/></div>
 						</button>
 						<h1>
 							{this.state.editList.length} selected
@@ -323,8 +325,8 @@ class DetailAll extends React.Component{
 											<button className="button right" onClick={this.onToggleEditGame.bind(this, game.id)}>
 												<div>
 													{this.state.editList.find(id => id === game.id) ?
-													<img alt="checked" src={process.env.PUBLIC_URL+"/assets/box_checked.svg"}/> :
-													<img alt="checked" src={process.env.PUBLIC_URL+"/assets/box.svg"}/>}
+													<img alt="checked" src={ICONS['boxChecked']}/> :
+													<img alt="checked" src={ICONS['box']}/>}
 												</div>
 											</button>
 											<Link to={`${this.props.match.url}/${game.id}`}>
