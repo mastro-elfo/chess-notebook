@@ -1,4 +1,5 @@
 import React from 'react';
+import {PIECES} from './pieces';
 import './chessboard.css';
 
 export default class Chessboard extends React.Component{
@@ -149,7 +150,7 @@ class Cell extends React.Component {
 				{this.props.cell !== ' ' &&
 					<span className="piece"
 						  draggable={isSelectable}
-						  onDragStart={this.onDragStart.bind(this, coords)}><img alt={this.props.cell} src={process.env.PUBLIC_URL+"/pieces/"+this.props.cell+".svg"}/></span>}
+						  onDragStart={this.onDragStart.bind(this, coords)}><img alt={this.props.cell} src={PIECES[this.props.cell]}/></span>}
 			</div>
 		);
 	}
@@ -183,7 +184,7 @@ export class Pool extends React.Component {
 						return (
 							<div key={i} className={classNames.join(' ')} onClick={this.props.onClick.bind(this, piece)}>
 								<span draggable={true} onDragStart={this.onDragStart.bind(this, piece)}>
-									<img alt={piece} src={process.env.PUBLIC_URL+"/pieces/"+piece+".svg"}/>
+									<img alt={piece} src={PIECES[piece]}/>
 								</span>
 							</div>
 						);
