@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Chess from 'chess.js/chess.js';
 import Chessboard, {Pool} from './chessboard';
 import {GameStorage} from './storage';
+import Modal from './Modal';
 import './newgame.css';
 
 export default class New extends React.Component {
@@ -20,8 +21,9 @@ export default class New extends React.Component {
 			enPassant: '-',
 			drawMoves: 0,
 			totalMoves: 1,
-			//
-			selectedPiece: null
+			// Others
+			selectedPiece: null,
+			openFromPGNDialog: false
 		};
 		this.storage = new GameStorage();
 		this.onClickPlayGame = this.onClickPlayGame.bind(this);
@@ -122,6 +124,50 @@ export default class New extends React.Component {
 		});
 	}
 
+	onClickOpenFromPGNDialog(){
+		this.setState({
+			openFromPGNDialog: true
+		});
+	}
+
+	onCancelFromPGNDialog(){
+		this.setState({
+			openFromPGNDialog: false
+		});
+	}
+
+	onPastePGN(pgn) {
+		console.debug('PGN', pgn);
+		let chess = new Chess();
+		if(chess.load_pgn(pgn)) {
+			const fen = chess.fen().split(' ');
+			const title =
+				pgn.match(/\[Event "(.+?)"\]/)[1]
+				|| 'No title';
+			const description =
+				(pgn.match(/\[White "(.+?)"\]/)[1] + ' - ' + pgn.match(/\[Black "(.+?)"\]/)[1] + "\n" + pgn.match(/\[Site "(.+?)"\]/)[1] + "\n" +  pgn.match(/\[Date "(.+?)"\]/)[1])
+				|| 'No description';
+
+			this.setState({
+				title: title,
+				description: description,
+				position: fen[0],
+				turn: fen[1],
+				whiteCastling: fen[2].match(/[KQ]+/g) || '',
+				blackCastling: fen[2].match(/[kq]+/g) || '',
+				enPassant: fen[3],
+				drawMoves: fen[4],
+				totalMoves: fen[5]
+			});
+		}
+		else {
+			console.error('Not a valid PGN', pgn);
+		}
+		this.setState({
+			openFromPGNDialog: false
+		});
+	}
+
 	render(){
 		const enPassantCandidates = this.getEnPassantCandidates();
 		const selectableCells = this.getSelectableCells();
@@ -129,14 +175,17 @@ export default class New extends React.Component {
 			<section className="Newgame">
 				<header>
 					<div>
-						<Link to="/" className="button left">
+						<Link to="/" className="button left" title="Back to dashboard">
 							<div><img alt="back" src={process.env.PUBLIC_URL+"/assets/back.svg"}/></div>
 						</Link>
-						<button className="button right" onClick={this.onClickPlayGame}>
+						<button className="button right" onClick={this.onClickPlayGame} title="Play this position">
 							<div><img alt="Play" src={process.env.PUBLIC_URL+"/assets/play.svg"}/></div>
 						</button>
-						<button className="button right" disabled={this.state.position === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'} onClick={this.onClickResetPosition.bind(this)}>
+						<button className="button right" disabled={this.state.position === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'} onClick={this.onClickResetPosition.bind(this)} title="Reset to start position">
 							<div><img alt="Reset" src={process.env.PUBLIC_URL+"/assets/rew.svg"}/></div>
+						</button>
+						<button className="button right" title="Load from PGN" onClick={this.onClickOpenFromPGNDialog.bind(this)}>
+							<div><img alt="pgn" src={process.env.PUBLIC_URL+"/assets/pgn.svg"}/></div>
 						</button>
 						<h1>New</h1>
 					</div>
@@ -266,6 +315,12 @@ export default class New extends React.Component {
 						</ul>
 					</div>
 				</main>
+				<Modal show={this.state.openFromPGNDialog} onCancel={this.onCancelFromPGNDialog.bind(this)}>
+					<div className="title">Load game from PGN</div>
+					<div>
+						<textarea placeholder="Paste the PGN here" onChange={(e)=>this.onPastePGN(e.target.value) || (e.target.value = '')}></textarea>
+					</div>
+				</Modal>
 			</section>
 		);
 	}
