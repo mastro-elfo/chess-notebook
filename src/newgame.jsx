@@ -137,7 +137,7 @@ export default class New extends React.Component {
 	}
 
 	onPastePGN(pgn) {
-		console.debug('PGN', pgn);
+		pgn = pgn.replace(/Sent from my .*$/, '').replace(/ \[| 1\./g, '$1'); // Should improve this
 		let chess = new Chess();
 		if(chess.load_pgn(pgn)) {
 			const fen = chess.fen().split(' ');
@@ -162,6 +162,7 @@ export default class New extends React.Component {
 		}
 		else {
 			console.error('Not a valid PGN', pgn);
+			console.error('ASCII', chess.ascii());
 		}
 		this.setState({
 			openFromPGNDialog: false
