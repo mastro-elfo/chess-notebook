@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Chess from 'chess.js/chess.js';
+import Chess from 'chess.js/chess.min.js';
 import Chessboard, {Pool} from './chessboard';
 import {GameStorage} from './storage';
 import Modal from './Modal';
