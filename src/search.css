@@ -30,9 +30,3 @@
 	width: 5em;
 	height: 5em;
 }
-
-.SearchResult .title {
-	font-variant: small-caps;
-	font-weight: bold;
-	font-size: 200%;
-}

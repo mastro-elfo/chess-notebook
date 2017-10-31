@@ -59,7 +59,8 @@ export default class Settings extends React.Component {
 											{this.state.rotateChessboard ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
 										</div>
 									</button>
-									<span>Rotate chessboard</span>
+									<h3>Rotate chessboard</h3>
+									<p>Rotate chessboard to the side of the player in turn</p>
 								</label>
 							</li>
 						</ul>
@@ -71,7 +72,7 @@ export default class Settings extends React.Component {
 									<div><img alt="clear" src={ICONS['delete']}/></div>
 								</button>
 								<label>
-									<span>Local storage</span>
+									<h3>Local storage</h3>
 									<p>{this.prefix(this.getStorageSize(), 0, 'B')}</p>
 								</label>
 							</li>

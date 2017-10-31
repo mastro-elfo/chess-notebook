@@ -71,10 +71,15 @@
 	padding-top: 2rem;
 }
 
-.App section > main > div > h2 {
+.App section > main h2 {
 	font-weight: normal;
 	color: #888;
 	border-bottom: 1px solid;
+}
+
+.App section > main h3 {
+	font-weight: normal;
+	font-variant: small-caps;
 }
 
 /* /Main */

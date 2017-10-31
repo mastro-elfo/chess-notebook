@@ -197,7 +197,7 @@ export default class New extends React.Component {
 						<ul className="list">
 							<li>
 								<label>
-									<span>Title</span>
+									<h3>Title</h3>
 									<input ref="title" placeholder="E.g. &quot;against the local champion&quot;" value={this.state.title} onChange={(e)=>this.setState({title: e.target.value})}/>
 								</label>
 							</li>
@@ -217,7 +217,7 @@ export default class New extends React.Component {
 						<ul className="list">
 							<li>
 								<label>
-									<span>Description</span>
+									<h3>Description</h3>
 									<textarea
 										placeholder="E.g. &quot;The best match I've ever played&quot;"
 										value={this.state.description}
@@ -227,7 +227,7 @@ export default class New extends React.Component {
 							</li>
 							<li>
 								<label>
-									<span>Turn</span>
+									<h3>Turn</h3>
 									<select
 										value={this.state.turn}
 										onChange={(e)=>this.setState({turn: e.target.value})}
@@ -239,7 +239,7 @@ export default class New extends React.Component {
 							</li>
 							<li>
 								<label>
-									<span>White castling</span>
+									<h3>White castling</h3>
 									<select
 										value={this.state.whiteCastling}
 										onChange={(e)=>this.setState({whiteCastling: e.target.value})}
@@ -253,7 +253,7 @@ export default class New extends React.Component {
 							</li>
 							<li>
 								<label>
-									<span>Black castling</span>
+									<h3>Black castling</h3>
 									<select
 										value={this.state.blackCastling}
 										onChange={(e)=>this.setState({blackCastling: e.target.value})}
@@ -267,7 +267,7 @@ export default class New extends React.Component {
 							</li>
 							<li>
 								<label>
-									<span>En passant</span>
+									<h3>En passant</h3>
 									<select
 										value={this.state.enPassant}
 										onChange={(e)=>this.setState({enPassant: e.target.value})}
@@ -285,7 +285,7 @@ export default class New extends React.Component {
 							</li>
 							<li>
 								<label>
-									<span>Draw moves</span>
+									<h3>Draw moves</h3>
 									<input
 										type="number"
 										min="0"
@@ -297,7 +297,7 @@ export default class New extends React.Component {
 							</li>
 							<li>
 								<label>
-									<span>Total moves</span>
+									<h3>Total moves</h3>
 									<input
 										type="number"
 										min="1"
@@ -308,7 +308,7 @@ export default class New extends React.Component {
 							</li>
 							<li>
 								<label>
-									<span>Fen</span>
+									<h3>Fen</h3>
 									<p>
 										{this.toFen()}
 									</p>

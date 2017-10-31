@@ -336,8 +336,8 @@ class DetailAll extends React.Component{
 														side={game.side}
 														showLabels={false}/>
 												</div>
-												<div className="title">{game.title}</div>
-												<div className="comment"></div>
+												<h3>{game.title}</h3>
+												<p></p>
 												<div className="clear"></div>
 											</Link>
 										</li>

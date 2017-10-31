@@ -13,7 +13,7 @@ export default class Search extends React.Component {
 		};
 		this.storage = new GameStorage();
 	}
-	
+
 	componentDidMount(){
 		this.setState({
 			last: this.storage.loadGames().sort((a,b) => {
@@ -21,7 +21,7 @@ export default class Search extends React.Component {
 				}).splice(0, 2)
 		});
 	}
-	
+
 	search(event) {
 		event.preventDefault();
 		const term = event.target.value.trim();
@@ -60,12 +60,12 @@ export default class Search extends React.Component {
 			result: result
 		});
 	}
-	
+
 	render(){
 		return (
 			<div className="Search">
 				<input type="text" placeholder="Search..." onChange={this.search.bind(this)}/>
-				
+
 				<ul className="list">
 					{
 						this.state.result.map((result, i) =>
@@ -75,7 +75,7 @@ export default class Search extends React.Component {
 						)
 					}
 				</ul>
-				
+
 				<ul className="list">
 					{
 						this.state.last.map((result, i) =>
@@ -105,8 +105,8 @@ function SearchResult (props) {
 						showLabels={false}
 						fen={play.fen}/>
 				</div>
-				<div className="title">{props.title}</div>
-				<div className="comment">{props.comment}</div>
+				<h3>{props.title}</h3>
+				<p>{props.comment}</p>
 				<div className="clear"></div>
 			</Link>
 		</div>

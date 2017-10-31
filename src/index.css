@@ -84,7 +84,11 @@ ul.list li:last-child {
 
 /* /Buttons */
 
-a {
+a:not(.external) {
 	text-decoration: none;
 	color: inherit;
+}
+
+a.external {
+	color: hsl(120, 50%, 40%);
 }

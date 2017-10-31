@@ -2,12 +2,6 @@
     padding: 1em;
 }
 
-.Newgame .list span {
-    display: block;
-    font-variant: small-caps;
-    margin-bottom: 0.5em;
-}
-
 .Newgame .list input {
     font: inherit;
     display: block;
