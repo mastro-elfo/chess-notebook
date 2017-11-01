@@ -54,6 +54,10 @@
 	float: right;
 }
 
+.Newgame .ModalContent {
+	width: 50%;
+	max-width: 500px;
+}
 .Newgame .Modal textarea {
 	resize: none;
 	display: block;
