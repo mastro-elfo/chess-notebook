@@ -21,33 +21,15 @@
 }
 
 .ModalContent {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	overflow: auto;
-	width: 12.75em;
-	height: 13.5em;
-	margin-top: -6.75em;
-	margin-left: -6.375em;
-	background: white;
-	border-radius: 1em;
-	box-shadow: 0 0 0.5em rgba(0,0,0,0.25);
-}
-
-.ModalContent .title {
-	background: #333;
-	color: white;
-	font-weight: bold;
-	padding: 0.5em;
-	height: 1.5em;
-	line-height: 1.5em;
+	width: 21em;
+	height: 8em;
 }
 
 .ModalContent .piece {
 	width: 2em;
 	height: 2em;
 	margin-top: 0.5em;
-	margin-left: 0.75em;
+	margin-left: 0.5em;
 	font-size: 200%;
 	float: left;
 	text-align: center;

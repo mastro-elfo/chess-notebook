@@ -4,7 +4,7 @@ import Chess from 'chess.js/chess.min.js';
 import Chessboard from './chessboard';
 import Notebook from './notebook';
 import {GameStorage, LineStorage, SettingsStorage} from './storage';
-import Modal from './Modal';
+import Modal from './modal';
 import {ICONS} from './icons';
 import {PIECES} from  './pieces';
 import './detail.css';
@@ -201,19 +201,22 @@ class DetailLine extends React.Component{
 						</div>
 					</div>
 				</main>
-				<Modal show={this.state.requestPromotion} onCancel={this.onCancelPromotion.bind(this)}>
-					<div className="title">Choose a piece…</div>
-					{
-						'qrnb'.split('').map(piece =>
-							<div
-								className="piece"
-								key={piece}
-								onClick={this.onConfirmPromotion.bind(this, piece)}>
-								<img alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece} src={PIECES[(this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece)]}/>
-							</div>
-						)
-					}
-				</Modal>
+				{
+					this.state.requestPromotion &&
+					<Modal onClose={this.onCancelPromotion.bind(this)}>
+						<h1>Choose a piece…</h1>
+						{
+							'qrnb'.split('').map(piece =>
+								<div
+									className="piece"
+									key={piece}
+									onClick={this.onConfirmPromotion.bind(this, piece)}>
+									<img alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece} src={PIECES[(this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece)]}/>
+								</div>
+							)
+						}
+					</Modal>
+				}
 			</section>
 		);
 	}

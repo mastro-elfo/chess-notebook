@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import Chess from 'chess.js/chess.min.js';
 import Chessboard, {Pool} from './chessboard';
 import {GameStorage} from './storage';
-import Modal from './Modal';
+import Modal from './modal';
 import {ICONS} from './icons';
 import './newgame.css';
 
@@ -317,12 +317,15 @@ export default class New extends React.Component {
 						</ul>
 					</div>
 				</main>
-				<Modal show={this.state.openFromPGNDialog} onCancel={this.onCancelFromPGNDialog.bind(this)}>
-					<div className="title">Load from PGN</div>
-					<div>
-						<textarea placeholder="Paste the PGN here" onChange={(e)=>this.onPastePGN(e.target.value) || (e.target.value = '')}></textarea>
-					</div>
-				</Modal>
+				{
+					this.state.openFromPGNDialog &&
+					<Modal onClose={this.onCancelFromPGNDialog.bind(this)}>
+						<h1>Load from PGN</h1>
+						<div style={{height: '100%'}}>
+							<textarea placeholder="Paste the PGN here" onChange={(e)=>this.onPastePGN(e.target.value) || (e.target.value = '')}></textarea>
+						</div>
+					</Modal>
+				}
 			</section>
 		);
 	}
