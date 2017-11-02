@@ -16,9 +16,10 @@ export default class Search extends React.Component {
 
 	componentDidMount(){
 		this.setState({
-			last: this.storage.loadGames().sort((a,b) => {
-					return a.edit - b.edit;
-				}).splice(0, 2)
+			last: this.storage
+						.loadGames()
+						.sort((a,b) => b.edit - a.edit)
+						.splice(0, 2)
 		});
 	}
 
