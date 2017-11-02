@@ -92,3 +92,37 @@
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 }
+
+/* List of settings */
+.App .list li {
+    padding: 1em;
+}
+
+.App .list input {
+    font: inherit;
+    display: block;
+    width: 100%;
+    border: none;
+    letter-spacing: inherit;
+	border: none;
+	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.App .list textarea {
+    resize: none;
+    display: block;
+    width: 100%;
+    font: inherit;
+    letter-spacing: inherit;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.App .list select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+	padding: 0.5em;
+}
