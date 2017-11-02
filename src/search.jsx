@@ -66,7 +66,7 @@ export default class Search extends React.Component {
 		return (
 			<div className="Search">
 				<input type="text" placeholder="Search..." onChange={this.search.bind(this)}/>
-
+				
 				<ul className="list">
 					{
 						this.state.result.map((result, i) =>
@@ -77,6 +77,7 @@ export default class Search extends React.Component {
 					}
 				</ul>
 
+				<h2>Last games</h2>
 				<ul className="list">
 					{
 						this.state.last.map((result, i) =>
