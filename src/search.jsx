@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Chessboard from './chessboard';
-import {GameStorage} from './storage';
+import {GameStorage, SettingsStorage} from './storage';
 import './search.css';
 
 export default class Search extends React.Component {
@@ -12,14 +12,16 @@ export default class Search extends React.Component {
 			last: []
 		};
 		this.storage = new GameStorage();
+		this.settingsStorage = new SettingsStorage();
 	}
 
 	componentDidMount(){
+		const limit = this.settingsStorage.loadKey('lastEditLimit', 2);
 		this.setState({
 			last: this.storage
 						.loadGames()
 						.sort((a,b) => b.edit - a.edit)
-						.splice(0, 2)
+						.splice(0, limit)
 		});
 	}
 
@@ -66,7 +68,7 @@ export default class Search extends React.Component {
 		return (
 			<div className="Search">
 				<input type="text" placeholder="Search..." onChange={this.search.bind(this)}/>
-				
+
 				<ul className="list">
 					{
 						this.state.result.map((result, i) =>

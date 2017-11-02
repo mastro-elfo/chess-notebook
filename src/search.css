@@ -1,3 +1,9 @@
+.Search h2 {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	margin-bottom: 0;
+}
+
 .Search > input {
 	display: block;
 	width: 75%;
@@ -26,7 +32,7 @@
 
 .SearchResult .thumbnail {
 	float: left;
-	margin: 0.5em;
+	margin-right: 0.5em;
 	width: 5em;
 	height: 5em;
 }

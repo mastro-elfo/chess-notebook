@@ -85,7 +85,7 @@
 /* /Main */
 
 /* Add padding */
-.App section > header h1,
+.App section > header > div > h1,
 .App section > main > div > h2,
 .App section > main > div > p,
 .App section > main > div > ul > li {
@@ -96,6 +96,10 @@
 /* List of settings */
 .App .list li {
     padding: 1em;
+}
+
+.App .list h3 {
+	margin-top: 0;
 }
 
 .App .list input {
