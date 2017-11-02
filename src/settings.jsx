@@ -37,6 +37,14 @@ export default class Settings extends React.Component {
 		});
 	}
 
+	onChangeLastGames(event) {
+		const value = parseInt(event.target.value, 10);
+		this.storage.saveKey('lastEditLimit', value);
+		this.setState({
+			'lastEditLimit': value
+		});
+	}
+
 	render(){
 		return (
 			<section className="Settings">
@@ -61,6 +69,16 @@ export default class Settings extends React.Component {
 									</button>
 									<h3>Rotate chessboard</h3>
 									<p>Rotate chessboard to the side of the player in turn</p>
+								</label>
+							</li>
+						</ul>
+
+						<h2>Search settings</h2>
+						<ul className="list">
+							<li>
+								<label>
+									<h3>Last games</h3>
+									<input type="number" min="0" value={this.state.lastEditLimit} onChange={this.onChangeLastGames.bind(this)}/>
 								</label>
 							</li>
 						</ul>
