@@ -24,11 +24,10 @@
 	display: block;
 }
 
-.SearchResult a:hover,
-.SearchResult a:active{
+.Search .list li:hover,
+.Search .list li:active {
 	background: hsla(120, 50%, 50%, 0.25);
 }
-
 
 .SearchResult .thumbnail {
 	float: left;
