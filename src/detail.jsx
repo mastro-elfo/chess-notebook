@@ -349,7 +349,7 @@ class DetailAll extends React.Component{
 							}
 						</ul>
 						{(!games || games.length === 0) &&
-						<p>There are no games. Start creating a new game. <Link to="/new-game"><span>Create</span></Link></p>}
+						<p>There are no games yet. Start creating a new game. <Link to="/new-game" style={{color: 'hsl(120,50%,50%)', textDecoration: 'underline'}}><span>Create</span></Link></p>}
 					</div>
 				</main>
 			</section>
