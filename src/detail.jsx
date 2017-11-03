@@ -166,7 +166,7 @@ class DetailLine extends React.Component{
 			moves = chess.moves({square: this.state.selectedCell, verbose: true});
 			selectableCells = selectableCells.concat(moves.map(move => move.to));
 		}
-		const settings = this.settingsStorage.load('Settings');
+		const settings = this.settingsStorage.load('Settings', {rotateChessboard: false});
 		return (
 			<section className="Detail">
 				<header>
