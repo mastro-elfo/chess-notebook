@@ -31,7 +31,8 @@ export default class Search extends React.Component {
 		if(term === '') {
 			// Nothing to search
 			this.setState({
-				result: []
+				result: [],
+				term: null
 			});
 			return;
 		}
@@ -60,7 +61,8 @@ export default class Search extends React.Component {
 			return true;
 		});
 		this.setState({
-			result: result
+			result: result,
+			term: term
 		});
 	}
 
@@ -79,16 +81,18 @@ export default class Search extends React.Component {
 					}
 				</ul>
 
-				<h2>Last games</h2>
-				<ul className="list">
-					{
-						this.state.last.map((result, i) =>
-							<li key={i}>
-								<SearchResult {...result}/>
-							</li>
-						)
-					}
-				</ul>
+				{this.state.last.length > 0 ? [
+					<h2 key="h2">Last games</h2>,
+					<ul key="ul" className="list">
+						{
+							this.state.last.map((result, i) =>
+								<li key={i}>
+									<SearchResult {...result}/>
+								</li>
+							)
+						}
+					</ul>
+				] : ''}
 			</div>
 		);
 	}
