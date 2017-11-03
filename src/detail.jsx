@@ -340,7 +340,7 @@ class DetailAll extends React.Component{
 														showLabels={false}/>
 												</div>
 												<h3>{game.title}</h3>
-												<p></p>
+												<p>{play.comment}</p>
 												<div className="clear"></div>
 											</Link>
 										</li>
