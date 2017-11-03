@@ -12,7 +12,7 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				<BrowserRouter>
+				<BrowserRouter basename="/chess-notebook">
 					<Switch>
 						<Route path="/" exact component={Dashboard}/>
 						<Route path="/dashboard" component={Dashboard}/>
