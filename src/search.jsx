@@ -110,7 +110,7 @@ function SearchResult (props) {
 						fen={play.fen}/>
 				</div>
 				<h3>{props.title}</h3>
-				<p>{props.comment}</p>
+				<p>{play.comment}</p>
 				<div className="clear"></div>
 			</Link>
 		</div>
