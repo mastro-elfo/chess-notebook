@@ -1,5 +1,6 @@
 {
   "name": "chess-notebook",
+  "homepage": "https://mastro-elfo.github.io/chess-notebook/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
