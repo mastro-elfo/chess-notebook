@@ -1,6 +1,6 @@
 import React from 'react';
 import {ICONS} from './icons';
-import {Link} from 'react-router-dom';
+import {LinkButton} from './Button';
 
 export default class Info extends React.Component {
 	render(){
@@ -8,9 +8,9 @@ export default class Info extends React.Component {
 			<section className="Info">
 				<header>
 					<div>
-						<Link to="/settings" className="button left">
-							<div><img alt="back" src={ICONS['back']}/></div>
-						</Link>
+						<LinkButton to="/settings" className="left">
+							<img alt="back" src={ICONS['back']}/>
+						</LinkButton>
 						<h1>Info</h1>
 					</div>
 				</header>

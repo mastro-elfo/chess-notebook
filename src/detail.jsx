@@ -8,6 +8,7 @@ import Modal from './modal';
 import {ICONS} from './icons';
 import {PIECES} from  './pieces';
 import './detail.css';
+import {Button, LinkButton} from './Button';
 
 class DetailLine extends React.Component{
 	constructor(props) {
@@ -171,12 +172,12 @@ class DetailLine extends React.Component{
 			<section className="Detail">
 				<header>
 					<div>
-						<Link to="/" className="button left">
-							<div><img alt="back" src={ICONS['back']}/></div>
-						</Link>
-						<button className="button right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)}>
-							<div><img alt="Reverse" src={ICONS['swap']}/></div>
-						</button>
+						<LinkButton to="/" className="left">
+							<img alt="back" src={ICONS['back']}/>
+						</LinkButton>
+						<Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)}>
+							<img alt="Reverse" src={ICONS['swap']}/>
+						</Button>
 						<h1>{game.title}</h1>
 					</div>
 				</header>
@@ -290,28 +291,26 @@ class DetailAll extends React.Component{
 			<section className={classNames.join(' ')}>
 				<header>
 					<div>
-						<Link to="/" className="button left">
-							<div><img alt="back" src={ICONS['back']}/></div>
-						</Link>
+						<LinkButton to="/" className="left">
+							<img alt="back" src={ICONS['back']}/>
+						</LinkButton>
 						<h1>Detail</h1>
 					</div>
 				</header>
 				<header className="edit">
 					<div>
-						<button className="button left"
+						<Button className="left"
 							onClick={this.onClickExitEdit.bind(this)}>
 							<div><img alt="back" src={ICONS['back']}/></div>
-						</button>
-						<button className="button left" onClick={this.onToggleEditAll.bind(this)}>
-							<div>
-								{games.length === this.state.editList.length?
-								<img alt="checked" src={ICONS['boxChecked']}/>:
-								<img alt="checked" src={ICONS['box']}/>}
-							</div>
-						</button>
-						<button className="button right" onClick={this.onClickDeleteGames.bind(this)}>
-							<div><img alt="delete" src={ICONS['trash']}/></div>
-						</button>
+						</Button>
+						<Button className="left" onClick={this.onToggleEditAll.bind(this)}>
+							{games.length === this.state.editList.length?
+							<img alt="checked" src={ICONS['boxChecked']}/>:
+							<img alt="checked" src={ICONS['box']}/>}
+						</Button>
+						<Button className="right" onClick={this.onClickDeleteGames.bind(this)}>
+							<img alt="delete" src={ICONS['trash']}/>
+						</Button>
 						<h1>
 							{this.state.editList.length} selected
 						</h1>
@@ -325,13 +324,11 @@ class DetailAll extends React.Component{
 									const play = game.lines.find(line => line.play);
 									return (
 										<li key={i}>
-											<button className="button right" onClick={this.onToggleEditGame.bind(this, game.id)}>
-												<div>
-													{this.state.editList.find(id => id === game.id) ?
+											<Button className="right" onClick={this.onToggleEditGame.bind(this, game.id)}>
+												{this.state.editList.find(id => id === game.id) ?
 													<img alt="checked" src={ICONS['boxChecked']}/> :
 													<img alt="checked" src={ICONS['box']}/>}
-												</div>
-											</button>
+											</Button>
 											<Link to={`${this.props.match.url}/${game.id}`}>
 												<div className="thumbnail">
 													<Chessboard

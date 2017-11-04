@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {LineStorage} from './storage';
 import {ICONS} from './icons';
 import './notebook.css';
+import {Button} from './Button';
 
 export default class Notebook extends React.Component {
 	constructor(props){
@@ -62,15 +63,15 @@ export default class Notebook extends React.Component {
 			<div className="NotebookContainer">
 				<div className="Notebook">
 					<div className="buttons">
-						<button className="button left" title="Back to first move" disabled={line.play} onClick={this.onClickBackToFirstMove.bind(this)}>
-							<div><img alt="Back to first move" src={ICONS['rew']}/></div>
-						</button>
-						<button className="button left" title="Up one level" disabled={!parent} onClick={this.onClickUpOneLevel.bind(this)}>
-							<div><img alt="Up one level" src={ICONS['top']}/></div>
-						</button>
-						<button className="button left" title="Play this move" disabled={line.play} onClick={this.onClickPlayThisMove.bind(this)}>
-							<div><img alt="Play this move" src={ICONS['play']}/></div>
-						</button>
+						<Button className="left" title="Back to first move" disabled={line.play} onClick={this.onClickBackToFirstMove.bind(this)}>
+							<img alt="Back to first move" src={ICONS['rew']}/>
+						</Button>
+						<Button className="left" title="Up one level" disabled={!parent} onClick={this.onClickUpOneLevel.bind(this)}>
+							<img alt="Up one level" src={ICONS['top']}/>
+						</Button>
+						<Button className="left" title="Play this move" disabled={line.play} onClick={this.onClickPlayThisMove.bind(this)}>
+							<img alt="Play this move" src={ICONS['play']}/>
+						</Button>
 					</div>
 
 					<Superline
@@ -202,17 +203,15 @@ class Sublines extends React.Component {
 				<div className="header">
 					{this.state.edit &&
 						[
-							<button key="cancelEdit" className="button left" onClick={this.onClickCancelEdit.bind(this)}>
-								<div><img alt="cancel" src={ICONS['back']}/></div>
-							</button>,
-							<button key="toggleAll" className="button left" onClick={this.onClickToggleAll.bind(this)}>
-								<div>
-									{children.length && this.state.selected.length === children.length ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
-								</div>
-							</button>,
-							<button key="delete" className="button right" onClick={this.onClickDelete.bind(this)}>
-								<div><img alt="delete" src={ICONS['trash']}/></div>
-							</button>,
+							<Button key="cancelEdit" className="left" onClick={this.onClickCancelEdit.bind(this)}>
+								<img alt="cancel" src={ICONS['back']}/>
+							</Button>,
+							<Button key="toggleAll" className="left" onClick={this.onClickToggleAll.bind(this)}>
+								{children.length && this.state.selected.length === children.length ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
+							</Button>,
+							<Button key="delete" className="right" onClick={this.onClickDelete.bind(this)}>
+								<img alt="delete" src={ICONS['trash']}/>
+							</Button>,
 							<span key="title">{this.state.selected.length} selected</span>
 						]
 					}
@@ -243,11 +242,9 @@ class Sublines extends React.Component {
 		const isSelected = this.state.selected.indexOf(child.id) !== -1;
 		return (
 			<div key={i} className="line">
-				<button className="button right" onClick={this.onClickToggle.bind(this, child.id)}>
-					<div>
-						{isSelected ? <img alt="x" src={ICONS['boxChecked']}/> : <img alt="x" src={ICONS['box']}/>}
-					</div>
-				</button>
+				<Button className="right" onClick={this.onClickToggle.bind(this, child.id)}>
+					{isSelected ? <img alt="x" src={ICONS['boxChecked']}/> : <img alt="x" src={ICONS['box']}/>}
+				</Button>
 				<div className="slider">
 					<Move
 						complete={true}

@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {SettingsStorage} from './storage';
 import {ICONS} from './icons';
 import './settings.css';
+import {Button, LinkButton} from './Button';
 
 export default class Settings extends React.Component {
 	constructor(props){
@@ -50,9 +51,9 @@ export default class Settings extends React.Component {
 			<section className="Settings">
 				<header>
 					<div>
-						<Link to="/" className="button left">
-							<div><img alt="back" src={ICONS['back']}/></div>
-						</Link>
+						<LinkButton to="/" className="left">
+							<img alt="back" src={ICONS['back']}/>
+						</LinkButton>
 						<h1>Settings</h1>
 					</div>
 				</header>
@@ -62,11 +63,9 @@ export default class Settings extends React.Component {
 						<ul className="list">
 							<li>
 								<label>
-									<button className="button" onClick={this.onClickToggleRotateChessboard.bind(this)}>
-										<div>
-											{this.state.rotateChessboard ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
-										</div>
-									</button>
+									<Button onClick={this.onClickToggleRotateChessboard.bind(this)}>
+										{this.state.rotateChessboard ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
+									</Button>
 									<h3>Rotate chessboard</h3>
 									<p>Rotate chessboard to the side of the player in turn</p>
 								</label>
@@ -86,9 +85,9 @@ export default class Settings extends React.Component {
 						<h2>Memory</h2>
 						<ul className="list">
 							<li>
-								<button className="button" onClick={this.onClickClearStorage.bind(this)}>
-									<div><img alt="clear" src={ICONS['delete']}/></div>
-								</button>
+								<Button onClick={this.onClickClearStorage.bind(this)}>
+									<img alt="clear" src={ICONS['delete']}/>
+								</Button>
 								<label>
 									<h3>Local storage</h3>
 									<p>{this.prefix(this.getStorageSize(), 0, 'B')}</p>
@@ -101,11 +100,9 @@ export default class Settings extends React.Component {
 							<li>
 								<label>
 									<Link to="/info">
-										<button className="button">
-											<div>
-												<img alt="info" src={ICONS['forward']}/>
-											</div>
-										</button>
+										<Button>
+											<img alt="info" src={ICONS['forward']}/>
+										</Button>
 										<span>Info</span>
 									</Link>
 								</label>

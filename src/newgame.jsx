@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import Chess from 'chess.js/chess.min.js';
 import Chessboard, {Pool} from './chessboard';
 import {GameStorage} from './storage';
 import Modal from './modal';
 import {ICONS} from './icons';
 import './newgame.css';
+import {Button, LinkButton} from './Button';
 
 export default class New extends React.Component {
 	constructor(props){
@@ -177,18 +177,18 @@ export default class New extends React.Component {
 			<section className="Newgame">
 				<header>
 					<div>
-						<Link to="/" className="button left" title="Back to dashboard">
-							<div><img alt="back" src={ICONS['back']}/></div>
-						</Link>
-						<button className="button right" onClick={this.onClickPlayGame} title="Play this position">
-							<div><img alt="Play" src={ICONS['play']}/></div>
-						</button>
-						<button className="button right" disabled={this.state.position === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'} onClick={this.onClickResetPosition.bind(this)} title="Reset to start position">
-							<div><img alt="Reset" src={ICONS['rew']}/></div>
-						</button>
-						<button className="button right" title="Load from PGN" onClick={this.onClickOpenFromPGNDialog.bind(this)}>
-							<div><img alt="pgn" src={ICONS['pgn']}/></div>
-						</button>
+						<LinkButton to="/" className="left" title="Back to dashboard">
+							<img alt="back" src={ICONS['back']}/>
+						</LinkButton>
+						<Button className="right" onClick={this.onClickPlayGame} title="Play this position">
+							<img alt="Play" src={ICONS['play']}/>
+						</Button>
+						<Button className="right" disabled={this.state.position === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'} onClick={this.onClickResetPosition.bind(this)} title="Reset to start position">
+							<img alt="Reset" src={ICONS['rew']}/>
+						</Button>
+						<Button className="right" title="Load from PGN" onClick={this.onClickOpenFromPGNDialog.bind(this)}>
+							<img alt="pgn" src={ICONS['pgn']}/>
+						</Button>
 						<h1>New</h1>
 					</div>
 				</header>

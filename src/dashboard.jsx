@@ -1,7 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {ICONS} from './icons';
 import Search from './search';
+import {LinkButton} from './Button';
 
 export default class Dashboard extends React.Component {
 	render(){
@@ -9,15 +9,15 @@ export default class Dashboard extends React.Component {
 			<section className="Dashboard">
 				<header>
 					<div>
-						<Link to="/new-game" className="button right">
-							<div><img alt="New" src={ICONS['plus']}/></div>
-						</Link>
-						<Link to="/detail" className="button right">
-							<div><img alt="Details" src={ICONS['menu']}/></div>
-						</Link>
-						<Link to="/settings" className="button right">
-							<div><img alt="Settings" src={ICONS['gear']}/></div>
-						</Link>
+						<LinkButton to="/new-game" className="right">
+							<img alt="New" src={ICONS['plus']}/>
+						</LinkButton>
+						<LinkButton to="/detail" className="right">
+							<img alt="Details" src={ICONS['menu']}/>
+						</LinkButton>
+						<LinkButton to="/settings" className="right">
+							<img alt="Settings" src={ICONS['gear']}/>
+						</LinkButton>
 						<h1>Dashboard</h1>
 					</div>
 				</header>
