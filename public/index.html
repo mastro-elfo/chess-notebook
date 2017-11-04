@@ -22,8 +22,8 @@
     <title>Chess-Notebook</title>
 	<script>
 		window.addEventListener('beforeinstallprompt', function(e) {
+			// Don't fire install prompt if launch from homescreen
 			if(location.search.search('homescreen=1')) {
-				console.log('beforeinstallprompt Event fired');
 				e.preventDefault();
 				return false;
 			}
