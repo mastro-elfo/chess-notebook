@@ -93,8 +93,8 @@
 	line-height: 3em;
 }
 
-.Sublines .header .button,
-.Sublines .line .button {
+.Sublines .header .Button,
+.Sublines .line .Button {
 	height: 3em;
 	width: 3em;
 	z-index: 10;
@@ -112,7 +112,7 @@
 	box-sizing: border-box;
 }
 
-.Notebook .buttons .button {
+.Notebook .buttons .Button {
 	width: 3em;
 	height: 3em;
 	margin-right: 0.5em;
