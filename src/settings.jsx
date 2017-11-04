@@ -51,7 +51,7 @@ export default class Settings extends React.Component {
 			<section className="Settings">
 				<header>
 					<div>
-						<LinkButton to="/" className="left">
+						<LinkButton to="/" className="left" title="Back to dashboard">
 							<img alt="back" src={ICONS['back']}/>
 						</LinkButton>
 						<h1>Settings</h1>
@@ -63,7 +63,7 @@ export default class Settings extends React.Component {
 						<ul className="list">
 							<li>
 								<label>
-									<Button onClick={this.onClickToggleRotateChessboard.bind(this)}>
+									<Button onClick={this.onClickToggleRotateChessboard.bind(this)} title="Check to rotate chessboard each move">
 										{this.state.rotateChessboard ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
 									</Button>
 									<h3>Rotate chessboard</h3>
@@ -85,7 +85,7 @@ export default class Settings extends React.Component {
 						<h2>Memory</h2>
 						<ul className="list">
 							<li>
-								<Button onClick={this.onClickClearStorage.bind(this)}>
+								<Button onClick={this.onClickClearStorage.bind(this)} title="Delete local storage">
 									<img alt="clear" src={ICONS['delete']}/>
 								</Button>
 								<label>
@@ -99,7 +99,7 @@ export default class Settings extends React.Component {
 						<ul className="list">
 							<li>
 								<label>
-									<Link to="/info">
+									<Link to="/info" title="Open info">
 										<Button>
 											<img alt="info" src={ICONS['forward']}/>
 										</Button>

@@ -172,10 +172,10 @@ class DetailLine extends React.Component{
 			<section className="Detail">
 				<header>
 					<div>
-						<LinkButton to="/" className="left">
+						<LinkButton to="/" className="left" title="Back to dashboard">
 							<img alt="back" src={ICONS['back']}/>
 						</LinkButton>
-						<Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)}>
+						<Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)} title="Reverse chessboard">
 							<img alt="Reverse" src={ICONS['swap']}/>
 						</Button>
 						<h1>{game.title}</h1>
@@ -291,7 +291,7 @@ class DetailAll extends React.Component{
 			<section className={classNames.join(' ')}>
 				<header>
 					<div>
-						<LinkButton to="/" className="left">
+						<LinkButton to="/" className="left" title="Back to dashboard">
 							<img alt="back" src={ICONS['back']}/>
 						</LinkButton>
 						<h1>Detail</h1>
@@ -300,15 +300,15 @@ class DetailAll extends React.Component{
 				<header className="edit">
 					<div>
 						<Button className="left"
-							onClick={this.onClickExitEdit.bind(this)}>
+							onClick={this.onClickExitEdit.bind(this)} title="Cancel edit">
 							<div><img alt="back" src={ICONS['back']}/></div>
 						</Button>
-						<Button className="left" onClick={this.onToggleEditAll.bind(this)}>
+						<Button className="left" onClick={this.onToggleEditAll.bind(this)} title="Check all games">
 							{games.length === this.state.editList.length?
 							<img alt="checked" src={ICONS['boxChecked']}/>:
 							<img alt="checked" src={ICONS['box']}/>}
 						</Button>
-						<Button className="right" onClick={this.onClickDeleteGames.bind(this)}>
+						<Button className="right" onClick={this.onClickDeleteGames.bind(this)} title="Delete selected games">
 							<img alt="delete" src={ICONS['trash']}/>
 						</Button>
 						<h1>
@@ -324,7 +324,7 @@ class DetailAll extends React.Component{
 									const play = game.lines.find(line => line.play);
 									return (
 										<li key={i}>
-											<Button className="right" onClick={this.onToggleEditGame.bind(this, game.id)}>
+											<Button className="right" onClick={this.onToggleEditGame.bind(this, game.id)} title="Check game">
 												{this.state.editList.find(id => id === game.id) ?
 													<img alt="checked" src={ICONS['boxChecked']}/> :
 													<img alt="checked" src={ICONS['box']}/>}

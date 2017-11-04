@@ -9,13 +9,13 @@ export default class Dashboard extends React.Component {
 			<section className="Dashboard">
 				<header>
 					<div>
-						<LinkButton to="/new-game" className="right">
+						<LinkButton to="/new-game" className="right" title="Create a new game">
 							<img alt="New" src={ICONS['plus']}/>
 						</LinkButton>
-						<LinkButton to="/detail" className="right">
+						<LinkButton to="/detail" className="right" title="Show all games">
 							<img alt="Details" src={ICONS['menu']}/>
 						</LinkButton>
-						<LinkButton to="/settings" className="right">
+						<LinkButton to="/settings" className="right" title="Open settings">
 							<img alt="Settings" src={ICONS['gear']}/>
 						</LinkButton>
 						<h1>Dashboard</h1>

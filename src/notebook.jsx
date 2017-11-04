@@ -203,13 +203,13 @@ class Sublines extends React.Component {
 				<div className="header">
 					{this.state.edit &&
 						[
-							<Button key="cancelEdit" className="left" onClick={this.onClickCancelEdit.bind(this)}>
+							<Button key="cancelEdit" className="left" onClick={this.onClickCancelEdit.bind(this)} title="Cancel edit">
 								<img alt="cancel" src={ICONS['back']}/>
 							</Button>,
-							<Button key="toggleAll" className="left" onClick={this.onClickToggleAll.bind(this)}>
+							<Button key="toggleAll" className="left" onClick={this.onClickToggleAll.bind(this)} title="Check all lines">
 								{children.length && this.state.selected.length === children.length ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
 							</Button>,
-							<Button key="delete" className="right" onClick={this.onClickDelete.bind(this)}>
+							<Button key="delete" className="right" onClick={this.onClickDelete.bind(this)} title="Delete selected lines">
 								<img alt="delete" src={ICONS['trash']}/>
 							</Button>,
 							<span key="title">{this.state.selected.length} selected</span>
@@ -242,7 +242,7 @@ class Sublines extends React.Component {
 		const isSelected = this.state.selected.indexOf(child.id) !== -1;
 		return (
 			<div key={i} className="line">
-				<Button className="right" onClick={this.onClickToggle.bind(this, child.id)}>
+				<Button className="right" onClick={this.onClickToggle.bind(this, child.id)} title="Check line">
 					{isSelected ? <img alt="x" src={ICONS['boxChecked']}/> : <img alt="x" src={ICONS['box']}/>}
 				</Button>
 				<div className="slider">
