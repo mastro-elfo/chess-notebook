@@ -5,7 +5,7 @@ import './button.css';
 export function Button(props) {
 	const className = 'Button ' + (props.className || '');
 	return (
-		<button className={className} onClick={props.onClick} disabled={props.disabled}>
+		<button className={className} onClick={props.onClick} title={props.title} disabled={props.disabled}>
 			<div>
 				{props.children}
 			</div>
@@ -16,7 +16,7 @@ export function Button(props) {
 export function LinkButton(props) {
 	const className = 'Button ' + (props.className || '');
 	return (
-		<Link to={props.to} className={className} disabled={props.disabled}>
+		<Link to={props.to} className={className} title={props.title} disabled={props.disabled}>
 			<div>
 				{props.children}
 			</div>
