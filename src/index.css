@@ -7,7 +7,7 @@ body {
 	padding: 0;
 	overflow-x: hidden;
 	min-height: 100%;
-	font-family: arial, sans-serif;
+	font-family: sans-serif;
 	letter-spacing: 0.1em;
 	color: #333;
 	background: white url("./background.svg") bottom right no-repeat;
