@@ -38,7 +38,7 @@
 
 .ModalContent .piece:hover,
 .ModalContent .piece:active{
-	background: hsl(120, 50%, 50%);
+	background: hsl(140, 50%, 50%);
 }
 
 .ModalContent .piece > img {

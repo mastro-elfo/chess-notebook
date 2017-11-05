@@ -1,7 +1,7 @@
 .Chessboard {
 	width: 16em;
 	height: 16em;
-	border: 0.25em solid hsl(120, 50%, 30%);
+	border: 0.25em solid hsl(140, 50%, 30%);
 	margin: auto;
 }
 
@@ -18,14 +18,14 @@
 
 .Chessboard .Row:nth-child(even) .Cell:nth-child(even),
 .Chessboard .Row:nth-child(odd) .Cell:nth-child(odd){
-	background: white;
-	color: hsl(120, 50%, 50%);
+	background: #f8f8f8;
+	color: hsl(140, 50%, 50%);
 }
 
 .Chessboard .Row:nth-child(even) .Cell:nth-child(odd),
 .Chessboard .Row:nth-child(odd) .Cell:nth-child(even){
-	background: hsl(120, 50%, 50%);
-	color: white;
+	background: hsl(140, 50%, 50%);
+	color: #f8f8f8;
 }
 
 .Chessboard .Row .Cell .piece {
@@ -90,5 +90,5 @@
 }
 
 .Pool .selected {
-	background: hsl(120, 50%, 50%);
+	background: hsl(140, 50%, 50%);
 }

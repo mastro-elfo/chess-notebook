@@ -10,7 +10,7 @@ body {
 	font-family: sans-serif;
 	letter-spacing: 0.1em;
 	color: #333;
-	background: white url("./background.svg") bottom right no-repeat;
+	background: #f8f8f8 url("./background.svg") bottom right no-repeat;
     background-size: 100%;
 }
 
@@ -97,5 +97,5 @@ a:not(.external) {
 }
 
 a.external {
-	color: hsl(120, 50%, 40%);
+	color: hsl(140, 50%, 40%);
 }
