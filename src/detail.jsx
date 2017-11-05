@@ -204,7 +204,7 @@ class DetailLine extends React.Component{
 				</main>
 				{
 					this.state.requestPromotion &&
-					<Modal onClose={this.onCancelPromotion.bind(this)}>
+					<Modal className="ChoosePiece" onClose={this.onCancelPromotion.bind(this)}>
 						<h1>Choose a piece…</h1>
 						{
 							'qrnb'.split('').map(piece =>
@@ -280,7 +280,8 @@ class DetailAll extends React.Component{
 		this.storage.removeGames(editList);
 		this.setState({
 			edit: false,
-			editList: []
+			editList: [],
+			confirmDeleteGames: false
 		});
 	}
 
@@ -308,7 +309,7 @@ class DetailAll extends React.Component{
 							<img alt="checked" src={ICONS['boxChecked']}/>:
 							<img alt="checked" src={ICONS['box']}/>}
 						</Button>
-						<Button className="right" onClick={this.onClickDeleteGames.bind(this)} title="Delete selected games">
+						<Button className="right" onClick={()=>this.setState({confirmDeleteGames: true})} title="Delete selected games">
 							<img alt="delete" src={ICONS['trash']}/>
 						</Button>
 						<h1>
@@ -321,7 +322,7 @@ class DetailAll extends React.Component{
 						<ul className="list">
 							{
 								games.map((game, i) =>{
-									const play = game.lines.find(line => line.play);
+									const play = game.lines.find(line => line.play) || game.lines[0];
 									return (
 										<li key={i}>
 											<Button className="right" onClick={this.onToggleEditGame.bind(this, game.id)} title="Check game">
@@ -349,6 +350,16 @@ class DetailAll extends React.Component{
 						<p>There are no games yet. Start creating a new game. <Link to="/new-game" style={{color: 'hsl(140,50%,50%)', textDecoration: 'underline'}}><span>Create</span></Link></p>}
 					</div>
 				</main>
+				{this.state.confirmDeleteGames &&
+					<Modal onClose={()=>this.setState({confirmDeleteGames: false})}>
+						<h1>Confirm delete games</h1>
+						<p>Do you really want to delete the selected games?<br/>The operation can't be undone.</p>
+						<div>
+							<button onClick={this.onClickDeleteGames.bind(this)}>Confirm</button>
+							<button onClick={()=>this.setState({confirmDeleteGames: false})}>Cancel</button>
+						</div>
+					</Modal>
+				}
 			</section>
 		);
 	}

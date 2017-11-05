@@ -4,13 +4,15 @@ import {SettingsStorage} from './storage';
 import {ICONS} from './icons';
 import './settings.css';
 import {Button, LinkButton} from './Button';
+import Modal from './modal';
 
 export default class Settings extends React.Component {
 	constructor(props){
 		super(props);
 		this.storage = new SettingsStorage();
 		this.state = {
-			...this.storage.load('Settings')
+			...this.storage.load('Settings'),
+			confirmClearStorage: false
 		};
 	}
 
@@ -27,7 +29,7 @@ export default class Settings extends React.Component {
 	onClickClearStorage(){
 		this.storage.clear();
 		this.setState({
-			update: +new Date()
+			onClickClearStorage: false
 		});
 	}
 
@@ -85,13 +87,22 @@ export default class Settings extends React.Component {
 						<h2>Memory</h2>
 						<ul className="list">
 							<li>
-								<Button onClick={this.onClickClearStorage.bind(this)} title="Delete local storage">
+								<Button onClick={()=>this.setState({confirmClearStorage: true})} title="Delete local storage">
 									<img alt="clear" src={ICONS['delete']}/>
 								</Button>
 								<label>
 									<h3>Local storage</h3>
 									<p>{this.prefix(this.getStorageSize(), 0, 'B')}</p>
 								</label>
+								{this.state.confirmClearStorage &&
+									<Modal onClose={()=>this.setState({confirmClearStorage: false})}>
+										<h1>Confirm clear storage</h1>
+										<p>Do you really want to delete the storage?<br/>The operation can't be undone.</p>
+										<div>
+											<button onClick={this.onClickClearStorage.bind(this)}>Confirm</button>
+											<button onClick={()=>this.setState({confirmClearStorage: false})}>Cancel</button>
+										</div>
+									</Modal>}
 							</li>
 						</ul>
 

@@ -14,11 +14,14 @@ export default class Modal extends Component {
 		this.props.onClose();
 	}
 	render(){
+		const className = ['Modal', this.props.className].join(' ');
 		return (
-			<div className="Modal">
+			<div className={className}>
 				<div className="ModalUnderlay" onClick={this.handleClick}></div>
 				<ReactCenter className="center">
-					<div className="ModalContent">{this.props.children}</div>
+					<div className="ModalContent">
+						{this.props.children}
+					</div>
 				</ReactCenter>
 			</div>
 		)

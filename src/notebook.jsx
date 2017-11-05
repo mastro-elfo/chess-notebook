@@ -4,6 +4,7 @@ import {LineStorage} from './storage';
 import {ICONS} from './icons';
 import './notebook.css';
 import {Button} from './Button';
+import Modal from './modal';
 
 export default class Notebook extends React.Component {
 	constructor(props){
@@ -185,6 +186,7 @@ class Sublines extends React.Component {
 			this.props.onClickDelete(this.state.selected.slice());
 		}
 		this.setState({
+			confirmDeleteLines: false,
 			edit: false
 		});
 	}
@@ -209,7 +211,7 @@ class Sublines extends React.Component {
 							<Button key="toggleAll" className="left" onClick={this.onClickToggleAll.bind(this)} title="Check all lines">
 								{children.length && this.state.selected.length === children.length ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
 							</Button>,
-							<Button key="delete" className="right" onClick={this.onClickDelete.bind(this)} title="Delete selected lines">
+							<Button key="delete" className="right" onClick={()=>this.setState({confirmDeleteLines: true})} title="Delete selected lines">
 								<img alt="delete" src={ICONS['trash']}/>
 							</Button>,
 							<span key="title">{this.state.selected.length} selected</span>
@@ -221,6 +223,15 @@ class Sublines extends React.Component {
 						children.map((child, i) => this.renderSubline(child, i))
 					}
 				</div>
+				{this.state.confirmDeleteLines &&
+					<Modal onClose={()=>this.setState({confirmDeleteLines: false})}>
+						<h1>Confirm delete lines</h1>
+						<p>Do you really want to delete the selected lines?<br/>The operation can't be undone.</p>
+						<div>
+							<button onClick={this.onClickDelete.bind(this)}>Confirm</button>
+							<button onClick={()=>this.setState({confirmDeleteLines: false})}>Cancel</button>
+						</div>
+					</Modal>}
 			</div>
 		);
 	}

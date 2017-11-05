@@ -27,7 +27,6 @@ export default class New extends React.Component {
 			openFromPGNDialog: false
 		};
 		this.storage = new GameStorage();
-		this.onClickPlayGame = this.onClickPlayGame.bind(this);
 	}
 
 	componentDidMount(){
@@ -43,6 +42,9 @@ export default class New extends React.Component {
 		// Retrieve Title: if empty don't save
 		const title = this.state.title;
 		if(title === '') {
+			this.setState({
+				requestTitle: true
+			});
 			return;
 		}
 
@@ -180,7 +182,7 @@ export default class New extends React.Component {
 						<LinkButton to="/" className="left" title="Back to dashboard">
 							<img alt="back" src={ICONS['back']}/>
 						</LinkButton>
-						<Button className="right" onClick={this.onClickPlayGame} title="Play this position">
+						<Button className="right" onClick={this.onClickPlayGame.bind(this)} title="Play this position">
 							<img alt="Play" src={ICONS['play']}/>
 						</Button>
 						<Button className="right" disabled={this.state.position === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'} onClick={this.onClickResetPosition.bind(this)} title="Reset to start position">
@@ -323,6 +325,18 @@ export default class New extends React.Component {
 						<h1>Load from PGN</h1>
 						<div style={{height: '100%'}}>
 							<textarea placeholder="Paste the PGN here" onChange={(e)=>this.onPastePGN(e.target.value) || (e.target.value = '')}></textarea>
+						</div>
+					</Modal>
+				}
+				{this.state.requestTitle &&
+					<Modal onClose={()=>this.setState({requestTitle: false})}>
+						<h1>Title required</h1>
+						<p>
+							<input placeholder="Write a title" value={this.state.title} onChange={(e)=>this.setState({title: e.target.value})}/>
+						</p>
+						<div>
+							<button onClick={this.onClickPlayGame.bind(this)} disabled={this.state.title.trim() === ''}>Confirm</button>
+							<button onClick={()=>this.setState({requestTitle: false})}>Cancel</button>
 						</div>
 					</Modal>
 				}
