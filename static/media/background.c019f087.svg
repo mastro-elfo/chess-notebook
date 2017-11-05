@@ -23,7 +23,7 @@
        inkscape:collect="always"
        id="linearGradient857">
       <stop
-         style="stop-color:#000000;stop-opacity:0.25098041"
+         style="stop-color:#000000;stop-opacity:0.1882353"
          offset="0"
          id="stop853" />
       <stop
@@ -37,7 +37,7 @@
        id="linearGradient859"
        x1="20.677828"
        y1="169.43303"
-       x2="15.677828"
+       x2="20.677828"
        y2="164.43303"
        gradientUnits="userSpaceOnUse" />
   </defs>
@@ -48,9 +48,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6568543"
-     inkscape:cx="7.3010013"
-     inkscape:cy="0.66578717"
+     inkscape:zoom="8.0000001"
+     inkscape:cx="25.801841"
+     inkscape:cy="11.778471"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
