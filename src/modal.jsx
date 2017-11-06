@@ -27,3 +27,20 @@ export default class Modal extends Component {
 		)
 	}
 }
+
+export function ModalButton(props) {
+	const className = ['ModalButton', props.className].join(' ');
+	return (
+		<button className={className} onClick={props.onClick} title={props.title} disabled={props.disabled}>
+			{props.children}
+		</button>
+	);
+}
+
+export function ModalButtons(props) {
+	return (
+		<div className="ModalButtons">
+			{props.children}
+		</div>
+	);
+}

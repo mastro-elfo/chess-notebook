@@ -2,7 +2,7 @@ import React from 'react';
 import Chess from 'chess.js/chess.min.js';
 import Chessboard, {Pool} from './chessboard';
 import {GameStorage} from './storage';
-import Modal from './modal';
+import Modal, {ModalButton, ModalButtons} from './modal';
 import {ICONS} from './icons';
 import './newgame.css';
 import {Button, LinkButton} from './Button';
@@ -334,10 +334,14 @@ export default class New extends React.Component {
 						<p>
 							<input placeholder="Write a title" value={this.state.title} onChange={(e)=>this.setState({title: e.target.value})}/>
 						</p>
-						<div>
-							<button onClick={this.onClickPlayGame.bind(this)} disabled={this.state.title.trim() === ''}>Confirm</button>
-							<button onClick={()=>this.setState({requestTitle: false})}>Cancel</button>
-						</div>
+						<ModalButtons>
+							<ModalButton title="Cancel" disabled={this.state.title.trim() === ''} onClick={this.onClickPlayGame.bind(this)}>
+								<img src={ICONS['boxChecked']} alt="ok"/> Confirm
+							</ModalButton>
+							<ModalButton title="Cancel" onClick={()=>this.setState({requestTitle: false})}>
+								<img src={ICONS['delete']} alt="x"/> Cancel
+							</ModalButton>
+						</ModalButtons>
 					</Modal>
 				}
 			</section>

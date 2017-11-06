@@ -52,3 +52,35 @@
 .Modal p {
 	padding: 0.5em 1em;
 }
+
+/* ModalButton */
+.ModalButton {
+	cursor: pointer;
+	border: 1px solid #bbb;
+	background: linear-gradient(#fff, #eee);
+	border-radius: 0.2em;
+	padding: 0.2em 0.5em;
+	margin: 0.2em;
+}
+
+.ModalButton:active {
+	background: linear-gradient(#eee, #fff);
+}
+
+.ModalButton:disabled {
+	cursor: default;
+	background: #eee;
+}
+
+.ModalButton img {
+	width: 1.5em;
+	height: 1.5em;
+	vertical-align: middle;
+	margin-right: 0.5em;
+}
+
+/* ModalButtons */
+.ModalButtons {
+	display: flex;
+	padding: 1em;
+}
