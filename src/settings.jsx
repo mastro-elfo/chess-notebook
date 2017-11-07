@@ -11,7 +11,10 @@ export default class Settings extends React.Component {
 		super(props);
 		this.storage = new SettingsStorage();
 		this.state = {
-			...this.storage.load('Settings', {}),
+			...this.storage.load('Settings', {
+				rotateChessboard: false,
+				lastEditLimit: 2
+			}),
 			confirmClearStorage: false
 		};
 	}
