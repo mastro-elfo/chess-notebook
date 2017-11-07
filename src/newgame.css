@@ -12,6 +12,10 @@
 	width: 25%
 }
 
+.Newgame .Pool {
+	margin-top: 2em;
+}
+
 .Newgame .Pool .Piece {
 	height: 2em;
 	width: 2em;
