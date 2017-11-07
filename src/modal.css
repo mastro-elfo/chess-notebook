@@ -80,6 +80,10 @@
 	margin-right: 0.5em;
 }
 
+.ModalButton:disabled img {
+	filter: grayscale(100%);
+}
+
 /* ModalButtons */
 .ModalButtons {
 	display: flex;
