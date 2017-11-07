@@ -11,7 +11,7 @@ export default class Settings extends React.Component {
 		super(props);
 		this.storage = new SettingsStorage();
 		this.state = {
-			...this.storage.load('Settings'),
+			...this.storage.load('Settings', {}),
 			confirmClearStorage: false
 		};
 	}
@@ -29,7 +29,7 @@ export default class Settings extends React.Component {
 	onClickClearStorage(){
 		this.storage.clear();
 		this.setState({
-			onClickClearStorage: false
+			confirmClearStorage: false
 		});
 	}
 
