@@ -40,56 +40,6 @@ ul.list li:last-child {
 	clear: both;
 }
 
-/* Buttons */
-/* TODO: delete */
-/*.button {
-	margin: 0;
-	padding: 0;
-	background: transparent;
-	border: none;
-	cursor: pointer;
-	text-decoration: none;
-	color: inherit;
-	text-align: center;
-}
-
-.button.right:first-of-type {
-	margin-right: 0;
-}
-
-.button > *{
-	border-radius: 0.25em;
-	overflow: hidden;
-}
-
-.button > *,
-.button img{
-	width: 80%;
-	height: 80%;
-	margin: 10%;
-}
-
-.button.selected:not(:disabled) > *,
-.button:active:not(:disabled) > * {
-	box-shadow: 0 0 0.25em rgba(0,0,0,0.25) inset;
-	background: rgba(0,0,0,0.25);
-}
-
-.button:disabled {
-	cursor: default;
-}
-
-.button:disabled img {
-	filter: opacity(50%);
-}
-
-.button.danger {
-	background: hsl(0, 75%, 50%);
-	color: white;
-}*/
-
-/* /Buttons */
-
 a:not(.external) {
 	text-decoration: none;
 	color: inherit;
