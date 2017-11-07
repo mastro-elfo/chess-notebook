@@ -99,6 +99,7 @@ class DetailLine extends React.Component{
 				.filter(line => line.parent === lineId)
 				.find(line => line.move === move.san);
 			if(!newLine) {
+				// This is a new line
 				newLine = this.lineStorage.saveLine(gameId, {
 					move: move.san,
 					parent: lineId,
