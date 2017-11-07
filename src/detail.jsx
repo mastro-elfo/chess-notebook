@@ -4,7 +4,7 @@ import Chess from 'chess.js/chess.min.js';
 import Chessboard from './chessboard';
 import Notebook from './notebook';
 import {GameStorage, LineStorage, SettingsStorage} from './storage';
-import Modal from './modal';
+import Modal, {ModalButtons, ModalButton} from './modal';
 import {ICONS} from './icons';
 import {PIECES} from  './pieces';
 import './detail.css';
@@ -354,10 +354,14 @@ class DetailAll extends React.Component{
 					<Modal onClose={()=>this.setState({confirmDeleteGames: false})}>
 						<h1>Confirm delete games</h1>
 						<p>Do you really want to delete the selected games?<br/>The operation can't be undone.</p>
-						<div>
-							<button onClick={this.onClickDeleteGames.bind(this)}>Confirm</button>
-							<button onClick={()=>this.setState({confirmDeleteGames: false})}>Cancel</button>
-						</div>
+						<ModalButtons>
+							<ModalButton onClick={this.onClickDeleteGames.bind(this)}>
+								<img src={ICONS['boxChecked']} alt="ok"/> Confirm
+							</ModalButton>
+							<ModalButton onClick={()=>this.setState({confirmDeleteGames: false})}>
+								<img src={ICONS['delete']} alt="x"/> Cancel
+							</ModalButton>
+						</ModalButtons>
 					</Modal>
 				}
 			</section>

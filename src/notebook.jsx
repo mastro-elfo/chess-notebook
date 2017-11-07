@@ -4,7 +4,7 @@ import {LineStorage} from './storage';
 import {ICONS} from './icons';
 import './notebook.css';
 import {Button} from './Button';
-import Modal from './modal';
+import Modal, {ModalButtons, ModalButton} from './modal';
 
 export default class Notebook extends React.Component {
 	constructor(props){
@@ -227,10 +227,14 @@ class Sublines extends React.Component {
 					<Modal onClose={()=>this.setState({confirmDeleteLines: false})}>
 						<h1>Confirm delete lines</h1>
 						<p>Do you really want to delete the selected lines?<br/>The operation can't be undone.</p>
-						<div>
-							<button onClick={this.onClickDelete.bind(this)}>Confirm</button>
-							<button onClick={()=>this.setState({confirmDeleteLines: false})}>Cancel</button>
-						</div>
+						<ModalButtons>
+							<ModalButton onClick={this.onClickDelete.bind(this)}>
+								<img src={ICONS['boxChecked']} alt="ok"/> Confirm
+							</ModalButton>
+							<ModalButton onClick={()=>this.setState({confirmDeleteLines: false})}>
+								<img src={ICONS['delete']} alt="x"/> Cancel
+							</ModalButton>
+						</ModalButtons>
 					</Modal>}
 			</div>
 		);
