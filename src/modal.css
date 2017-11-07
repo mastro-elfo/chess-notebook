@@ -53,6 +53,18 @@
 	padding: 0.5em 1em;
 }
 
+.Modal input {
+	display: block;
+	width: 75%;
+	max-width: 500px;
+	padding: 0.5em;
+	margin: 0 auto 0.5em;
+	font: inherit;
+	letter-spacing: inherit;
+	border: none;
+	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
+}
+
 /* ModalButton */
 .ModalButton {
 	cursor: pointer;
