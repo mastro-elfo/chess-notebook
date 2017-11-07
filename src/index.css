@@ -41,14 +41,13 @@ ul.list li:last-child {
 }
 
 /* Buttons */
-.button {
+/* TODO: delete */
+/*.button {
 	margin: 0;
 	padding: 0;
 	background: transparent;
 	border: none;
 	cursor: pointer;
-	/*width: 1em;
-	height: 1em;*/
 	text-decoration: none;
 	color: inherit;
 	text-align: center;
@@ -87,7 +86,7 @@ ul.list li:last-child {
 .button.danger {
 	background: hsl(0, 75%, 50%);
 	color: white;
-}
+}*/
 
 /* /Buttons */
 
