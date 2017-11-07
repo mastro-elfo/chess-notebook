@@ -8,8 +8,6 @@ export default class Modal extends Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 	handleClick(){
-		this.props.close &&
-		this.props.close();
 		this.props.onClose &&
 		this.props.onClose();
 	}
