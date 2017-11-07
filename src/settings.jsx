@@ -4,7 +4,7 @@ import {SettingsStorage} from './storage';
 import {ICONS} from './icons';
 import './settings.css';
 import {Button, LinkButton} from './Button';
-import Modal from './modal';
+import Modal, {ModalButtons, ModalButton} from './modal';
 
 export default class Settings extends React.Component {
 	constructor(props){
@@ -98,10 +98,14 @@ export default class Settings extends React.Component {
 									<Modal onClose={()=>this.setState({confirmClearStorage: false})}>
 										<h1>Confirm clear storage</h1>
 										<p>Do you really want to delete the storage?<br/>The operation can't be undone.</p>
-										<div>
-											<button onClick={this.onClickClearStorage.bind(this)}>Confirm</button>
-											<button onClick={()=>this.setState({confirmClearStorage: false})}>Cancel</button>
-										</div>
+										<ModalButtons>
+											<ModalButton onClick={this.onClickClearStorage.bind(this)}>
+												<img src={ICONS['boxChecked']} alt="ok"/> Confirm
+											</ModalButton>
+											<ModalButton onClick={()=>this.setState({confirmClearStorage: false})}>
+												<img src={ICONS['delete']} alt="x"/> Cancel
+											</ModalButton>
+										</ModalButtons>
 									</Modal>}
 							</li>
 						</ul>
