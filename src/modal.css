@@ -69,11 +69,11 @@
 .ModalButton {
 	cursor: pointer;
 	border: 1px solid #bbb;
-	background: linear-gradient(#fff, #eee);
-	border-radius: 0.2em;
-	padding: 0.2em 0.5em;
-	margin: 0.2em;
+	background: #eee;
+	padding: 0.5em 0.5em;
+	margin: 0;
 	text-align: center;
+	flex-basis: 50%;
 }
 
 .ModalButton:active {
@@ -82,7 +82,7 @@
 
 .ModalButton:disabled {
 	cursor: default;
-	background: #eee;
+	background: #ddd;
 }
 
 .ModalButton img {
@@ -99,5 +99,4 @@
 /* ModalButtons */
 .ModalButtons {
 	display: flex;
-	padding: 1em;
 }
