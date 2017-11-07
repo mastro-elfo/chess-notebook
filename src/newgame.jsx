@@ -331,6 +331,7 @@ export default class New extends React.Component {
 				{this.state.requestTitle &&
 					<Modal onClose={()=>this.setState({requestTitle: false})}>
 						<h1>Title required</h1>
+						<p>Title and description are useful to search games.</p>
 						<p>
 							<input placeholder="Write a title" value={this.state.title} onChange={(e)=>this.setState({title: e.target.value})}/>
 						</p>
