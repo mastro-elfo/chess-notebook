@@ -9,8 +9,7 @@
     "react-center": "^1.1.1",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.14",
-    "simple-react-modal": "^0.5.1"
+    "react-scripts": "1.0.14"
   },
   "scripts": {
     "start": "react-scripts start",
