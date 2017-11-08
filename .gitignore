@@ -22,3 +22,6 @@ yarn-error.log*
 
 # my documents
 /doc
+
+# openings manager
+/openings
