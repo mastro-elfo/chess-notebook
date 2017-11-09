@@ -9,6 +9,7 @@ import {ICONS} from './icons';
 import {PIECES} from  './pieces';
 import './detail.css';
 import {Button, LinkButton} from './Button';
+import {OPENINGS} from './openings';
 
 class DetailLine extends React.Component{
 	constructor(props) {
@@ -100,11 +101,20 @@ class DetailLine extends React.Component{
 				.find(line => line.move === move.san);
 			if(!newLine) {
 				// This is a new line
+				const fen = chess.fen();
+				console.debug('Fen', fen);
+				// Search openings
+				const settings = this.settingsStorage.load('Settings', {searchOpenings: true});
+				let comment = '';
+				if(settings.searchOpenings) {
+					const opening = OPENINGS.find(open => open.fen === fen);
+					comment = (opening && opening.name) || '';
+				}
 				newLine = this.lineStorage.saveLine(gameId, {
 					move: move.san,
 					parent: lineId,
-					fen: chess.fen(),
-					comment: '',
+					fen: fen,
+					comment: comment,
 					value: null
 				});
 			}

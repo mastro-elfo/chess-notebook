@@ -13,7 +13,8 @@ export default class Settings extends React.Component {
 		this.state = {
 			...this.storage.load('Settings', {
 				rotateChessboard: false,
-				lastEditLimit: 2
+				lastEditLimit: 2,
+				searchOpenings: true
 			}),
 			confirmClearStorage: false
 		};
@@ -51,6 +52,13 @@ export default class Settings extends React.Component {
 		});
 	}
 
+	onClickToggleSearchOpenings(){
+		this.storage.saveKey('searchOpenings', !this.state.searchOpenings);
+		this.setState({
+			searchOpenings: !this.state.searchOpenings
+		});
+	}
+
 	render(){
 		return (
 			<section className="Settings">
@@ -69,10 +77,19 @@ export default class Settings extends React.Component {
 							<li>
 								<label>
 									<Button onClick={this.onClickToggleRotateChessboard.bind(this)} title="Check to rotate chessboard each move">
-										{this.state.rotateChessboard ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
+										{this.state.rotateChessboard ? <img alt="y" src={ICONS['boxChecked']}/> : <img alt="n" src={ICONS['box']}/>}
 									</Button>
 									<h3>Rotate chessboard</h3>
 									<p>Rotate chessboard to the side of the player in turn</p>
+								</label>
+							</li>
+							<li>
+								<label>
+									<Button onClick={this.onClickToggleSearchOpenings.bind(this)} title="Check to search openings when move">
+										{this.state.searchOpenings ? <img alt="y" src={ICONS['boxChecked']}/> : <img alt="n" src={ICONS['box']}/>}
+									</Button>
+									<h3>Search openings</h3>
+									<p>When move add opening name as comment</p>
 								</label>
 							</li>
 						</ul>
