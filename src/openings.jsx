@@ -65,6 +65,66 @@ export const OPENINGS = [
 		eco: 'A01'
 	},
 	{
+		name: "Bird opening",
+		fen: 'rnbqkbnr/pppppppp/8/8/5P2/8/PPPPP1PP/RNBQKBNR b KQkq - 0 1',
+		eco: 'A02'
+	},
+	{
+		name: "Bird opening: dutch variation",
+		fen: 'rnbqkbnr/ppp1pppp/8/3p4/5P2/8/PPPPP1PP/RNBQKBNR w KQkq - 0 2',
+		eco: 'A03'
+	},
+	{
+		name: "Bird opening: horsefly defense",
+		fen: 'rnbqkb1r/pppppppp/7n/8/5P2/8/PPPPP1PP/RNBQKBNR w KQkq - 1 2',
+		eco: 'A03'
+	},
+	{
+		name: "Bird opening: Lasker variation",
+		fen: 'rnbqkb1r/pp2pppp/5n2/2pp4/5P2/4PN2/PPPP2PP/RNBQKB1R w KQkq - 0 4',
+		eco: 'A03'
+	},
+	{
+		name: "Mujannah opening",
+		fen: 'rnbqkb1r/pppppppp/5n2/8/2P2P2/8/PP1PP1PP/RNBQKBNR b KQkq - 0 2',
+		eco: 'A03'
+	},
+	{
+		name: "Williams gambit",
+		fen: 'rnbqkbnr/ppp1pppp/8/8/4pP2/3P4/PPP3PP/RNBQKBNR b KQkq - 0 3',
+		eco: 'A03'
+	},
+	{
+		name: "Reti opening",
+		fen: 'rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1',
+		eco: 'A04'
+	},
+	{
+		name: "Reti opening",
+		fen: 'rnbqkb1r/pppppppp/5n2/8/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 2 2',
+		eco: 'A04'
+	},
+	{
+		name: "Reti opening",
+		fen: 'rnbqkbnr/ppp1pppp/8/3p4/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 0 2',
+		eco: 'A06'
+	},
+	{
+		name: "King's indian attack",
+		fen: 'rnbqkbnr/ppp1pppp/8/3p4/8/5NP1/PPPPPP1P/RNBQKB1R b KQkq - 0 2',
+		eco: 'A07'
+	},
+	{
+		name: "King's indian attack: sicilian variation",
+		fen: 'rnbqkbnr/pp2pppp/8/2pp4/8/5NP1/PPPPPPBP/RNBQK2R b KQkq - 1 3',
+		eco: 'A08'
+	},
+	{
+		name: "Reti opening",
+		fen: 'rnbqkbnr/ppp1pppp/8/3p4/2P5/5N2/PP1PPPPP/RNBQKB1R b KQkq - 0 2',
+		eco: 'A09'
+	},
+	{
 		name: "Queen's Pawn",
 		fen: 'rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq d3 0 1'
 	},
