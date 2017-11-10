@@ -102,7 +102,6 @@ class DetailLine extends React.Component{
 			if(!newLine) {
 				// This is a new line
 				const fen = chess.fen();
-				console.debug('Fen', fen);
 				// Search openings
 				const settings = this.settingsStorage.load('Settings', {searchOpenings: true});
 				let comment = '';
