@@ -108,7 +108,9 @@ class DetailLine extends React.Component{
 				let comment = '';
 				if(settings.searchOpenings) {
 					const opening = OPENINGS.find(open => open.fen === fen);
-					comment = (opening && opening.name) || '';
+					if(opening) {
+						comment = opening.name + ' ('+opening.eco+')';
+					}
 				}
 				newLine = this.lineStorage.saveLine(gameId, {
 					move: move.san,
