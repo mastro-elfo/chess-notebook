@@ -23,7 +23,8 @@ class DetailLine extends React.Component{
 			side: game.side || 'w',
 			selectedCell: null,
 			targetCell: null,
-			requestPromotion: null
+			requestPromotion: null,
+			editTitle: game.title
 		};
 	}
 
@@ -167,6 +168,31 @@ class DetailLine extends React.Component{
 		return output;
 	}
 
+	onClickEditTitle(){
+		this.setState({
+			openEditTitle: true
+		});
+	}
+
+	onCancelEditTitle(){
+		this.setState({
+			openEditTitle: false
+		});
+	}
+
+	onConfirmEditTitle(){
+		const editTitle = this.state.editTitle.trim();
+		if(editTitle !== '') {
+			const gameId = +this.props.match.params.gameId;
+			let game = this.gameStorage.loadGame(gameId);
+			game.title = editTitle;
+			this.gameStorage.saveGame(game);
+			this.setState({
+				openEditTitle: false
+			});
+		}
+	}
+
 	render(){
 		const gameId = +this.props.match.params.gameId;
 		const lineId = +this.props.match.params.lineId;
@@ -180,8 +206,9 @@ class DetailLine extends React.Component{
 			selectableCells = selectableCells.concat(moves.map(move => move.to));
 		}
 		const settings = this.settingsStorage.load('Settings', {rotateChessboard: false});
+		const className = ['Detail', (this.state.openEditTitle? 'edit' : '')].join(' ');
 		return (
-			<section className="Detail">
+			<section className={className}>
 				<header>
 					<div>
 						<LinkButton to="/" className="left" title="Back to dashboard">
@@ -190,7 +217,20 @@ class DetailLine extends React.Component{
 						<Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)} title="Reverse chessboard">
 							<img alt="Reverse" src={ICONS['swap']}/>
 						</Button>
-						<h1>{game.title}</h1>
+						<h1 onClick={this.onClickEditTitle.bind(this)}>{game.title}</h1>
+					</div>
+				</header>
+				<header className="edit">
+					<div>
+						<Button className="left" onClick={this.onCancelEditTitle.bind(this)}>
+							<img alt="close" src={ICONS['back']}/>
+						</Button>
+						<Button className="right" onClick={this.onConfirmEditTitle.bind(this)} disabled={this.state.editTitle.trim() === ''}>
+							<img alt="confirm" src={ICONS['boxChecked']}/>
+						</Button>
+						<h1>
+							<input type="text" value={this.state.editTitle} onChange={(e)=>this.setState({editTitle: e.target.value})}/>
+						</h1>
 					</div>
 				</header>
 				<main>

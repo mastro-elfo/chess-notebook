@@ -43,6 +43,19 @@
 	font-weight: normal;
 }
 
+.App section > header input {
+	font: inherit;
+	letter-spacing: inherit;
+	line-height: inherit;
+	display: block;
+    width: 100%;
+    border: none;
+	border: none;
+	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
+    padding: 0 0.5em;
+    box-sizing: border-box;
+}
+
 .App section > header.edit {
 	display: none;
 	color: #333;
@@ -102,10 +115,11 @@
 
 .App .list input {
     font: inherit;
+	letter-spacing: inherit;
+	line-height: inherit;
     display: block;
     width: 100%;
     border: none;
-    letter-spacing: inherit;
 	border: none;
 	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
     padding: 0.5em;
