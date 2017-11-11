@@ -11,7 +11,7 @@ export default class Storage {
 	}
 
 	load(key, defaultValue) {
-		let value = this.json.parse(this.storage.getItem(key));
+		const value = this.json.parse(this.storage.getItem(key));
 		if(value === null) {
 			return defaultValue;
 		}

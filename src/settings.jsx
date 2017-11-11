@@ -10,12 +10,13 @@ export default class Settings extends React.Component {
 	constructor(props){
 		super(props);
 		this.storage = new SettingsStorage();
+		const settings = Object.assign({
+			rotateChessboard: false,
+			lastEditLimit: 2,
+			searchOpenings: true
+		}, this.storage.load('Settings'));
 		this.state = {
-			...this.storage.load('Settings', {
-				rotateChessboard: false,
-				lastEditLimit: 2,
-				searchOpenings: true
-			}),
+			...settings,
 			confirmClearStorage: false
 		};
 	}
@@ -48,7 +49,7 @@ export default class Settings extends React.Component {
 		const value = parseInt(event.target.value, 10);
 		this.storage.saveKey('lastEditLimit', value);
 		this.setState({
-			'lastEditLimit': value
+			lastEditLimit: value
 		});
 	}
 
