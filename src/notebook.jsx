@@ -99,7 +99,6 @@ export default class Notebook extends React.Component {
 						line={line}
 						onClickDelete={this.props.onClickDelete}/>
 				</div>
-				<ReactTooltip place="top" type="dark" effect="solid"/>
 			</div>
 		);
 	}
@@ -325,6 +324,7 @@ class Move extends React.Component {
 								{this.props.line.value}
 							</Link>
 						}
+						<ReactTooltip place="top" type="dark" effect="solid"/>
 					</span>
 				}
 			</span>

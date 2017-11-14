@@ -26,8 +26,8 @@
 	text-decoration: underline;
 }
 
-.Move span[title=""] a,
-.Move span:not([title]) a{
+.Move span[data-tip=""] a,
+.Move span:not([data-tip]) a{
 	text-decoration: none;
 }
 
