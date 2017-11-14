@@ -361,7 +361,7 @@ class DetailAll extends React.Component{
 							<img alt="checked" src={ICONS['boxChecked']}/>:
 							<img alt="checked" src={ICONS['box']}/>}
 						</Button>
-						<Button className="right" onClick={()=>this.setState({confirmDeleteGames: true})} title="Delete selected games">
+						<Button className="right" onClick={()=>this.setState({confirmDeleteGames: true})} title="Delete selected games" disabled={this.state.editList.length===0}>
 							<img alt="delete" src={ICONS['trash']}/>
 						</Button>
 						<h1>
