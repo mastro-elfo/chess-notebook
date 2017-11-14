@@ -211,7 +211,7 @@ class Sublines extends React.Component {
 							<Button key="toggleAll" className="left" onClick={this.onClickToggleAll.bind(this)} title="Check all lines">
 								{children.length && this.state.selected.length === children.length ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
 							</Button>,
-							<Button key="delete" className="right" onClick={()=>this.setState({confirmDeleteLines: true})} title="Delete selected lines">
+							<Button key="delete" className="right" onClick={()=>this.setState({confirmDeleteLines: true})} title="Delete selected lines" disabled={this.state.selected.length===0}>
 								<img alt="delete" src={ICONS['trash']}/>
 							</Button>,
 							<span key="title">{this.state.selected.length} selected</span>
