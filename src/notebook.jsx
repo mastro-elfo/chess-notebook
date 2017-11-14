@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import ReactTooltip from 'react-tooltip'
 import {LineStorage} from './storage';
 import {ICONS} from './icons';
 import './notebook.css';
@@ -98,6 +99,7 @@ export default class Notebook extends React.Component {
 						line={line}
 						onClickDelete={this.props.onClickDelete}/>
 				</div>
+				<ReactTooltip place="top" type="dark" effect="solid"/>
 			</div>
 		);
 	}
@@ -312,8 +314,7 @@ class Move extends React.Component {
 				}
 
 				{
-					<span
-						title={this.props.line.comment}>
+					<span data-tip={this.props.line.comment}>
 						{this.props.noLink &&
 							[this.props.line.move,
 							this.props.line.value]
