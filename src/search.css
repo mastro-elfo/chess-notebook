@@ -4,16 +4,34 @@
 	margin-bottom: 0;
 }
 
-.Search > input {
-	display: block;
+.Search .inputContainer {
 	width: 75%;
 	max-width: 500px;
-	padding: 0.5em;
-	margin: 0 auto 0.5em;
+	margin: 0 auto;
+	position: relative;
+}
+
+.Search .inputContainer .Button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 2.5em;
+	height: 2.5em;
+}
+
+.Search .inputContainer input[value=""] + .Button {
+	display: none;
+}
+
+.Search input {
+	display: block;
+	width: 100%;
+	padding: 0.5em 2.5em 0.5em 0.5em;
 	font: inherit;
 	letter-spacing: inherit;
 	border: none;
 	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
+	box-sizing: border-box;
 }
 
 .SearchResult {

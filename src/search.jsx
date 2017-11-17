@@ -2,12 +2,15 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import Chessboard from './chessboard';
 import {GameStorage, SettingsStorage} from './storage';
+import {Button} from './Button';
+import {ICONS} from './icons';
 import './search.css';
 
 export default class Search extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			term: '',
 			result: [],
 			last: []
 		};
@@ -25,6 +28,13 @@ export default class Search extends React.Component {
 		});
 	}
 
+	onClickClearSearch(){
+		this.setState({
+			result: [],
+			term: ''
+		});
+	}
+
 	search(event) {
 		event.preventDefault();
 		const term = event.target.value.trim();
@@ -32,7 +42,7 @@ export default class Search extends React.Component {
 			// Nothing to search
 			this.setState({
 				result: [],
-				term: null
+				term: ''
 			});
 			return;
 		}
@@ -69,7 +79,12 @@ export default class Search extends React.Component {
 	render(){
 		return (
 			<div className="Search">
-				<input type="text" placeholder="Search..." onChange={this.search.bind(this)}/>
+				<div className="inputContainer">
+					<input type="text" placeholder="Search..." onChange={this.search.bind(this)} value={this.state.term}/>
+					<Button title="Clear search" onClick={this.onClickClearSearch.bind(this)}>
+						<img alt="x" src={ICONS['delete']}/>
+					</Button>
+				</div>
 
 				{this.state.term && this.state.result.length === 0 &&
 					<h2>No result for &quot;{this.state.term}&quot;</h2>
