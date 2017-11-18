@@ -104,7 +104,7 @@ class DetailLine extends React.Component{
 				// This is a new line
 				const fen = chess.fen();
 				// Search openings
-				const settings = this.settingsStorage.load('Settings', {searchOpenings: true});
+				const settings = Object.assign({searchOpenings: true}, this.settingsStorage.load('Settings', {}));
 				let comment = '';
 				if(settings.searchOpenings) {
 					const opening = OPENINGS.find(open => open.fen === fen);
