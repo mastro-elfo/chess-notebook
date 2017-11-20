@@ -176,7 +176,7 @@ export class Pool extends React.Component {
 	}
 
 	onContainerResize(){
-		const size = Math.min(this.refs.PoolContainer.clientWidth, this.refs.PoolContainer.clientHeight) /16.5;
+		const size = Math.min(this.refs.PoolContainer.clientWidth *2, this.refs.PoolContainer.clientHeight) /16.5;
 		this.setState({
 			fontSize: size
 		});
