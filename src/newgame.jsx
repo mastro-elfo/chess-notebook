@@ -24,13 +24,22 @@ export default class New extends React.Component {
 			totalMoves: 1,
 			// Others
 			selectedPiece: null,
-			openFromPGNDialog: false
+			openFromPGNDialog: false,
+			componentSize: Math.min(window.innerHeight, window.innerWidth /2)
 		};
 		this.storage = new GameStorage();
 	}
 
 	componentDidMount(){
+		window.addEventListener('resize', this.onResize.bind(this));
+		this.onResize();
 		this.refs.title.focus();
+	}
+
+	onResize(){
+		this.setState({
+			componentSize: Math.min(window.innerHeight -parseFloat(getComputedStyle(document.body).fontSize) *3.5, window.innerWidth /2)
+		});
 	}
 
 	toFen(){
@@ -112,12 +121,6 @@ export default class New extends React.Component {
 
 		this.setState({
 			position: chess.fen().split(' ')[0]
-		});
-	}
-
-	onChessboardResize(size){
-		this.setState({
-			chessboardSize: size
 		});
 	}
 
@@ -204,12 +207,12 @@ export default class New extends React.Component {
 								</label>
 							</li>
 						</ul>
-						<div>
+						<div style={{height: this.state.componentSize}}>
 							<div className="column column-4 whitePool">
 								<Pool pieces="KQRNBP" onClick={this.onClickPiece.bind(this)} selected={this.state.selectedPiece}/>
 							</div>
 							<div className="column column-2">
-								<Chessboard fen={this.toFen()} selectableCells={selectableCells} onClick={this.onClickCell.bind(this)} onDrop={this.onDropCell.bind(this)} onResize={this.onChessboardResize.bind(this)}/>
+								<Chessboard fen={this.toFen()} selectableCells={selectableCells} onClick={this.onClickCell.bind(this)} onDrop={this.onDropCell.bind(this)}/>
 							</div>
 							<div className="column column-4 blackPool">
 								<Pool pieces="kqrnbp" onClick={this.onClickPiece.bind(this)} selected={this.state.selectedPiece}/>
