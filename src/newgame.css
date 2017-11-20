@@ -1,6 +1,6 @@
 /* Column */
 .Newgame .column {
-	height: calc(100vh - 5.5rem);
+	height: 100%;
 	float: left;
 }
 
