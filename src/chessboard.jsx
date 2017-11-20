@@ -1,6 +1,7 @@
 import React from 'react';
 import {PIECES} from './pieces';
 import './chessboard.css';
+import elementResizeEvent from 'element-resize-event';
 
 export default class Chessboard extends React.Component{
 	static defaultProps = {
@@ -19,23 +20,15 @@ export default class Chessboard extends React.Component{
 	}
 
 	componentDidMount(){
-		window.addEventListener('resize', this.onWindowResize.bind(this));
-		this.onWindowResize();
+		elementResizeEvent(this.refs.ChessboardContainer, this.onContainerResize.bind(this));
+		this.onContainerResize();
 	}
 
-	// componentWillUnmount(){
-	// 	window.removeEventListener('resize', this.onWindowResize);
-	// }
-
-	onWindowResize(){
-		if(this && this.refs && this.refs.ChessboardContainer){
-			const size = Math.min(this.refs.ChessboardContainer.clientWidth, this.refs.ChessboardContainer.clientHeight) /16.5;
-			this.setState({
-				fontSize: size
-			});
-			this.props.onResize &&
-			this.props.onResize(size);
-		}
+	onContainerResize(){
+		const size = Math.min(this.refs.ChessboardContainer.clientWidth, this.refs.ChessboardContainer.clientHeight) /16.5;
+		this.setState({
+			fontSize: size
+		});
 	}
 
 	onClick(coords) {
@@ -167,9 +160,29 @@ class Cell extends React.Component {
 
 export class Pool extends React.Component {
 	static defaultProps = {
-		pieces: '',
-		size: 1
+		pieces: ''
 	};
+
+	constructor(props){
+		super(props);
+		this.state = {
+			fontSize: 1
+		};
+	}
+
+	componentDidMount(){
+		elementResizeEvent(this.refs.PoolContainer, this.onContainerResize.bind(this));
+		this.onContainerResize();
+	}
+
+	onContainerResize(){
+		const size = Math.min(this.refs.PoolContainer.clientWidth, this.refs.PoolContainer.clientHeight) /16.5;
+		this.setState({
+			fontSize: size
+		});
+		this.props.onResize &&
+		this.props.onResize(size);
+	}
 
 	onDragStart(piece, event){
 		event.dataTransfer.setData('start', piece);
@@ -177,19 +190,21 @@ export class Pool extends React.Component {
 
 	render(){
 		return (
-			<div className="Pool" style={{fontSize: this.props.size}}>
-				{
-					this.props.pieces.split('').map((piece, i) => {
-						const classNames = ['Piece', piece===this.props.selected?'selected':''];
-						return (
-							<div key={i} className={classNames.join(' ')} onClick={this.props.onClick.bind(this, piece)}>
-								<span draggable={true} onDragStart={this.onDragStart.bind(this, piece)}>
-									<img alt={piece} src={PIECES[piece]}/>
-								</span>
-							</div>
-						);
-					})
-				}
+			<div className="PoolContainer" ref="PoolContainer">
+				<div className="Pool" style={{fontSize: this.state.fontSize}}>
+					{
+						this.props.pieces.split('').map((piece, i) => {
+							const classNames = ['Piece', piece===this.props.selected?'selected':''];
+							return (
+								<div key={i} className={classNames.join(' ')} onClick={this.props.onClick.bind(this, piece)}>
+									<span draggable={true} onDragStart={this.onDragStart.bind(this, piece)}>
+										<img alt={piece} src={PIECES[piece]}/>
+									</span>
+								</div>
+							);
+						})
+					}
+				</div>
 			</div>
 		)
 	}
