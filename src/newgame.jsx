@@ -206,13 +206,13 @@ export default class New extends React.Component {
 						</ul>
 						<div>
 							<div className="column column-4 whitePool">
-								<Pool pieces="KQRNBP" size={this.state.chessboardSize} onClick={this.onClickPiece.bind(this)} selected={this.state.selectedPiece}/>
+								<Pool pieces="KQRNBP" onClick={this.onClickPiece.bind(this)} selected={this.state.selectedPiece}/>
 							</div>
 							<div className="column column-2">
 								<Chessboard fen={this.toFen()} selectableCells={selectableCells} onClick={this.onClickCell.bind(this)} onDrop={this.onDropCell.bind(this)} onResize={this.onChessboardResize.bind(this)}/>
 							</div>
 							<div className="column column-4 blackPool">
-								<Pool pieces="kqrnbp" size={this.state.chessboardSize} onClick={this.onClickPiece.bind(this)} selected={this.state.selectedPiece}/>
+								<Pool pieces="kqrnbp" onClick={this.onClickPiece.bind(this)} selected={this.state.selectedPiece}/>
 							</div>
 						</div>
 						<div className="clear"></div>
