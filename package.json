@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "chess.js": "^0.10.2",
+    "element-resize-event": "^2.0.9",
     "react": "^16.0.0",
     "react-center": "^1.1.1",
     "react-dom": "^16.0.0",
