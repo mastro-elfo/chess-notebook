@@ -34,6 +34,11 @@
 	margin-right: 0.5rem;
 }
 
+.App section > header .Button.logo {
+	width: 4rem;
+	height: 4rem;
+}
+
 .App section > header h1 {
 	margin: 0;
 	padding: 0;

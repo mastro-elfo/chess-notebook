@@ -1,7 +1,7 @@
 import React from 'react';
 import {ICONS} from './icons';
 import Search from './search';
-import {LinkButton} from './Button';
+import {Button, LinkButton} from './Button';
 
 export default class Dashboard extends React.Component {
 	render(){
@@ -9,6 +9,9 @@ export default class Dashboard extends React.Component {
 			<section className="Dashboard">
 				<header>
 					<div>
+						<Button className="left fill logo">
+							<img alt="logo" src={ICONS['logo']}/>
+						</Button>
 						<LinkButton to="/new-game" className="right" title="Create a new game">
 							<img alt="New" src={ICONS['plus']}/>
 						</LinkButton>

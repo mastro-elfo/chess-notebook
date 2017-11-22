@@ -5,6 +5,7 @@ import deleteIcon from './assets/delete.svg';
 import exclamation from './assets/exclamation.svg';
 import forward from './assets/forward.svg';
 import gear from './assets/gear.svg';
+import logo from './assets/logo.svg';
 import menu from './assets/menu.svg';
 import pgn from './assets/pgn.svg';
 import play from './assets/play.svg';
@@ -16,5 +17,5 @@ import top from './assets/top.svg';
 import trash from './assets/trash.svg';
 
 export const ICONS = {
-	'back': back, 'box': box, 'boxChecked': boxChecked, 'delete': deleteIcon, 'exclamation': exclamation, 'forward': forward, 'gear': gear, 'menu': menu, 'pgn': pgn, 'play': play, 'plus': plus, 'question': question, 'rew': rew, 'swap': swap, 'top': top, 'trash': trash
+	'back': back, 'box': box, 'boxChecked': boxChecked, 'delete': deleteIcon, 'exclamation': exclamation, 'forward': forward, 'gear': gear, 'logo': logo, 'menu': menu, 'pgn': pgn, 'play': play, 'plus': plus, 'question': question, 'rew': rew, 'swap': swap, 'top': top, 'trash': trash
 };
