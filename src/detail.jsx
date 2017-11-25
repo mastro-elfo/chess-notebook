@@ -18,7 +18,6 @@ class DetailLine extends React.Component{
 		this.lineStorage = new LineStorage();
 		this.settingsStorage = new SettingsStorage();
 		const gameId = +this.props.match.params.gameId;
-		console.debug('Game id', gameId);
 		const game = this.gameStorage.loadGame(gameId);
 		this.state = {
 			side: game.side || 'w',

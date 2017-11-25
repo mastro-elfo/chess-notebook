@@ -31,9 +31,7 @@ export default class Storage {
 	 */
 	load(defaults){
 		defaults = defaults || {};
-		console.debug('Key', this.key);
 		const value = this.json.parse(this.storage.getItem(this.key));
-		console.debug('Load value', value);
 		if(value === null || typeof value === 'undefined') {
 			return defaults;
 		}
@@ -99,7 +97,6 @@ export class GameStorage extends Storage {
 	 * @return {array} Games
 	 */
 	loadGames() {
-		console.debug('Load games');
 		return this.load([]);
 	}
 
