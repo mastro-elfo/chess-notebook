@@ -10,25 +10,15 @@ export default class Settings extends React.Component {
 	constructor(props){
 		super(props);
 		this.storage = new SettingsStorage();
-		const settings = Object.assign({
+		const settings = this.storage.load({
 			rotateChessboard: false,
 			lastEditLimit: 2,
 			searchOpenings: true
-		}, this.storage.load('Settings'));
+		});
 		this.state = {
 			...settings,
 			confirmClearStorage: false
 		};
-	}
-
-	getStorageSize(){
-		let sum = 0;
-		for(var i in localStorage) {
-			if(typeof localStorage[i] === 'string') {
-				sum += localStorage[i].length;
-			}
-		}
-		return sum;
 	}
 
 	onClickClearStorage(){
@@ -113,7 +103,7 @@ export default class Settings extends React.Component {
 								</Button>
 								<label>
 									<h3>Local storage</h3>
-									<p>{this.prefix(this.getStorageSize(), 0, 'B')}</p>
+									<p>{this.prefix(this.storage.size(), 0, 'B')}</p>
 								</label>
 								{this.state.confirmClearStorage &&
 									<Modal onClose={()=>this.setState({confirmClearStorage: false})}>

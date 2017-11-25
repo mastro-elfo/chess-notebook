@@ -18,6 +18,7 @@ class DetailLine extends React.Component{
 		this.lineStorage = new LineStorage();
 		this.settingsStorage = new SettingsStorage();
 		const gameId = +this.props.match.params.gameId;
+		console.debug('Game id', gameId);
 		const game = this.gameStorage.loadGame(gameId);
 		this.state = {
 			side: game.side || 'w',
@@ -104,9 +105,9 @@ class DetailLine extends React.Component{
 				// This is a new line
 				const fen = chess.fen();
 				// Search openings
-				const settings = Object.assign({searchOpenings: true}, this.settingsStorage.load('Settings', {}));
+				const searchOpenings = this.settingsStorage.loadKey('searchOpenings', true);
 				let comment = '';
-				if(settings.searchOpenings) {
+				if(searchOpenings) {
 					const opening = OPENINGS.find(open => open.fen === fen);
 					if(opening) {
 						comment = opening.name + ' ('+opening.eco+')';
@@ -205,7 +206,7 @@ class DetailLine extends React.Component{
 			moves = chess.moves({square: this.state.selectedCell, verbose: true});
 			selectableCells = selectableCells.concat(moves.map(move => move.to));
 		}
-		const settings = this.settingsStorage.load('Settings', {rotateChessboard: false});
+		const settings = this.settingsStorage.load({rotateChessboard: false});
 		const className = ['Detail', (this.state.openEditTitle? 'edit' : '')].join(' ');
 		return (
 			<section className={className}>
