@@ -14,14 +14,14 @@ export default class Search extends React.Component {
 			result: [],
 			last: []
 		};
-		this.storage = new GameStorage();
+		this.gameStorage = new GameStorage();
 		this.settingsStorage = new SettingsStorage();
 	}
 
 	componentDidMount(){
 		const limit = this.settingsStorage.loadKey('lastEditLimit', 2);
 		this.setState({
-			last: this.storage
+			last: this.gameStorage
 						.loadGames()
 						.sort((a,b) => b.edit - a.edit)
 						.splice(0, limit)
@@ -48,7 +48,7 @@ export default class Search extends React.Component {
 		}
 		let re = RegExp(term, 'gi');
 		let result = [];
-		let games = this.storage.loadGames().map(game => {
+		let games = this.gameStorage.loadGames().map(game => {
 			if(game.title.match(re)){
 				result.push(game);
 				return null;
