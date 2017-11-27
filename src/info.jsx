@@ -1,17 +1,18 @@
 import React from 'react';
 import {ICONS} from './icons';
-import {LinkButton} from './Button';
+import {Button} from './Button';
 import {OPENINGS} from './openings';
 
 export default class Info extends React.Component {
 	render(){
+		console.debug('Props', this.props);
 		return (
 			<section className="Info">
 				<header>
 					<div>
-						<LinkButton to="/settings" className="left">
+						<Button className="left" onClick={this.props.history.goBack}>
 							<img alt="back" src={ICONS['back']}/>
-						</LinkButton>
+						</Button>
 						<h1>Info</h1>
 					</div>
 				</header>
