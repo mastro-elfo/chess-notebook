@@ -5,12 +5,11 @@ import {OPENINGS} from './openings';
 
 export default class Info extends React.Component {
 	render(){
-		console.debug('Props', this.props);
 		return (
 			<section className="Info">
 				<header>
 					<div>
-						<Button className="left" onClick={this.props.history.goBack}>
+						<Button className="left" onClick={this.props.history.goBack} title="Go back">
 							<img alt="back" src={ICONS['back']}/>
 						</Button>
 						<h1>Info</h1>
