@@ -62,20 +62,11 @@
 }
 
 .App section > header.edit {
-	display: none;
 	color: #333;
 	background: white;
 }
 
-.App section.edit > header {
-	display: none;
-}
-
-.App section.edit > header.edit {
-	display: block;
-}
-
-.App section.edit > header.edit:after {
+.App section > header.edit:after {
 	background: hsl(140, 0%, 30%);
 }
 /* /Header */
