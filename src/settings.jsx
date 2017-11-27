@@ -2,7 +2,7 @@ import React from 'react';
 import {SettingsStorage} from './storage';
 import {ICONS} from './icons';
 import './settings.css';
-import {Button, LinkButton} from './Button';
+import {Button} from './Button';
 import Modal, {ModalButtons, ModalButton} from './modal';
 
 export default class Settings extends React.Component {
@@ -54,9 +54,9 @@ export default class Settings extends React.Component {
 			<section className="Settings">
 				<header>
 					<div>
-						<LinkButton to="/" className="left" title="Back to dashboard">
+						<Button className="left" title="Go back" onClick={this.props.history.goBack}>
 							<img alt="back" src={ICONS['back']}/>
-						</LinkButton>
+						</Button>
 						<h1>Settings</h1>
 					</div>
 				</header>
