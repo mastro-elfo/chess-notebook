@@ -109,6 +109,10 @@
 	margin-top: 0;
 }
 
+.App .list a {
+	display: block;
+}
+
 .App .list input {
     font: inherit;
 	letter-spacing: inherit;
@@ -139,3 +143,31 @@
 	padding: 0.5em;
 	letter-spacing: inherit;
 }
+
+/* Sidebar */
+.App .Sidebar {
+	background: #333;
+	color: white;
+}
+
+.App .Sidebar header {
+	background: hsl(140, 50%, 30%);
+}
+
+.App .Sidebar header::after {
+	background: #333;
+}
+
+.App .Sidebar main {
+	padding-top: 0;
+}
+
+.App .Sidebar a img {
+	margin-right: 0.5em;
+	height: 1em;
+}
+
+.App .Sidebar a img.invert {
+	filter: invert(100%);
+}
+/* /Sidebar */
