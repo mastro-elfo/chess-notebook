@@ -5,7 +5,7 @@ import {GameStorage} from './storage';
 import Modal, {ModalButton, ModalButtons} from './modal';
 import {ICONS} from './icons';
 import './newgame.css';
-import {Button, LinkButton} from './Button';
+import {Button} from './Button';
 
 export default class New extends React.Component {
 	constructor(props){
@@ -182,9 +182,9 @@ export default class New extends React.Component {
 			<section className="Newgame">
 				<header>
 					<div>
-						<LinkButton to="/" className="left" title="Back to dashboard">
+						<Button to="/" className="left" title="Go back" onClick={this.props.history.goBack}>
 							<img alt="back" src={ICONS['back']}/>
-						</LinkButton>
+						</Button>
 						<Button className="right" onClick={this.onClickPlayGame.bind(this)} title="Play this position">
 							<img alt="Play" src={ICONS['play']}/>
 						</Button>
