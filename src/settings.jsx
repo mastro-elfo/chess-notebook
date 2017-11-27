@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {SettingsStorage} from './storage';
 import {ICONS} from './icons';
 import './settings.css';
@@ -118,20 +117,6 @@ export default class Settings extends React.Component {
 											</ModalButton>
 										</ModalButtons>
 									</Modal>}
-							</li>
-						</ul>
-
-						<h2>About Chess-Notebook</h2>
-						<ul className="list">
-							<li>
-								<label>
-									<Link to="/info" title="Open info">
-										<Button>
-											<img alt="info" src={ICONS['forward']}/>
-										</Button>
-										<span>Info</span>
-									</Link>
-								</label>
 							</li>
 						</ul>
 					</div>
