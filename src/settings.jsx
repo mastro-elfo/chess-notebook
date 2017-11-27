@@ -1,9 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {SettingsStorage} from './storage';
 import {ICONS} from './icons';
 import './settings.css';
-import {Button, LinkButton} from './Button';
+import {Button} from './Button';
 import Modal, {ModalButtons, ModalButton} from './modal';
 
 export default class Settings extends React.Component {
@@ -55,9 +54,9 @@ export default class Settings extends React.Component {
 			<section className="Settings">
 				<header>
 					<div>
-						<LinkButton to="/" className="left" title="Back to dashboard">
+						<Button className="left" title="Go back" onClick={this.props.history.goBack}>
 							<img alt="back" src={ICONS['back']}/>
-						</LinkButton>
+						</Button>
 						<h1>Settings</h1>
 					</div>
 				</header>
@@ -118,20 +117,6 @@ export default class Settings extends React.Component {
 											</ModalButton>
 										</ModalButtons>
 									</Modal>}
-							</li>
-						</ul>
-
-						<h2>About Chess-Notebook</h2>
-						<ul className="list">
-							<li>
-								<label>
-									<Link to="/info" title="Open info">
-										<Button>
-											<img alt="info" src={ICONS['forward']}/>
-										</Button>
-										<span>Info</span>
-									</Link>
-								</label>
 							</li>
 						</ul>
 					</div>

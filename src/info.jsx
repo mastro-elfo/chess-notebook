@@ -1,6 +1,6 @@
 import React from 'react';
 import {ICONS} from './icons';
-import {LinkButton} from './Button';
+import {Button} from './Button';
 import {OPENINGS} from './openings';
 
 export default class Info extends React.Component {
@@ -9,9 +9,9 @@ export default class Info extends React.Component {
 			<section className="Info">
 				<header>
 					<div>
-						<LinkButton to="/settings" className="left">
+						<Button className="left" onClick={this.props.history.goBack} title="Go back">
 							<img alt="back" src={ICONS['back']}/>
-						</LinkButton>
+						</Button>
 						<h1>Info</h1>
 					</div>
 				</header>
