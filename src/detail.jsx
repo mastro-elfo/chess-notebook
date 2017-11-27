@@ -206,33 +206,33 @@ class DetailLine extends React.Component{
 			selectableCells = selectableCells.concat(moves.map(move => move.to));
 		}
 		const settings = this.settingsStorage.load({rotateChessboard: false});
-		const className = ['Detail', (this.state.openEditTitle? 'edit' : '')].join(' ');
 		return (
-			<section className={className}>
-				<header>
-					<div>
-						<LinkButton to="/" className="left" title="Back to dashboard">
-							<img alt="back" src={ICONS['back']}/>
-						</LinkButton>
-						<Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)} title="Reverse chessboard">
-							<img alt="Reverse" src={ICONS['swap']}/>
-						</Button>
-						<h1 onClick={this.onClickEditTitle.bind(this)}>{game.title}</h1>
-					</div>
-				</header>
-				<header className="edit">
-					<div>
-						<Button className="left" onClick={this.onCancelEditTitle.bind(this)}>
-							<img alt="close" src={ICONS['back']}/>
-						</Button>
-						<Button className="right" onClick={this.onConfirmEditTitle.bind(this)} disabled={this.state.editTitle.trim() === ''}>
-							<img alt="confirm" src={ICONS['boxChecked']}/>
-						</Button>
-						<h1>
-							<input type="text" value={this.state.editTitle} onChange={(e)=>this.setState({editTitle: e.target.value})}/>
-						</h1>
-					</div>
-				</header>
+			<section className="Detail">
+				{!this.state.openEditTitle &&
+					<header>
+						<div>
+							<LinkButton to="/" className="left" title="Back to dashboard">
+								<img alt="back" src={ICONS['back']}/>
+							</LinkButton>
+							<Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)} title="Reverse chessboard">
+								<img alt="Reverse" src={ICONS['swap']}/>
+							</Button>
+							<h1 onClick={this.onClickEditTitle.bind(this)}>{game.title}</h1>
+						</div>
+					</header>
+				}
+				{this.state.openEditTitle &&
+					<header className="edit">
+						<div>
+							<Button className="left" onClick={this.onCancelEditTitle.bind(this)}>
+								<img alt="close" src={ICONS['back']}/>
+							</Button>
+							<h1>
+								<input type="text" value={this.state.editTitle} onChange={(e)=>this.setState({editTitle: e.target.value})} onBlur={this.onConfirmEditTitle.bind(this)} autoFocus/>
+							</h1>
+						</div>
+					</header>
+				}
 				<main>
 					<div>
 						<div className="column column-2">
@@ -339,36 +339,39 @@ class DetailAll extends React.Component{
 
 	render(){
 		const games = this.storage.loadGames();
-		const classNames = ['DetailAll', (this.state.edit?'edit':'')];
 		return (
-			<section className={classNames.join(' ')}>
-				<header>
-					<div>
-						<LinkButton to="/" className="left" title="Back to dashboard">
-							<img alt="back" src={ICONS['back']}/>
-						</LinkButton>
-						<h1>Detail</h1>
-					</div>
-				</header>
-				<header className="edit">
-					<div>
-						<Button className="left"
-							onClick={this.onClickExitEdit.bind(this)} title="Cancel edit">
-							<div><img alt="back" src={ICONS['back']}/></div>
-						</Button>
-						<Button className="left" onClick={this.onToggleEditAll.bind(this)} title="Check all games">
-							{games.length === this.state.editList.length?
-							<img alt="checked" src={ICONS['boxChecked']}/>:
-							<img alt="checked" src={ICONS['box']}/>}
-						</Button>
-						<Button className="right" onClick={()=>this.setState({confirmDeleteGames: true})} title="Delete selected games" disabled={this.state.editList.length===0}>
-							<img alt="delete" src={ICONS['trash']}/>
-						</Button>
-						<h1>
-							{this.state.editList.length} selected
-						</h1>
-					</div>
-				</header>
+			<section className="DetailAll">
+				{!this.state.edit &&
+					<header>
+						<div>
+							<LinkButton to="/" className="left" title="Back to dashboard">
+								<img alt="back" src={ICONS['back']}/>
+							</LinkButton>
+							<h1>Detail</h1>
+						</div>
+					</header>
+				}
+				{this.state.edit &&
+					<header className="edit">
+						<div>
+							<Button className="left"
+								onClick={this.onClickExitEdit.bind(this)} title="Cancel edit">
+								<div><img alt="back" src={ICONS['back']}/></div>
+							</Button>
+							<Button className="left" onClick={this.onToggleEditAll.bind(this)} title="Check all games">
+								{games.length === this.state.editList.length?
+								<img alt="checked" src={ICONS['boxChecked']}/>:
+								<img alt="checked" src={ICONS['box']}/>}
+							</Button>
+							<Button className="right" onClick={()=>this.setState({confirmDeleteGames: true})} title="Delete selected games" disabled={this.state.editList.length===0}>
+								<img alt="delete" src={ICONS['trash']}/>
+							</Button>
+							<h1>
+								{this.state.editList.length} selected
+							</h1>
+						</div>
+					</header>
+				}
 				<main>
 					<div>
 						<ul className="list">
