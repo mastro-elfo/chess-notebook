@@ -8,7 +8,7 @@ import Modal, {ModalButtons, ModalButton} from './modal';
 import {ICONS} from './icons';
 import {PIECES} from  './pieces';
 import './detail.css';
-import {Button, LinkButton} from './Button';
+import {Button} from './Button';
 import {OPENINGS} from './openings';
 
 class DetailLine extends React.Component{
@@ -211,9 +211,9 @@ class DetailLine extends React.Component{
 				{!this.state.openEditTitle &&
 					<header>
 						<div>
-							<LinkButton to="/" className="left" title="Back to dashboard">
+							<Button className="left" title="Go back" onClick={this.props.history.goBack}>
 								<img alt="back" src={ICONS['back']}/>
-							</LinkButton>
+							</Button>
 							<Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)} title="Reverse chessboard">
 								<img alt="Reverse" src={ICONS['swap']}/>
 							</Button>
@@ -344,9 +344,9 @@ class DetailAll extends React.Component{
 				{!this.state.edit &&
 					<header>
 						<div>
-							<LinkButton to="/" className="left" title="Back to dashboard">
+							<Button to="/" className="left" title="Go back" onClick={this.props.history.goBack}>
 								<img alt="back" src={ICONS['back']}/>
-							</LinkButton>
+							</Button>
 							<h1>Detail</h1>
 						</div>
 					</header>
