@@ -48,24 +48,7 @@
 	margin: 10%;
 }
 
-.DetailAll .list li {
-	padding: 0.5em;
-}
-
-.DetailAll .list li:hover,
-.DetailAll .list li:active {
-	background: hsla(120, 50%, 50%, 0.25);
-}
-
-.DetailAll .list li a {
-	display: block;
-}
-
-
-.DetailAll .list .thumbnail {
-	float: left;
-	margin: 0.5em;
-	display: block;
-	width: 5em;
-	height: 5em;
+.DetailAll .SearchResult .Button {
+	position: relative;
+	z-index: 1;
 }
