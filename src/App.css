@@ -101,16 +101,13 @@
 }
 
 /* List of settings */
-.App .list li {
-    padding: 1em;
-}
-
 .App .list h3 {
 	margin-top: 0;
 }
 
 .App .list a {
 	display: block;
+	padding: 1em;
 }
 
 .App .list input {
