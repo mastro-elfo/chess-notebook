@@ -119,20 +119,16 @@ export default class Search extends React.Component {
 	}
 }
 
-function SearchResult (props) {
+export function SearchResult (props) {
 	let play = props.lines.find(line => line.play);
 	if(!play) {
 		play = props.lines[0];
 	}
 	return (
 		<div className="SearchResult">
-			<Link to={`/detail/${props.id}/${play.id}`}
-				  title={props.title}>
+			<Link to={`/detail/${props.id}/${play.id}`} title={props.title}>
 				<div className="thumbnail">
-					<Chessboard
-						side={props.side}
-						showLabels={false}
-						fen={play.fen}/>
+					<Chessboard side={props.side} showLabels={false} fen={play.fen}/>
 				</div>
 				<h3>{props.title}</h3>
 				<p>{play.comment}</p>
