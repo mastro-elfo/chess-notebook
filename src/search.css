@@ -42,8 +42,8 @@
 	display: block;
 }
 
-.Search .list li:hover,
-.Search .list li:active {
+.SearchResult a:hover,
+.SearchResult a:active {
 	background: hsla(120, 50%, 50%, 0.25);
 }
 
