@@ -1,3 +1,7 @@
+.Newgame .list li {
+	padding: 1em;
+}
+
 /* Column */
 .Newgame .column {
 	height: 100%;
