@@ -10,6 +10,7 @@ import {PIECES} from  './pieces';
 import './detail.css';
 import {Button} from './Button';
 import {OPENINGS} from './openings';
+import {SearchResult} from './search';
 
 class DetailLine extends React.Component{
 	constructor(props) {
@@ -376,29 +377,7 @@ class DetailAll extends React.Component{
 					<div>
 						<ul className="list">
 							{
-								games.map((game, i) =>{
-									const play = game.lines.find(line => line.play) || game.lines[0];
-									return (
-										<li key={i}>
-											<Button className="right" onClick={this.onToggleEditGame.bind(this, game.id)} title="Check game">
-												{this.state.editList.find(id => id === game.id) ?
-													<img alt="checked" src={ICONS['boxChecked']}/> :
-													<img alt="checked" src={ICONS['box']}/>}
-											</Button>
-											<Link to={`${this.props.match.url}/${game.id}`}>
-												<div className="thumbnail">
-													<Chessboard
-														fen={play.fen}
-														side={game.side}
-														showLabels={false}/>
-												</div>
-												<h3>{game.title}</h3>
-												<p>{play.comment}</p>
-												<div className="clear"></div>
-											</Link>
-										</li>
-									)
-								})
+								games.map((game, i) => this.renderGame(game, i))
 							}
 						</ul>
 						{(!games || games.length === 0) &&
@@ -422,7 +401,31 @@ class DetailAll extends React.Component{
 			</section>
 		);
 	}
+
+	renderGame(game, i) {
+		return (
+			<li key={i}>
+				<Button className="right" onClick={this.onToggleEditGame.bind(this, game.id)} title="Check game">
+					{this.state.editList.find(id => id === game.id) ? <img alt="checked" src={ICONS['boxChecked']}/> : <img alt="checked" src={ICONS['box']}/>}
+				</Button>
+				<SearchResult {...game}/>
+			</li>
+		)
+	}
 }
+
+// <Link to={`${this.props.match.url}/${game.id}`}>
+// 	<div className="thumbnail">
+// 		<Chessboard
+// 			fen={play.fen}
+// 			side={game.side}
+// 			showLabels={false}/>
+// 	</div>
+// 	<h3>{game.title}</h3>
+// 	<p>{play.comment}</p>
+// 	<div className="clear"></div>
+// </Link>
+
 
 export default function Detail(props) {
 	return (
