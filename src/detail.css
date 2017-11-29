@@ -48,7 +48,7 @@
 	margin: 10%;
 }
 
-.DetailAll .SearchResult .Button {
+.DetailAll .list .Button {
 	position: relative;
 	z-index: 1;
 }
