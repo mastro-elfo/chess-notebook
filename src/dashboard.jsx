@@ -4,6 +4,7 @@ import Search from './search';
 import {Button} from './Button';
 import Sidebar from 'react-sidebar';
 import {Link} from 'react-router-dom';
+import {GameStorage} from './storage';
 
 export default class Dashboard extends React.Component {
 	constructor(props){
@@ -12,6 +13,7 @@ export default class Dashboard extends React.Component {
 			sidebarOpen: false
 		};
 		this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+		this.gameStorage = new GameStorage();
 	}
 
 	onSetSidebarOpen(open){
@@ -21,6 +23,7 @@ export default class Dashboard extends React.Component {
 	}
 
 	render(){
+		const games = this.gameStorage.loadGames();
 		return (
 			<Sidebar sidebar={<DashboardSidebar/>} open={this.state.sidebarOpen} onSetOpen={this.onSetSidebarOpen} styles={{content:{overflowY: 'auto'}}} sidebarClassName="Sidebar">
 				<section className="Dashboard">
@@ -34,7 +37,10 @@ export default class Dashboard extends React.Component {
 					</header>
 					<main>
 						<div>
-							<Search/>
+							{games.length !== 0 && <Search/>}
+							{games.length === 0 &&
+								<p>There are no games yet. Start creating a new game. <Link to="/new-game" style={{color: 'hsl(140,50%,50%)', textDecoration: 'underline'}}><span>Create</span></Link></p>
+							}
 						</div>
 					</main>
 				</section>
