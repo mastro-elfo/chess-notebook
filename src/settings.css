@@ -1,5 +1,6 @@
 .Settings .list li {
 	position: relative;
+	padding: 1em 0;
 }
 
 .Settings .list .Button {
