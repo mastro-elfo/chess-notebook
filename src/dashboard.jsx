@@ -70,7 +70,7 @@ function DashboardSidebar(props){
 							<img alt="o" src={ICONS['gear']} className="left invert"/> Settings
 						</Link></li>
 						<li><Link to="/info">
-							<img alt=">" src={ICONS['forward']} className="left invert"/> Info
+							<img alt=">" src={ICONS['info']} className="left invert"/> Info
 						</Link></li>
 					</ul>
 				</div>
