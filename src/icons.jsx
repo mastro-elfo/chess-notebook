@@ -1,6 +1,7 @@
 import back from './assets/back.svg';
 import box from './assets/box.svg';
 import boxChecked from './assets/box_checked.svg';
+import dash from './assets/dash.svg';
 import deleteIcon from './assets/delete.svg';
 import exclamation from './assets/exclamation.svg';
 import forward from './assets/forward.svg';
@@ -21,6 +22,7 @@ export const ICONS = {
 	'back': back,
 	'box': box,
 	'boxChecked': boxChecked,
+	'dash': dash,
 	'delete': deleteIcon,
 	'exclamation': exclamation,
 	'forward': forward,
