@@ -8,7 +8,7 @@ import Modal, {ModalButtons, ModalButton} from './modal';
 import {ICONS} from './icons';
 import {PIECES} from  './pieces';
 import './detail.css';
-import {Button} from './Button';
+import {Button, LinkButton} from './Button';
 import {OPENINGS} from './openings';
 import {SearchResult} from './search';
 
@@ -212,6 +212,9 @@ class DetailLine extends React.Component{
 				{!this.state.openEditTitle &&
 					<header>
 						<div>
+							<LinkButton className="left" title="Back to dashboard" to="/dashboard">
+								<img alt="dash" src={ICONS['dash']}/>
+							</LinkButton>
 							<Button className="left" title="Go back" onClick={this.props.history.goBack}>
 								<img alt="back" src={ICONS['back']}/>
 							</Button>
