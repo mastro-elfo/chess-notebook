@@ -167,6 +167,7 @@ class Sublines extends React.Component {
 	}
 
 	onClickToggle(id){
+		const children = this.props.lines.filter(line => line.parent === this.props.line.id);
 		let selected = this.state.selected.slice();
 		const index = selected.indexOf(id);
 		if(index !== -1) {
@@ -175,8 +176,10 @@ class Sublines extends React.Component {
 		else {
 			selected.push(id);
 		}
+		// Filter selected
+		selected = selected.filter(lineId => lineId === id || children.find(child => child.id === lineId));
 		this.setState({
-			edit: true,
+			edit: this.props.line.id,
 			selected: selected
 		});
 	}
@@ -204,7 +207,7 @@ class Sublines extends React.Component {
 		return (
 			<div className="Sublines">
 				<div className="header">
-					{this.state.edit &&
+					{this.state.edit === this.props.line.id &&
 						[
 							<Button key="cancelEdit" className="left" onClick={this.onClickCancelEdit.bind(this)} title="Cancel edit">
 								<img alt="cancel" src={ICONS['back']}/>
