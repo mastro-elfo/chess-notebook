@@ -82,7 +82,7 @@ export default class Search extends React.Component {
 				<div className="inputContainer">
 					<input type="text" placeholder="Search..." onChange={this.search.bind(this)} value={this.state.term}/>
 					<Button title="Clear search" onClick={this.onClickClearSearch.bind(this)}>
-						<img alt="x" src={ICONS['delete']}/>
+						<img alt="x" src={ICONS['cancel']}/>
 					</Button>
 				</div>
 

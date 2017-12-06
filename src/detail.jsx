@@ -229,7 +229,7 @@ class DetailLine extends React.Component{
 					<header className="edit">
 						<div>
 							<Button className="left" onClick={this.onCancelEditTitle.bind(this)}>
-								<img alt="close" src={ICONS['back']}/>
+								<img alt="close" src={ICONS['cancel']}/>
 							</Button>
 							<h1>
 								<input type="text" value={this.state.editTitle} onChange={(e)=>this.setState({editTitle: e.target.value})} onBlur={this.onConfirmEditTitle.bind(this)} autoFocus/>
@@ -360,7 +360,7 @@ class DetailAll extends React.Component{
 						<div>
 							<Button className="left"
 								onClick={this.onClickExitEdit.bind(this)} title="Cancel edit">
-								<div><img alt="back" src={ICONS['back']}/></div>
+								<div><img alt="back" src={ICONS['cancel']}/></div>
 							</Button>
 							<Button className="left" onClick={this.onToggleEditAll.bind(this)} title="Check all games">
 								{games.length === this.state.editList.length?

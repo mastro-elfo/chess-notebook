@@ -210,7 +210,7 @@ class Sublines extends React.Component {
 					{this.state.edit === this.props.line.id &&
 						[
 							<Button key="cancelEdit" className="left" onClick={this.onClickCancelEdit.bind(this)} title="Cancel edit">
-								<img alt="cancel" src={ICONS['back']}/>
+								<img alt="cancel" src={ICONS['cancel']}/>
 							</Button>,
 							<Button key="toggleAll" className="left" onClick={this.onClickToggleAll.bind(this)} title="Check all lines">
 								{children.length && this.state.selected.length === children.length ? <img alt="" src={ICONS['boxChecked']}/> : <img alt="" src={ICONS['box']}/>}
