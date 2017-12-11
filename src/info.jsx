@@ -51,7 +51,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 						<ul className="list">
 							<li>
 								<h3>Chess pieces</h3>
-								<p>By jurgenwesterhof (adapted from work of Cburnett) - <a className="external free" href="http://commons.wikimedia.org/wiki/Template:SVG_chess_pieces">http://commons.wikimedia.org/wiki/Template:SVG_chess_pieces</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=35634436">Link</a></p>
+								<p>By jurgenwesterhof (adapted from work of Cburnett) - <a className="external free" href="http://commons.wikimedia.org/wiki/Template:SVG_chess_pieces">http://commons.wikimedia.org/wiki/Template:SVG_chess_pieces</a>, <a className="external" href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=35634436">Link</a></p>
 							</li>
 						</ul>
 
