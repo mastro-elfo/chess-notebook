@@ -1,7 +1,10 @@
 .Chessboard {
 	width: 16em;
 	height: 16em;
-	border: 0.25em solid hsl(140, 50%, 30%);
+	/*border: 0.25em solid hsl(140, 50%, 30%);*/
+	border-radius: 0.25em;
+	overflow: hidden;
+	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
 	margin: auto;
 }
 
@@ -18,7 +21,7 @@
 
 .Chessboard .Row:nth-child(even) .Cell:nth-child(even),
 .Chessboard .Row:nth-child(odd) .Cell:nth-child(odd){
-	background: #f8f8f8;
+	background: #eee;
 	color: hsl(140, 50%, 50%);
 }
 
@@ -78,6 +81,10 @@
 
 .Pool .Piece {
 	cursor: pointer;
+}
+
+.Pool .Piece:hover {
+	background: hsl(140, 50%, 50%);
 }
 
 .Pool .Piece span {
