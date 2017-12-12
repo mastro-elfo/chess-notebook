@@ -12,7 +12,8 @@ export default class Settings extends React.Component {
 		const settings = this.storage.load({
 			rotateChessboard: false,
 			lastEditLimit: 2,
-			searchOpenings: true
+			searchOpenings: true,
+			showLabels: true
 		});
 		this.state = {
 			...settings,
@@ -49,6 +50,13 @@ export default class Settings extends React.Component {
 		});
 	}
 
+	onClickToggleShowLabels(){
+		this.storage.saveKey('showLabels', !this.state.showLabels);
+		this.setState({
+			showLabels: !this.state.showLabels
+		});
+	}
+
 	render(){
 		return (
 			<section className="Settings">
@@ -80,6 +88,14 @@ export default class Settings extends React.Component {
 									</Button>
 									<h3>Search openings</h3>
 									<p>When move add opening name as comment</p>
+								</label>
+							</li>
+							<li>
+								<label>
+									<Button onClick={this.onClickToggleShowLabels.bind(this)}>
+										{this.state.showLabels ? <img alt="y" src={ICONS['boxChecked']}/> : <img alt="n" src={ICONS['box']}/>}
+									</Button>
+									<h3>Show labels</h3>
 								</label>
 							</li>
 						</ul>
