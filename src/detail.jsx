@@ -206,7 +206,7 @@ class DetailLine extends React.Component{
 			moves = chess.moves({square: this.state.selectedCell, verbose: true});
 			selectableCells = selectableCells.concat(moves.map(move => move.to));
 		}
-		const settings = this.settingsStorage.load({rotateChessboard: false});
+		const settings = this.settingsStorage.load({rotateChessboard: false, showLabels: true});
 		return (
 			<section className="Detail">
 				{!this.state.openEditTitle &&
@@ -240,21 +240,10 @@ class DetailLine extends React.Component{
 				<main>
 					<div>
 						<div className="column column-2">
-							<Chessboard
-								side={settings.rotateChessboard ? chess.turn() : this.state.side}
-								fen={line.fen}
-								onClick={this.onClickCell.bind(this)}
-								onDrop={this.onDropCell.bind(this)}
-								selectedCell={this.state.selectedCell}
-								selectableCells={selectableCells}/>
+							<Chessboard side={settings.rotateChessboard ? chess.turn() : this.state.side} fen={line.fen} onClick={this.onClickCell.bind(this)} onDrop={this.onDropCell.bind(this)} selectedCell={this.state.selectedCell} selectableCells={selectableCells} showLabels={settings.showLabels}/>
 						</div>
 						<div className="column column-2">
-							<Notebook
-								gameId={game.id}
-								lines={game.lines}
-								selectedId={lineId}
-								history={this.props.history}
-								onClickDelete={this.onClickDelete.bind(this)}/>
+							<Notebook gameId={game.id} lines={game.lines} selectedId={lineId} history={this.props.history} onClickDelete={this.onClickDelete.bind(this)}/>
 						</div>
 					</div>
 				</main>
