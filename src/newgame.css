@@ -29,15 +29,13 @@
 	float: right;
 }
 
-.Newgame .ModalContent {
-	width: 50%;
-	max-width: 500px;
-}
 .Newgame .Modal textarea {
 	resize: none;
 	display: block;
-	width: 100%;
-	height: 100%;
+	margin: 0 auto 1em;
+	width: 80%;
+	height: 5em;
 	box-sizing: border-box;
 	border: none;
+	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
 }
