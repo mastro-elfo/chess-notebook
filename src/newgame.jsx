@@ -24,7 +24,6 @@ export default class New extends React.Component {
 			totalMoves: 1,
 			// Others
 			selectedPiece: null,
-			openFromPGNDialog: false,
 			componentSize: Math.min(window.innerHeight, window.innerWidth /2)
 		};
 		this.storage = new GameStorage();
@@ -142,35 +141,71 @@ export default class New extends React.Component {
 		});
 	}
 
-	onPastePGN(pgn) {
-		pgn = pgn.replace(/Sent from my .*$/, '').replace(' [', '[').replace(' 1.', '1.'); // Should improve this
-		let chess = new Chess();
-		if(chess.load_pgn(pgn)) {
-			const fen = chess.fen().split(' ');
-			const title =
-				pgn.match(/\[Event "(.+?)"\]/)[1]
-				|| 'No title';
-			const description =
-				(pgn.match(/\[White "(.+?)"\]/)[1] + ' - ' + pgn.match(/\[Black "(.+?)"\]/)[1] + "\n" + pgn.match(/\[Site "(.+?)"\]/)[1] + "\n" +  pgn.match(/\[Date "(.+?)"\]/)[1])
-				|| 'No description';
+	onChangePGN(event){
+		// Get the PGN from input
+		let pgn = event.target.value;
 
+		// Remove spaces and final comments
+		pgn = pgn.replace(/\n\s(.)/g, "\n$1").replace(/[\n\s]{2}.+$/, '');
+
+		// Remove setup 1, or load_pgn will fail without a fen
+		pgn = pgn.replace(/\[setup "1"]/i, '');
+
+		// If PGN is empty, validity is undefined
+		if(pgn.trim() === '') {
 			this.setState({
-				title: title,
-				description: description,
-				position: fen[0],
-				turn: fen[1],
-				whiteCastling: fen[2].match(/[KQ]+/g) || '',
-				blackCastling: fen[2].match(/[kq]+/g) || '',
-				enPassant: fen[3],
-				drawMoves: fen[4],
-				totalMoves: fen[5]
+				pastePGN: '',
+				pastePGNValid: undefined
+			});
+			return;
+		}
+
+		let chess = new Chess();
+
+		// Parse the PGN
+		if(chess.load_pgn(pgn)) {
+			// PGN is valid
+			this.setState({
+				pastePGNValid: true
 			});
 		}
 		else {
+			// Not a valid PGN
 			console.error('Not a valid PGN', pgn);
 			console.error('ASCII', chess.ascii());
+			this.setState({
+				pastePGNValid: false
+			});
 		}
+
 		this.setState({
+			pastePGN: pgn
+		});
+	}
+
+	onClickConfirmPGN(){
+		let chess = new Chess();
+		const pgn = this.state.pastePGN;
+		chess.load_pgn(pgn);
+		const fen = chess.fen().split(' ');
+		const title =
+			pgn.match(/\[Event "(.+?)"\]/)[1]
+			|| 'No title';
+		const description =
+			(pgn.match(/\[White "(.+?)"\]/)[1] + ' - ' + pgn.match(/\[Black "(.+?)"\]/)[1] + "\n" + pgn.match(/\[Site "(.+?)"\]/)[1] + "\n" +  pgn.match(/\[Date "(.+?)"\]/)[1])
+			|| 'No description';
+
+		this.setState({
+			title: title,
+			description: description,
+			position: fen[0],
+			turn: fen[1],
+			whiteCastling: fen[2].match(/[KQ]+/g) || '',
+			blackCastling: fen[2].match(/[kq]+/g) || '',
+			enPassant: fen[3],
+			drawMoves: fen[4],
+			totalMoves: fen[5],
+
 			openFromPGNDialog: false
 		});
 	}
@@ -322,15 +357,31 @@ export default class New extends React.Component {
 						</ul>
 					</div>
 				</main>
-				{
-					this.state.openFromPGNDialog &&
+
+				{this.state.openFromPGNDialog &&
 					<Modal onClose={this.onCancelFromPGNDialog.bind(this)}>
 						<h1>Load from PGN</h1>
-						<div style={{height: '100%'}}>
-							<textarea placeholder="Paste the PGN here" onChange={(e)=>this.onPastePGN(e.target.value) || (e.target.value = '')}></textarea>
-						</div>
+						<p>Paste the PGN in this text input</p>
+
+						<textarea placeholder="" value={this.state.pastePGN} onChange={this.onChangePGN.bind(this)}></textarea>
+
+						{this.state.pastePGNValid === true && <p style={{color: 'green'}}>Valid PGN</p>}
+
+						{this.state.pastePGNValid === false && <p style={{color: 'red'}}>Not a valid PGN</p>}
+
+						{this.state.pastePGNValid !== true && this.state.pastePGNValid !== false && <p>&nbsp;</p>}
+
+						<ModalButtons>
+							<ModalButton title="Confirm" disabled={this.state.pastePGNValid !== true} onClick={this.onClickConfirmPGN.bind(this)}>
+								<img src={ICONS['boxChecked']} alt="ok"/> Confirm
+							</ModalButton>
+							<ModalButton title="Cancel" onClick={()=>this.setState({openFromPGNDialog: false})}>
+								<img src={ICONS['delete']} alt="x"/> Cancel
+							</ModalButton>
+						</ModalButtons>
 					</Modal>
 				}
+
 				{this.state.requestTitle &&
 					<Modal onClose={()=>this.setState({requestTitle: false})}>
 						<h1>Title required</h1>
@@ -339,7 +390,7 @@ export default class New extends React.Component {
 							<input placeholder="Write a title" value={this.state.title} onChange={(e)=>this.setState({title: e.target.value})}/>
 						</p>
 						<ModalButtons>
-							<ModalButton title="Cancel" disabled={this.state.title.trim() === ''} onClick={this.onClickPlayGame.bind(this)}>
+							<ModalButton title="Confirm" disabled={this.state.title.trim() === ''} onClick={this.onClickPlayGame.bind(this)}>
 								<img src={ICONS['boxChecked']} alt="ok"/> Confirm
 							</ModalButton>
 							<ModalButton title="Cancel" onClick={()=>this.setState({requestTitle: false})}>
