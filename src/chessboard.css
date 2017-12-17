@@ -84,7 +84,8 @@
 }
 
 .Pool .Piece:hover {
-	background: hsl(140, 50%, 50%);
+	/* With touch devices a piece seems to be selected even if it isn't */
+	/* background: hsl(140, 50%, 50%); */
 }
 
 .Pool .Piece span {
