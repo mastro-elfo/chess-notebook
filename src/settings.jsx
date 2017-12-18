@@ -96,6 +96,7 @@ export default class Settings extends React.Component {
 										{this.state.showLabels ? <img alt="y" src={ICONS['boxChecked']}/> : <img alt="n" src={ICONS['box']}/>}
 									</Button>
 									<h3>Show labels</h3>
+									<p>Show/hide rows and file labels on chessboard</p>
 								</label>
 							</li>
 						</ul>
