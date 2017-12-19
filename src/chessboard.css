@@ -1,11 +1,10 @@
 .Chessboard {
 	width: 16em;
 	height: 16em;
-	/*border: 0.25em solid hsl(140, 50%, 30%);*/
 	border-radius: 0.25em;
 	overflow: hidden;
 	box-shadow: 0 0 0.25em rgba(0,0,0,0.25);
-	margin: auto;
+	margin: 0.25em auto;
 }
 
 .Chessboard .Row {
