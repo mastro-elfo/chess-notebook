@@ -316,7 +316,7 @@ class Move extends React.Component {
 				}
 
 				{
-					<span data-tip={this.props.line.comment}>
+					<span data-tip={this.props.line.comment} className={this.props.line.positionValue ? 'position-value-'+this.props.line.positionValue : ''}>
 						{this.props.noLink &&
 							[this.props.line.move,
 							this.props.line.value]

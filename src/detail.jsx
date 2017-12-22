@@ -118,7 +118,8 @@ class DetailLine extends React.Component{
 					parent: lineId,
 					fen: fen,
 					comment: comment,
-					value: null
+					value: null,
+					positionValue: null
 				});
 			}
 			this.setState({

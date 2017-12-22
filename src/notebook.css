@@ -31,6 +31,14 @@
 	text-decoration: none;
 }
 
+.Move .position-value-OK {
+	color: hsl(140, 50%, 50%);
+}
+
+.Move .position-value-OK {
+	color: hsl(0, 50%, 50%);
+}
+
 .Superline .slider,
 .Sublines  .slider {
 	height: 3em;

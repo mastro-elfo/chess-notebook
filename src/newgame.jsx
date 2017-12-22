@@ -71,6 +71,7 @@ export default class New extends React.Component {
 					move: null,
 					parent: null,
 					value: null,
+					positionValue: null,
 					play: true
 				}
 			]
