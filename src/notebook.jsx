@@ -12,8 +12,7 @@ export default class Notebook extends React.Component {
 		super(props);
 		const line = this.props.lines.find(line => line.id === this.props.selectedId);
 		this.state = {
-			...line,
-			stateUpdate: null
+			...line
 		};
 		this.lineStorage = new LineStorage();
 	}
@@ -50,11 +49,31 @@ export default class Notebook extends React.Component {
 			this.lineStorage.saveLine(this.props.gameId, playingBefore);
 		}
 		if(playingAfter){
+			// This should always exists
 			playingAfter.play = true;
 			this.lineStorage.saveLine(this.props.gameId, playingAfter);
 		}
 		this.setState({
 			play: true
+		});
+	}
+
+	onChangeValue(event) {
+		let line = this.props.lines.find(line => line.id === this.props.selectedId);
+		line.value = event.target.value;
+		this.lineStorage.saveLine(this.props.gameId, line);
+		this.setState({
+			value: event.target.value
+		});
+	}
+
+	onChangePositionValue(event){
+		console.debug('New position value', event.target.value);
+		let line = this.props.lines.find(line => line.id === this.props.selectedId);
+		line.positionValue = event.target.value;
+		this.lineStorage.saveLine(this.props.gameId, line);
+		this.setState({
+			positionValue: event.target.value
 		});
 	}
 
@@ -87,6 +106,22 @@ export default class Notebook extends React.Component {
 							complete={true}
 							line={line}
 							noLink={true}/>
+						{line.move &&
+							<select value={line.value || ''} onChange={this.onChangeValue.bind(this)}>
+								<option value="!!">!!</option>
+								<option value="!">!</option>
+								<option value=""></option>
+								<option value="?">?</option>
+								<option value="??">??</option>
+							</select>
+						}
+						{false && line.move &&
+							<select value={line.positionValue || ''} onChange={this.onChangePositionValue.bind(this)}>
+								<option value="OK">Good</option>
+								<option value=""></option>
+								<option value="KO">Bad</option>
+							</select>
+						}
 						<textarea
 							value={line.comment}
 							placeholder="Comment this move"
@@ -316,18 +351,15 @@ class Move extends React.Component {
 				}
 
 				{
-					<span data-tip={this.props.line.comment} className={this.props.line.positionValue ? 'position-value-'+this.props.line.positionValue : ''}>
-						{this.props.noLink &&
-							[this.props.line.move,
-							this.props.line.value]
-						}
+					<span data-tip={this.props.line.comment} data-for={`tooltip-${this.props.line.id}`} className={this.props.line.positionValue ? 'position-value-'+this.props.line.positionValue : ''}>
+						{this.props.noLink && this.props.line.move}
 						{!this.props.noLink &&
 							<Link to={`/detail/${this.props.gameId}/${this.props.line.id}`}>
 								{this.props.line.move}
 								{this.props.line.value}
 							</Link>
 						}
-						<ReactTooltip place="top" type="dark" effect="solid"/>
+						<ReactTooltip id={`tooltip-${this.props.line.id}`} place="top" type="dark" effect="solid"/>
 					</span>
 				}
 			</span>

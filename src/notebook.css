@@ -20,6 +20,7 @@
 
 .Move a:hover {
 	background: hsl(140, 50%, 50%);
+	color: white;
 }
 
 .Move span a{
@@ -35,7 +36,7 @@
 	color: hsl(140, 50%, 50%);
 }
 
-.Move .position-value-OK {
+.Move .position-value-KO {
 	color: hsl(0, 50%, 50%);
 }
 
@@ -110,6 +111,12 @@
 
 .Notebook .lastMove {
 	font-size: 300%;
+}
+
+.Notebook .lastMove > select {
+	font-size: inherit;
+	letter-spacing: inherit;
+	line-height: inherit;
 }
 
 .Notebook .lastMove > textarea {
