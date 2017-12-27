@@ -53,3 +53,8 @@
 	width: 5em;
 	height: 5em;
 }
+
+.SearchResult h3,
+.SearchResult p {
+	margin: 0;
+}
