@@ -1,8 +1,8 @@
 {
-  "main.css": "static/css/main.65615a7c.css",
-  "main.css.map": "static/css/main.65615a7c.css.map",
-  "main.js": "static/js/main.f6e3ef84.js",
-  "main.js.map": "static/js/main.f6e3ef84.js.map",
+  "main.css": "static/css/main.f9bb00bf.css",
+  "main.css.map": "static/css/main.f9bb00bf.css.map",
+  "main.js": "static/js/main.1b543b21.js",
+  "main.js.map": "static/js/main.1b543b21.js.map",
   "static/media/back.svg": "static/media/back.ea34e870.svg",
   "static/media/background.svg": "static/media/background.c019f087.svg",
   "static/media/bishopBlack.svg": "static/media/bishopBlack.82f6f142.svg",
@@ -34,6 +34,9 @@
   "static/media/rookBlack.svg": "static/media/rookBlack.9a554455.svg",
   "static/media/rookWhite.svg": "static/media/rookWhite.3480866c.svg",
   "static/media/swap.svg": "static/media/swap.a49a9035.svg",
+  "static/media/thumb_down.svg": "static/media/thumb_down.dfb33acf.svg",
+  "static/media/thumb_up.svg": "static/media/thumb_up.b0d07398.svg",
+  "static/media/thumbs_up_down.svg": "static/media/thumbs_up_down.e1969f19.svg",
   "static/media/top.svg": "static/media/top.27069f21.svg",
   "static/media/trash.svg": "static/media/trash.0f3fcb06.svg"
 }
