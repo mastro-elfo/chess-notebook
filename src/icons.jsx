@@ -16,6 +16,9 @@ import plus from './assets/plus.svg';
 import question from './assets/question.svg';
 import rew from './assets/rew.svg';
 import swap from './assets/swap.svg';
+import thumb_down from './assets/thumb_down.svg';
+import thumb_up from './assets/thumb_up.svg';
+import thumbs_up_down from './assets/thumbs_up_down.svg';
 import top from './assets/top.svg';
 import trash from './assets/trash.svg';
 
@@ -38,6 +41,9 @@ export const ICONS = {
 	'question': question,
 	'rew': rew,
 	'swap': swap,
+	'thumb_down': thumb_down,
+	'thumb_up': thumb_up,
+	'thumbs_up_down': thumbs_up_down,
 	'top': top,
 	'trash': trash
 };
