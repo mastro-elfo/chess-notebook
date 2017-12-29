@@ -67,13 +67,20 @@ export default class Notebook extends React.Component {
 		});
 	}
 
-	onChangePositionValue(event){
-		console.debug('New position value', event.target.value);
+	onRequestPositionValue(){
+		console.debug('request position value')
+		this.setState({
+			requestPositionValue: true
+		});
+	}
+
+	onChangePositionValue(value){
 		let line = this.props.lines.find(line => line.id === this.props.selectedId);
-		line.positionValue = event.target.value;
+		line.positionValue = value;
 		this.lineStorage.saveLine(this.props.gameId, line);
 		this.setState({
-			positionValue: event.target.value
+			requestPositionValue: false,
+			positionValue: value
 		});
 	}
 
@@ -115,12 +122,12 @@ export default class Notebook extends React.Component {
 								<option value="??">??</option>
 							</select>
 						}
-						{false && line.move &&
-							<select value={line.positionValue || ''} onChange={this.onChangePositionValue.bind(this)}>
-								<option value="OK">Good</option>
-								<option value=""></option>
-								<option value="KO">Bad</option>
-							</select>
+						{line.move &&
+							<Button title="Click to change" onClick={this.onRequestPositionValue.bind(this)} className="positionValue">
+								{line.positionValue === 'OK' && <img alt="Ok" src={ICONS['thumb_up']}/>}
+								{line.positionValue === 'KO' && <img alt="Ko" src={ICONS['thumb_down']}/>}
+								{!line.positionValue && <img alt="None" src={ICONS['thumbs_up_down']}/>}
+							</Button>
 						}
 						<textarea
 							value={line.comment}
@@ -133,6 +140,23 @@ export default class Notebook extends React.Component {
 						lines={this.props.lines}
 						line={line}
 						onClickDelete={this.props.onClickDelete}/>
+
+						{this.state.requestPositionValue &&
+							<Modal onClose={()=>this.setState({requestPositionValue: false})} className="requestPositionValue">
+								<h1>Is this a good position?</h1>
+								<ul className="list">
+									<li><label>
+										<Button className="left" title="Good" onClick={this.onChangePositionValue.bind(this, 'OK')}><img alt="Ok" src={ICONS['thumb_up']}/></Button> Good
+									</label></li>
+									<li><label>
+										<Button className="left" title="Bad" onClick={this.onChangePositionValue.bind(this, 'KO')}><img alt="Ko" src={ICONS['thumb_down']}/></Button> Bad
+									</label></li>
+									<li><label>
+										<Button className="left" title="None" onClick={this.onChangePositionValue.bind(this, null)}><img alt="Ko" src={ICONS['thumbs_up_down']}/></Button> None
+									</label></li>
+								</ul>
+							</Modal>
+						}
 				</div>
 			</div>
 		);

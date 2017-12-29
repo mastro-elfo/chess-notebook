@@ -119,6 +119,10 @@
 	line-height: inherit;
 }
 
+.Notebook .lastMove .Button {
+	vertical-align: middle;
+}
+
 .Notebook .lastMove > textarea {
 	display: block;
 	resize: none;
@@ -131,4 +135,17 @@
 	width: 3em;
 	height: 3em;
 	margin-right: 0.5em;
+}
+
+.Notebook .requestPositionValue label {
+	cursor: pointer;
+	height: 3em;
+	line-height: 3em;
+	display: block;
+	clear: both;
+}
+
+.Notebook .requestPositionValue .Button {
+	width: 3em;
+	height: 3em;
 }
