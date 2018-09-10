@@ -1,51 +1,14 @@
-html {
-	min-height: 100%;
-	overflow-x: hidden;
-}
-
 body {
-	margin: 0;
-	padding: 0;
-	overflow-x: hidden;
-	min-height: 100%;
-	font-family: sans-serif;
-	letter-spacing: 0.1em;
-	color: #333;
-	background: #f8f8f8 url("./background.svg") bottom right no-repeat;
-    background-size: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  letter-spacing: 0.1em;
 }
 
-ul.list {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-ul.list li {
-	border-bottom: 1px solid;
-}
-
-ul.list li:last-child {
-	border-bottom: none;
-}
-
-.left {
-	float: left;
-}
-
-.right {
-	float: right;
-}
-
-.clear {
-	clear: both;
-}
-
-a:not(.external) {
-	text-decoration: none;
+a, a:hover, a:visited, a:active {
 	color: inherit;
-}
-
-a.external {
-	color: hsl(140, 50%, 40%);
 }

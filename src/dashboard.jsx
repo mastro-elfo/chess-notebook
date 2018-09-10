@@ -1,80 +1,102 @@
-import React from 'react';
-import {ICONS} from './icons';
-import Search from './search';
-import {Button} from './Button';
-import Sidebar from 'react-sidebar';
-import {Link} from 'react-router-dom';
-import {GameStorage} from './storage';
+import React, {Component} from 'react';
 
-export default class Dashboard extends React.Component {
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Paper from '@material-ui/core/Paper';
+
+import DrawerIcon from '@material-ui/icons/Menu';
+import AddIcon from '@material-ui/icons/Add';
+import ViewListIcon from '@material-ui/icons/ViewList';
+import SettingsIcon from '@material-ui/icons/Settings';
+import InfoIcon from '@material-ui/icons/Info';
+
+export default class Dashboard extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			sidebarOpen: false
+			drawer: false
 		};
-		this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
-		this.gameStorage = new GameStorage();
 	}
 
-	onSetSidebarOpen(open){
-		this.setState({
-			sidebarOpen: open
-		});
+	onToggleDrawer(drawer){
+		this.setState({drawer});
 	}
 
 	render(){
-		const games = this.gameStorage.loadGames();
 		return (
-			<Sidebar sidebar={<DashboardSidebar/>} open={this.state.sidebarOpen} onSetOpen={this.onSetSidebarOpen} styles={{content:{overflowY: 'auto'}}} sidebarClassName="Sidebar">
-				<section className="Dashboard">
-					<header>
-						<div>
-							<Button className="left fill logo" onClick={()=>this.onSetSidebarOpen(true)} title="Open sidebar">
-								<img alt="logo" src={ICONS['logo']}/>
-							</Button>
-							<h1>Dashboard</h1>
-						</div>
-					</header>
-					<main>
-						<div>
-							{games.length !== 0 && <Search/>}
-							{games.length === 0 &&
-								<p>There are no games yet. Start creating a new game. <Link to="/new-game" style={{color: 'hsl(140,50%,50%)', textDecoration: 'underline'}}><span>Create</span></Link></p>
-							}
-						</div>
-					</main>
-				</section>
-			</Sidebar>
+			<div>
+				<AppBar position="static">
+					<Toolbar>
+						<IconButton
+							onClick={()=>this.setState({drawer: true})}>
+							<DrawerIcon/>
+						</IconButton>
+						<Typography variant="title" style={{flexGrow: 1}}>
+							Dashboard
+						</Typography>
+					</Toolbar>
+				</AppBar>
+
+				<Drawer
+					open={this.state.drawer}
+					onClose={()=>this.setState({drawer: false})}>
+					<List>
+						<ListItem button
+							onClick={()=>this.props.history.push('/new-game')}>
+							<ListItemIcon>
+								<AddIcon/>
+							</ListItemIcon>
+							<ListItemText>Create new game</ListItemText>
+						</ListItem>
+						<ListItem button
+							onClick={()=>this.props.history.push('/detail')}>
+							<ListItemIcon>
+								<ViewListIcon/>
+							</ListItemIcon>
+							<ListItemText>View all games</ListItemText>
+						</ListItem>
+						<ListItem button
+							onClick={()=>this.props.history.push('/settings')}>
+							<ListItemIcon>
+								<SettingsIcon/>
+							</ListItemIcon>
+							<ListItemText>Settings</ListItemText>
+						</ListItem>
+						<ListItem button
+							onClick={()=>this.props.history.push('/info')}>
+							<ListItemIcon>
+								<InfoIcon/>
+							</ListItemIcon>
+							<ListItemText>Info</ListItemText>
+						</ListItem>
+					</List>
+				</Drawer>
+
+				<DashboardContent />
+			</div>
 		);
 	}
 }
 
-function DashboardSidebar(props){
+function DashboardContent (props) {
 	return (
-		<section>
-			<header>
-				<div>
-					<h1>Chess Notebook</h1>
-				</div>
-			</header>
-			<main>
-				<div>
-					<ul className="list">
-						<li><Link to="/new-game">
-							<img alt="+" src={ICONS['plus']} className="left invert"/> Create new game
-						</Link></li>
-						<li><Link to="/detail">
-							<img alt="_" src={ICONS['menu']} className="left invert"/> View all games
-						</Link></li>
-						<li><Link to="/settings">
-							<img alt="o" src={ICONS['gear']} className="left invert"/> Settings
-						</Link></li>
-						<li><Link to="/info">
-							<img alt=">" src={ICONS['info']} className="left invert"/> Info
-						</Link></li>
-					</ul>
-				</div>
-			</main>
-		</section>
-	);
+		<div>
+			<Typography variant="title" color="primary">Search</Typography>
+			{
+				// // TODO: insert search field here
+			}
+
+			<Typography variant="title" color="primary">Last games</Typography>
+			{
+				// TODO: insert last game list here
+			}
+		</div>
+	)
 }
