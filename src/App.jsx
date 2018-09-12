@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 
 // Customize main theme
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
-import cyan from '@material-ui/core/colors/cyan';
+import pink from '@material-ui/core/colors/pink';
 
 // Import the Robot typeface
 import 'typeface-roboto';
@@ -15,15 +15,24 @@ import Settings from './settings';
 import Info from './info';
 import NewGame from './newgame';
 
+import {Local} from './Storage';
+
 const THEME = createMuiTheme({
 	palette: {
 		primary: green,
-		secondary: cyan,
-		type: "light"
+		secondary: pink
 	}
 });
 
 export default function App () {
+	// Check storage version
+	const storageVersion = Local.get('Version');
+	if(!storageVersion || storageVersion < 1) {
+		Local.set('Games', Local.get('games'));
+		Local.set('Settings', Local.get('settings'));
+		Local.set('Version', 1);
+	}
+
 	return (
 		<MuiThemeProvider theme={THEME}>
 			<BrowserRouter basename="/chess-notebook">

@@ -9,7 +9,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Paper from '@material-ui/core/Paper';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import TextField from '@material-ui/core/TextField';
 
 import DrawerIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
@@ -17,11 +20,15 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import SettingsIcon from '@material-ui/icons/Settings';
 import InfoIcon from '@material-ui/icons/Info';
 
+import {Local} from './Storage';
+import Chessboard from './chessboard';
+
 export default class Dashboard extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			drawer: false
+			drawer: false,
+
 		};
 	}
 
@@ -79,24 +86,94 @@ export default class Dashboard extends Component {
 					</List>
 				</Drawer>
 
-				<DashboardContent />
+				<DashboardContent {...this.props}/>
 			</div>
 		);
 	}
 }
 
-function DashboardContent (props) {
-	return (
-		<div>
-			<Typography variant="title" color="primary">Search</Typography>
-			{
-				// // TODO: insert search field here
-			}
+class DashboardContent extends Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			search: ""
+		}
+	}
 
-			<Typography variant="title" color="primary">Last games</Typography>
-			{
-				// TODO: insert last game list here
-			}
-		</div>
-	)
+	handleItemDetailClick(item){
+		const {id} = item;
+		const move = item.lines.find(line => line.play);
+		const moveId = (move && move.id) || 0;
+		this.props.history.push('/detail/'+id+'/'+moveId);
+	}
+
+	render(){
+		const {search} = this.state;
+
+		const list = Local.get('Games') || [];
+
+		const filter = list.filter(item => this.filter(item, search));
+
+		return (
+			<div>
+				<TextField
+					fullWidth
+					label="Search game"
+					type="search"
+					value={search}
+					onChange={({target})=>this.setState({search: target.value})}
+					/>
+
+				{
+					this.state.search &&
+					<div>
+						<Typography variant="title" color="primary">Search</Typography>
+						{
+							filter.length !== 0 &&
+							<GridList>
+								{filter.map((item, i) =>
+									<GridListTile key={i}>
+										<div>
+											<Chessboard
+												fen={item.fen}/>
+										</div>
+										<GridListTileBar
+											title={item.title}
+											actionIcon={
+												<IconButton color="inherit"
+													onClick={()=>this.handleItemDetailClick(item)}>
+													<InfoIcon />
+												</IconButton>
+											}/>
+									</GridListTile>)}
+							</GridList>
+						}
+
+						{
+							filter.length === 0 &&
+							<Typography paragraph>No result found</Typography>
+						}
+					</div>
+				}
+
+				{
+					!this.state.search &&
+					<div>
+						<Typography variant="title" color="primary">Last games</Typography>
+						{
+							// TODO: insert last game list here
+						}
+					</div>
+				}
+			</div>
+		)
+	}
+
+	filter(item, search){
+		const searchLowerCase = search.toLowerCase();
+		return (
+			item.title.toLowerCase()
+				.indexOf(searchLowerCase) !== -1
+		)
+	}
 }
