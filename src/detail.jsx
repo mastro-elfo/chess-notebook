@@ -7,17 +7,21 @@ import IconButton from '@material-ui/core/IconButton';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
+// import Dialog from '@material-ui/core/Dialog';
+// import DialogTitle from '@material-ui/core/DialogTitle';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import DialogActions from '@material-ui/core/DialogActions';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+// import FormControl from '@material-ui/core/FormControl';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+// import DashboardIcon from '@material-ui/icons/Dashboard';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import InfoIcon from '@material-ui/icons/Info';
+// import InfoIcon from '@material-ui/icons/Info';
+import CheckIcon from '@material-ui/icons/Check';
+import EditIcon from '@material-ui/icons/Edit';
 
 import uuid from 'uuid/v1';
 import {Link, Route, Redirect, Switch} from 'react-router-dom';
@@ -34,14 +38,17 @@ class DetailLine extends Component{
 	constructor(props) {
 		super(props);
 
-		const gameId = +this.props.match.params.gameId;
+		const gameId = this.props.match.params.gameId;
 		// const game = this.gameStorage.loadGame(gameId);
+		const game = (Local.get("Games") || [])
+			.find(item => item.id === gameId);
+
 		this.state = {
-			// side: game.side || 'w',
+			side: game.side || 'w',
 			selectedCell: null,
 			targetCell: null,
 			requestPromotion: null,
-			// editTitle: game.title
+			editTitle: game.title
 		};
 	}
 
@@ -78,8 +85,8 @@ class DetailLine extends Component{
 	}
 
 	requestMove(from, to) {
-		const gameId = +this.props.match.params.gameId;
-		const lineId = +this.props.match.params.lineId;
+		const gameId = this.props.match.params.gameId;
+		const lineId = this.props.match.params.lineId;
 		const line = this.lineStorage.loadLine(gameId, lineId);
 		let chess = new Chess(line.fen);
 		const moves = chess.moves({square: from, verbose: true}).filter(move => move.to === to);
@@ -151,7 +158,7 @@ class DetailLine extends Component{
 
 	onClickDelete(linesId) {
 		// Delete lineId and all its descendants
-		const gameId = +this.props.match.params.gameId;
+		const gameId = this.props.match.params.gameId;
 		const lines = this.lineStorage.loadLines(gameId);
 		let toDelete = linesId;
 		linesId.map(lineId => toDelete = toDelete.concat(this.getDescendants(lines, lineId).map(line => line.id)));
@@ -197,92 +204,64 @@ class DetailLine extends Component{
 
 		return (
 			<div>
-				<AppBar position="static">
-					<Toolbar>
-						<IconButton
-							onClick={()=>this.props.history.goBack()}>
-							<ArrowBackIcon/>
-						</IconButton>
-						<Typography variant="title" style={{flexGrow: 1}}>
-							{game.title}
-						</Typography>
-					</Toolbar>
-				</AppBar>
+				{!this.state.editTitle &&
+					<AppBar position="static">
+						<Toolbar>
+							<IconButton
+								onClick={()=>this.props.history.goBack()}>
+								<ArrowBackIcon/>
+							</IconButton>
+
+							<Typography variant="title" style={{flexGrow: 1}}>
+								{game.title}
+							</Typography>
+
+							<IconButton
+								onClick={()=>this.setState({editTitle: game.title})}>
+								<EditIcon/>
+							</IconButton>
+						</Toolbar>
+					</AppBar>}
+				{this.state.editTitle &&
+					<AppBar position="static" color="default">
+						<Toolbar>
+							<IconButton
+								onClick={()=>this.setState({editTitle: false})}>
+								<CloseIcon/>
+							</IconButton>
+
+							<TextField
+								value={this.state.editTitle}
+								onChange={({target})=>this.setState({editTitle: target.value})}
+								style={{flexGrow: 1}}/>
+
+							<IconButton
+								onClick={()=>this.setState({editTitle: false})}>
+								<CheckIcon/>
+							</IconButton>
+						</Toolbar>
+					</AppBar>}
 				<div>
-					{
-						// <Chessboard side={settings.rotateChessboard ? chess.turn() : this.state.side} fen={line.fen} onClick={this.onClickCell.bind(this)} onDrop={this.onDropCell.bind(this)} selectedCell={this.state.selectedCell} selectableCells={selectableCells} showLabels={settings.showLabels}/>
-					}
+					<Chessboard
+						side={settings.rotateChessboard ? chess.turn() : this.state.side}
+						fen={line.fen}
+						onClick={this.onClickCell.bind(this)}
+						onDrop={this.onDropCell.bind(this)}
+						selectedCell={this.state.selectedCell}
+						selectableCells={selectableCells}
+						showLabels={settings.showLabels}/>
+
+					<Notebook
+						gameId={game.id}
+						lines={game.lines}
+						selectedId={lineId}
+						history={this.props.history}
+						onClickDelete={this.onClickDelete.bind(this)}/>
 				</div>
 			</div>
 		);
 	}
 }
-
-/*
-<section className="Detail">
-	{!this.state.openEditTitle &&
-		<header>
-			<div>
-				{
-				// <LinkButton className="left" title="Back to dashboard" to="/dashboard">
-				// 	<img alt="dash" src=""/>
-				// </LinkButton>
-				// <Button className="left" title="Go back" onClick={this.props.history.goBack}>
-				// 	<img alt="back" src=""/>
-				// </Button>
-				// <Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)} title="Reverse chessboard">
-				// 	<img alt="Reverse" src=""/>
-				// </Button>
-				}
-				<h1 onClick={this.onClickEditTitle.bind(this)}>{game.title}</h1>
-			</div>
-		</header>
-	}
-	{this.state.openEditTitle &&
-		<header className="edit">
-			<div>
-				{
-				// 	<Button className="left" onClick={this.onCancelEditTitle.bind(this)}>
-				// 	<img alt="close" src=""/>
-				// </Button>
-				}
-				<h1>
-					<input type="text" value={this.state.editTitle} onChange={(e)=>this.setState({editTitle: e.target.value})} onBlur={this.onConfirmEditTitle.bind(this)} autoFocus/>
-				</h1>
-			</div>
-		</header>
-	}
-	<main>
-		<div>
-			<div className="column column-2">
-
-			</div>
-			<div className="column column-2">
-				{
-					// <Notebook gameId={game.id} lines={game.lines} selectedId={lineId} history={this.props.history} onClickDelete={this.onClickDelete.bind(this)}/>
-				}
-			</div>
-		</div>
-	</main>
-	{
-		// this.state.requestPromotion &&
-		// <Modal className="ChoosePiece" onClose={this.onCancelPromotion.bind(this)}>
-		// 	<h1>Choose a piece…</h1>
-		// 	{
-		// 		'qrnb'.split('').map(piece =>
-		// 			<div
-		// 				className="piece"
-		// 				key={piece}
-		// 				onClick={this.onConfirmPromotion.bind(this, piece)}>
-		// 				<img alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece} src={PIECES[(this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece)]}/>
-		// 			</div>
-		// 		)
-		// 	}
-		// </Modal>
-	}
-</section>
-
- */
 
 function DetailGame(props){
 	const gameId = props.match.params.gameId;

@@ -9,10 +9,10 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
+// import Dialog from '@material-ui/core/Dialog';
+// import DialogTitle from '@material-ui/core/DialogTitle';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import DialogActions from '@material-ui/core/DialogActions';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -149,9 +149,11 @@ export default class New extends Component {
 					<Typography variant="title" color="secondary">
 						Position
 					</Typography>
-					{
-						// TODO: maybe insert chessboard here
-					}
+
+					<Chessboard
+						side="w"
+						fen={this.toFen()}
+						selectableCells={selectableCells}/>
 
 					<Typography variant="title" color="secondary">
 						Turn

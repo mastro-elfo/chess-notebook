@@ -186,9 +186,9 @@ const styles = theme => ({
 export default withStyles(styles, {withTheme: true})(Dashboard);
 
 class DashboardContent extends Component {
-	handleItemDetailClick(item){
-		const {id} = item;
-		const move = item.lines.find(line => line.play);
+	handleItemDetailClick(game){
+		const {id} = game;
+		const move = game.lines.find(line => line.play);
 		const moveId = (move && move.id) || 0;
 		this.props.history.push('/detail/'+id+'/'+moveId);
 	}
@@ -211,22 +211,11 @@ class DashboardContent extends Component {
 							filter.length !== 0 &&
 							<GridList>
 								{filter.map((item, i) =>
-									<GridListTile key={i}>
-										<div style={{
-												width: "100%",
-												height: "100%"
-											}}>
-											<Chessboard
-												fen={item.fen}/>
-										</div>
-										<GridListTileBar
-											title={item.title}
-											actionIcon={
-												<IconButton color="inherit"
-													onClick={()=>this.handleItemDetailClick(item)}>
-													<InfoIcon />
-												</IconButton>
-											}/>
+									<GridListTile><DashboardTile
+										key={i}
+										game={item}
+										onClick={()=>this.handleItemDetailClick(item)}
+										/>
 									</GridListTile>)}
 							</GridList>
 						}
@@ -246,22 +235,11 @@ class DashboardContent extends Component {
 								last.length !== 0 &&
 								<GridList>
 									{last.map((item, i) =>
-										<GridListTile key={i}>
-											<div style={{
-													width: "100%",
-													height: "100%"
-												}}>
-												<Chessboard
-													fen={item.fen}/>
-											</div>
-											<GridListTileBar
-												title={item.title}
-												actionIcon={
-													<IconButton
-														onClick={()=>this.handleItemDetailClick(item)}>
-														<InfoIcon />
-													</IconButton>
-												}/>
+										<GridListTile><DashboardTile
+											key={i}
+											game={item}
+											onClick={()=>this.handleItemDetailClick(item)}
+											/>
 										</GridListTile>)}
 								</GridList>
 							}
@@ -278,4 +256,31 @@ class DashboardContent extends Component {
 				.indexOf(searchLowerCase) !== -1
 		)
 	}
+}
+
+function DashboardTile (props) {
+	const {game} = props;
+	const line = game.lines
+		.find(item => item.play)
+		|| game.lines[0];
+
+	// TODO: Check line
+
+	return (
+			<div style={{
+					width: "100%",
+					height: "100%"
+				}}>
+				<Chessboard
+					fen={line.fen}/>
+				<GridListTileBar
+					title={game.title}
+					actionIcon={
+						<IconButton
+							onClick={props.onClick}>
+							<InfoIcon />
+						</IconButton>
+					}/>
+			</div>
+	)
 }
