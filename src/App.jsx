@@ -24,12 +24,28 @@ const THEME = createMuiTheme({
 	}
 });
 
-export default function App () {
+function App () {
 	// Check storage version
 	const storageVersion = Local.get('Version');
 	if(!storageVersion || storageVersion < 1) {
-		Local.set('Games', Local.get('games'));
-		Local.set('Settings', Local.get('settings'));
+		let games = Local.get("Games") || [];
+		// Transform id into string
+		games = games.map(item => ({
+			...item,
+			id: ""+item.id
+		}));
+
+		// Transform id into string
+		games = games.map(game => ({
+			...game,
+			lines: game.lines.map(item => ({
+				...item,
+				id: ""+item.id
+			}))
+		}));
+
+		Local.set("Games", games);
+		Local.set('Settings', Local.get('settings') || {});
 		Local.set('Version', 1);
 	}
 
@@ -49,3 +65,5 @@ export default function App () {
 		</MuiThemeProvider>
 	);
 }
+
+export default App;

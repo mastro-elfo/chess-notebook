@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,23 +13,28 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import { withStyles } from '@material-ui/core/styles';
 
 import DrawerIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import SettingsIcon from '@material-ui/icons/Settings';
 import InfoIcon from '@material-ui/icons/Info';
+import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 
 import {Local} from './Storage';
 import Chessboard from './chessboard';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			drawer: false,
-
+			search: ""
 		};
 	}
 
@@ -37,6 +43,7 @@ export default class Dashboard extends Component {
 	}
 
 	render(){
+		const {classes} = this.props;
 		return (
 			<div>
 				<AppBar position="static">
@@ -45,9 +52,34 @@ export default class Dashboard extends Component {
 							onClick={()=>this.setState({drawer: true})}>
 							<DrawerIcon/>
 						</IconButton>
-						<Typography variant="title" style={{flexGrow: 1}}>
+
+						<Typography variant="title">
 							Dashboard
 						</Typography>
+
+						<div className={classes.grow} />
+
+						<div className={classes.search}>
+							<div className={classes.searchIcon}><SearchIcon/></div>
+							<Input
+								classes={{
+									root: classes.root,
+									input: classes.input
+								}}
+								placeholder="Search..."
+								disableUnderline
+								type="search"
+								value={this.state.search}
+								onChange={({target})=>this.setState({search: target.value})}
+								endAdornment={<InputAdornment position="end">
+									<IconButton
+										onClick={()=>this.setState({search: ""})}
+										disabled={!this.state.search}>
+										<CloseIcon/>
+									</IconButton>
+								</InputAdornment>}
+								/>
+						</div>
 					</Toolbar>
 				</AppBar>
 
@@ -86,20 +118,74 @@ export default class Dashboard extends Component {
 					</List>
 				</Drawer>
 
-				<DashboardContent {...this.props}/>
+				<Button
+					classes={{fab: classes.fab}}
+					variant="fab"
+					color="primary"
+					onClick={()=>this.props.history.push('/new-game')}>
+					<AddIcon/>
+				</Button>
+
+				<DashboardContent {...this.props} {...this.state}/>
 			</div>
 		);
 	}
 }
 
-class DashboardContent extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			search: ""
+const styles = theme => ({
+	input: {
+		paddingTop: theme.spacing.unit,
+		paddingRight: theme.spacing.unit,
+		paddingBottom: theme.spacing.unit,
+		paddingLeft: theme.spacing.unit * 10,
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+			width: 120,
+			'&:focus': {
+				width: 200,
+			}
 		}
+	},
+	search: {
+		position: 'relative',
+		borderRadius: theme.shape.borderRadius,
+		backgroundColor: fade(theme.palette.common.white, 0.15),
+		'&:hover': {
+			backgroundColor: fade(theme.palette.common.white, 0.25),
+		},
+		marginLeft: 0,
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+			marginLeft: theme.spacing.unit,
+			width: 'auto',
+		}
+	},
+	grow: {
+		flexGrow: 1
+	},
+	searchIcon: {
+		width: theme.spacing.unit * 9,
+		height: '100%',
+		position: 'absolute',
+		pointerEvents: 'none',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	root: {
+		width: '100%',
+	},
+	fab: {
+		position: "absolute",
+		bottom: theme.spacing.unit *2,
+		right: theme.spacing.unit *2
 	}
+})
 
+export default withStyles(styles, {withTheme: true})(Dashboard);
+
+class DashboardContent extends Component {
 	handleItemDetailClick(item){
 		const {id} = item;
 		const move = item.lines.find(line => line.play);
@@ -108,32 +194,28 @@ class DashboardContent extends Component {
 	}
 
 	render(){
-		const {search} = this.state;
+		const {search} = this.props;
 
 		const list = Local.get('Games') || [];
 
 		const filter = list.filter(item => this.filter(item, search));
+		const last = list.slice().sort((a,b) => b.edit - a.edit);
 
 		return (
 			<div>
-				<TextField
-					fullWidth
-					label="Search game"
-					type="search"
-					value={search}
-					onChange={({target})=>this.setState({search: target.value})}
-					/>
-
 				{
-					this.state.search &&
+					search &&
 					<div>
-						<Typography variant="title" color="primary">Search</Typography>
+						<Typography variant="title" color="primary">Search result <small>({filter.length})</small></Typography>
 						{
 							filter.length !== 0 &&
 							<GridList>
 								{filter.map((item, i) =>
 									<GridListTile key={i}>
-										<div>
+										<div style={{
+												width: "100%",
+												height: "100%"
+											}}>
 											<Chessboard
 												fen={item.fen}/>
 										</div>
@@ -157,12 +239,32 @@ class DashboardContent extends Component {
 				}
 
 				{
-					!this.state.search &&
+					!search &&
 					<div>
-						<Typography variant="title" color="primary">Last games</Typography>
-						{
-							// TODO: insert last game list here
-						}
+						<Typography variant="title" color="primary">Last played games</Typography>
+							{
+								last.length !== 0 &&
+								<GridList>
+									{last.map((item, i) =>
+										<GridListTile key={i}>
+											<div style={{
+													width: "100%",
+													height: "100%"
+												}}>
+												<Chessboard
+													fen={item.fen}/>
+											</div>
+											<GridListTileBar
+												title={item.title}
+												actionIcon={
+													<IconButton
+														onClick={()=>this.handleItemDetailClick(item)}>
+														<InfoIcon />
+													</IconButton>
+												}/>
+										</GridListTile>)}
+								</GridList>
+							}
 					</div>
 				}
 			</div>

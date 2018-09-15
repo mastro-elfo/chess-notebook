@@ -9,14 +9,19 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
+import uuid from 'uuid/v1';
 import Chess from 'chess.js/chess.min.js';
 
 import Chessboard, {Pool} from './chessboard';
-import {GameStorage, LineStorage, SettingsStorage} from './storage';
+import {Local} from './Storage';
 
 export default class New extends Component {
 	constructor(props){
@@ -26,7 +31,7 @@ export default class New extends Component {
 			title: '',
 			description: '',
 			// Fen fields
-			position: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR',
+			position: 'rnbqkbnr/pppppppp/8/3p4/4P3/8/PPPPPPPP/RNBQKBNR',
 			turn: 'w',
 			whiteCastling: 'KQ',
 			blackCastling: 'kq',
@@ -37,7 +42,6 @@ export default class New extends Component {
 			selectedPiece: null,
 			componentSize: Math.min(window.innerHeight, window.innerWidth /2)
 		};
-		this.storage = new GameStorage();
 	}
 
 	componentDidMount(){
@@ -53,31 +57,22 @@ export default class New extends Component {
 	}
 
 	toFen(){
-		const castling = (this.state.whiteCastling === '' && this.state.blackCastling === '')? '-' : this.state.whiteCastling+this.state.blackCastling;
+		const whiteCastling = this.state.whiteCastling === '-' ? '' : this.state.whiteCastling;
+		const blackCastling = this.state.blackCastling === '-' ? '' : this.state.blackCastling;
+		const castling = (whiteCastling === '' && blackCastling === '')? '-' : whiteCastling + blackCastling;
 		return [this.state.position, this.state.turn, castling, this.state.enPassant, this.state.drawMoves, this.state.totalMoves].join(' ');
 	}
 
-	onClickPlayGame(){
-		// Retrieve Title: if empty don't save
-		const title = this.state.title;
-		if(title === '') {
-			this.setState({
-				requestTitle: true
-			});
-			return;
-		}
-
-		// Retrieve FEN: validate, if invalid don't save
-		const fen = this.toFen();
-
-		// Create game object and Save
-		const game = this.storage.saveGame({
-			title: title,
+	onClickPlay(){
+		// Create game object
+		const game = {
+			id: uuid(),
+			title: this.state.title,
 			side: this.state.turn,
 			lines: [
 				{
-					id: 0,
-					fen: fen,
+					id: uuid(),
+					fen: this.toFen(),
 					comment: this.state.description,
 					move: null,
 					parent: null,
@@ -86,144 +81,25 @@ export default class New extends Component {
 					play: true
 				}
 			]
-		});
+		};
+
+		let games = Local.get('Games') || [];
+		games.push(game);
+		Local.set("Games", games);
 
 		// Redirect to detail
 		this.props.history.push(`/detail/${game.id}`)
 	}
 
-	onClickCell(cell){
-		let chess = new Chess(this.toFen());
-		if(this.state.selectedPiece) {
-			chess.put({
-				type: this.state.selectedPiece.toLowerCase(),
-				color: this.state.selectedPiece === this.state.selectedPiece.toLowerCase() ? 'b' : 'w'
-			}, cell);
-		}
-		else {
-			chess.remove(cell);
-		}
-		this.setState({
-			position: chess.fen().split(' ')[0]
-		});
-	}
-
-	onClickPiece(piece) {
-		this.setState({
-			selectedPiece: this.state.selectedPiece === piece ? null : piece
-		});
-	}
-
-	onDropCell(start, end){
-		let chess = new Chess(this.toFen());
-		if('KQRNBPkqrnbp'.indexOf(start) !== -1) {
-			// Is a piece
-			chess.put({
-				type: start.toLowerCase(),
-				color: start === start.toLowerCase() ? 'b' : 'w'
-			}, end);
-		}
-		else {
-			// Is a cell
-			const piece = chess.get(start);
-			chess.remove(start);
-			chess.put(piece, end);
-		}
-
-		this.setState({
-			position: chess.fen().split(' ')[0]
-		});
-	}
-
-	onClickResetPosition(){
+	onClickReset(){
 		this.setState({
 			position: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
 		});
 	}
 
-	onClickOpenFromPGNDialog(){
-		this.setState({
-			openFromPGNDialog: true
-		});
-	}
-
-	onCancelFromPGNDialog(){
-		this.setState({
-			openFromPGNDialog: false
-		});
-	}
-
-	onChangePGN(event){
-		// Get the PGN from input
-		let pgn = event.target.value;
-
-		// Remove spaces and final comments
-		pgn = pgn.replace(/\n\s(.)/g, "\n$1").replace(/[\n\s]{2}.+$/, '');
-
-		// Remove setup 1, or load_pgn will fail without a fen
-		pgn = pgn.replace(/\[setup "1"]/i, '');
-
-		// If PGN is empty, validity is undefined
-		if(pgn.trim() === '') {
-			this.setState({
-				pastePGN: '',
-				pastePGNValid: undefined
-			});
-			return;
-		}
-
-		let chess = new Chess();
-
-		// Parse the PGN
-		if(chess.load_pgn(pgn)) {
-			// PGN is valid
-			this.setState({
-				pastePGNValid: true
-			});
-		}
-		else {
-			// Not a valid PGN
-			console.error('Not a valid PGN', pgn);
-			console.error('ASCII', chess.ascii());
-			this.setState({
-				pastePGNValid: false
-			});
-		}
-
-		this.setState({
-			pastePGN: pgn
-		});
-	}
-
-	onClickConfirmPGN(){
-		let chess = new Chess();
-		const pgn = this.state.pastePGN;
-		chess.load_pgn(pgn);
-		const fen = chess.fen().split(' ');
-		const title =
-			pgn.match(/\[Event "(.+?)"\]/)[1]
-			|| 'No title';
-		const description =
-			(pgn.match(/\[White "(.+?)"\]/)[1] + ' - ' + pgn.match(/\[Black "(.+?)"\]/)[1] + "\n" + pgn.match(/\[Site "(.+?)"\]/)[1] + "\n" +  pgn.match(/\[Date "(.+?)"\]/)[1])
-			|| 'No description';
-
-		this.setState({
-			title: title,
-			description: description,
-			position: fen[0],
-			turn: fen[1],
-			whiteCastling: fen[2].match(/[KQ]+/g) || '',
-			blackCastling: fen[2].match(/[kq]+/g) || '',
-			enPassant: fen[3],
-			drawMoves: fen[4],
-			totalMoves: fen[5],
-
-			openFromPGNDialog: false
-		});
-	}
-
 	render(){
 		const enPassantCandidates = this.getEnPassantCandidates();
+		console.debug(enPassantCandidates)
 		const selectableCells = this.getSelectableCells();
 		return (
 			<div>
@@ -241,73 +117,107 @@ export default class New extends Component {
 							PGN
 						</Button>
 
-						<Button>
+						<Button
+							onClick={()=>this.onClickReset()}>
 							Reset
 						</Button>
 
 						<IconButton
-							onClick={this.onClickPlayGame.bind(this)}>
+							onClick={()=>this.onClickPlay()}>
 							<PlayArrowIcon/>
 						</IconButton>
 					</Toolbar>
 				</AppBar>
-				<FormControl>
+				<FormControl fullWidth>
+					<Typography variant="title" color="secondary">
+
+					</Typography>
 					<TextField
 						label="Title"
 						fullWidth
-						value=""
+						value={this.state.title}
+						onChange={({target})=>this.setState({title: target.value})}
 						/>
 
 					<TextField
 						label="Description"
 						fullWidth
-						value=""
+						value={this.state.description}
+						onChange={({target})=>this.setState({description: target.value})}
 						/>
 
+					<Typography variant="title" color="secondary">
+						Position
+					</Typography>
 					{
 						// TODO: maybe insert chessboard here
 					}
 
-					<Select>
-						<MenuItem value="">White</MenuItem>
-						<MenuItem value="">Black</MenuItem>
+					<Typography variant="title" color="secondary">
+						Turn
+					</Typography>
+					<Select
+						value={this.state.turn}
+						onChange={({target})=>this.setState({turn: target.value, enPassant: "-"})}>
+						<MenuItem value="w">White</MenuItem>
+						<MenuItem value="b">Black</MenuItem>
 					</Select>
 
-					<Select>
-						<MenuItem value="">Both sides</MenuItem>
-						<MenuItem value="">King side</MenuItem>
-						<MenuItem value="">Queen side</MenuItem>
-						<MenuItem value="">None</MenuItem>
+					<Typography variant="title" color="secondary">
+						Castling
+					</Typography>
+					<Select
+						value={this.state.whiteCastling}
+						onChange={({target})=>this.setState({whiteCastling: target.value})}>
+						<MenuItem value="KQ">Both sides</MenuItem>
+						<MenuItem value="K">King side</MenuItem>
+						<MenuItem value="Q">Queen side</MenuItem>
+						<MenuItem value="-">None</MenuItem>
 					</Select>
 
-					<Select>
-						<MenuItem value="">Both sides</MenuItem>
-						<MenuItem value="">King side</MenuItem>
-						<MenuItem value="">Queen side</MenuItem>
-						<MenuItem value="">None</MenuItem>
+					<Select
+						value={this.state.blackCastling}
+						onChange={({target})=>this.setState({blackCastling: target.value})}>
+						<MenuItem value="kq">Both sides</MenuItem>
+						<MenuItem value="k">King side</MenuItem>
+						<MenuItem value="q">Queen side</MenuItem>
+						<MenuItem value="-">None</MenuItem>
 					</Select>
 
-					<Select>
-						<MenuItem value="">None</MenuItem>
+					<Typography variant="title" color="secondary">
+						En passant
+					</Typography>
+					<Select
+						value={this.state.enPassant}
+						onChange={({target})=>this.setState({enPassant: target.value})}>
+						<MenuItem value="-">None</MenuItem>
+						{
+							enPassantCandidates.map((item, i) =><MenuItem key={i} value={item}>{item}</MenuItem>)
+						}
 					</Select>
 
+					<Typography variant="title" color="secondary">
+						Moves
+					</Typography>
 					<TextField
 						label="Draw moves"
 						fullWidth
-						value={0}
+						value={this.state.drawMoves}
+						onChange={({target})=>this.setState({drawMoves: target.value})}
 						/>
 
 					<TextField
 						label="Total moves"
 						fullWidth
-						value={1}
+						value={this.state.totalMoves}
+						onChange={({target})=>this.setState({totalMoves: target.value})}
 						/>
 
 					<TextField
 						label="Fen"
 						fullWidth
 						readOnly
-						value=""
+						value={this.toFen()}
 						/>
 				</FormControl>
 			</div>
@@ -319,9 +229,20 @@ export default class New extends Component {
 		const turn = this.state.turn;
 		const position = this.state.position;
 		if(turn === 'w') {
-			output = position.split('/')[3].replace(/\d/g, (match)=>'-'.repeat(+match)).split('').map((piece, index) => piece === 'p' ? ('abcdefgh'.charAt(index)+'3') : null).filter(index => index);
+			// find coordinates of black pawns on the fifth row
+			output = position
+				// extract the fifth row (third in fen)
+				.split('/')[3]
+				// explode numbers in position
+				.replace(/\d/g, (match)=>'-'.repeat(+match)).split('')
+				// maps the pieces on the third row:
+				// substitute coordinates if piece is a pawn, null otherwise
+				.map((piece, index) => piece === 'p' ? ('abcdefgh'.charAt(index)+'3') : null)
+				// filter non null
+				.filter(index => index);
 		}
 		else if(turn === 'b') {
+			// See comments above
 			output = position.split('/')[4].replace(/\d/g, (match)=>'-'.repeat(+match)).split('').map((piece, index) => piece === 'P' ? ('abcdefgh'.charAt(index)+'6') : null).filter(index => index);
 		}
 		return output;

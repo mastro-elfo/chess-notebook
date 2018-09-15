@@ -1,31 +1,47 @@
-import React from 'react';
+import React, {Component} from 'react';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Checkbox from '@material-ui/core/Checkbox';
+
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import CloseIcon from '@material-ui/icons/Close';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import InfoIcon from '@material-ui/icons/Info';
+
+import uuid from 'uuid/v1';
 import {Link, Route, Redirect, Switch} from 'react-router-dom';
+
 import Chess from 'chess.js/chess.min.js';
 import Chessboard from './chessboard';
 import Notebook from './notebook';
-import {GameStorage, LineStorage, SettingsStorage} from './storage';
-import Modal, {ModalButtons, ModalButton} from './modal';
-import {ICONS} from './icons';
 import {PIECES} from  './pieces';
-import './detail.css';
-import {Button, LinkButton} from './Button';
 import {OPENINGS} from './openings';
-import {SearchResult} from './search';
 
-class DetailLine extends React.Component{
+import {Local} from './Storage';
+
+class DetailLine extends Component{
 	constructor(props) {
 		super(props);
-		this.gameStorage = new GameStorage();
-		this.lineStorage = new LineStorage();
-		this.settingsStorage = new SettingsStorage();
+
 		const gameId = +this.props.match.params.gameId;
-		const game = this.gameStorage.loadGame(gameId);
+		// const game = this.gameStorage.loadGame(gameId);
 		this.state = {
-			side: game.side || 'w',
+			// side: game.side || 'w',
 			selectedCell: null,
 			targetCell: null,
 			requestPromotion: null,
-			editTitle: game.title
+			// editTitle: game.title
 		};
 	}
 
@@ -114,6 +130,7 @@ class DetailLine extends React.Component{
 					}
 				}
 				newLine = this.lineStorage.saveLine(gameId, {
+					id: uuid(),
 					move: move.san,
 					parent: lineId,
 					fen: fen,
@@ -130,21 +147,6 @@ class DetailLine extends React.Component{
 		else {
 			console.error('Something very wrong happened here. Move should be valid', from, to, promotion, move);
 		}
-	}
-
-	onCancelPromotion(){
-		this.setState({
-			requestPromotion: null,
-			targetCell: null,
-			selectedCell: null
-		});
-	}
-
-	onConfirmPromotion(piece) {
-		this.setState({
-			requestPromotion: null
-		});
-		this.doMove(this.state.selectedCell, this.state.targetCell, piece);
 	}
 
 	onClickDelete(linesId) {
@@ -170,119 +172,138 @@ class DetailLine extends React.Component{
 		return output;
 	}
 
-	onClickEditTitle(){
-		this.setState({
-			openEditTitle: true
-		});
-	}
-
-	onCancelEditTitle(){
-		this.setState({
-			openEditTitle: false
-		});
-	}
-
-	onConfirmEditTitle(){
-		const editTitle = this.state.editTitle.trim();
-		if(editTitle !== '') {
-			const gameId = +this.props.match.params.gameId;
-			let game = this.gameStorage.loadGame(gameId);
-			game.title = editTitle;
-			this.gameStorage.saveGame(game);
-			this.setState({
-				openEditTitle: false
-			});
-		}
-	}
-
 	render(){
-		const gameId = +this.props.match.params.gameId;
-		const lineId = +this.props.match.params.lineId;
-		const game = this.gameStorage.loadGame(gameId);
-		const line = this.lineStorage.loadLine(gameId, lineId);
-		let chess = new Chess(line.fen);
+		const gameId = this.props.match.params.gameId;
+		const lineId = this.props.match.params.lineId;
+		// console.debug("Game id", gameId, Local.get("Games"));
+
+		// Find game in local storage
+		const game = (Local.get("Games") || [])
+			.find(item => item.id === gameId);
+
+		const line = game.lines
+			.find(item => item.id === lineId);
+
+		// let chess = new Chess(line.fen);
+		let chess = new Chess();
+
 		let moves = chess.moves({verbose: true});
 		let selectableCells = moves.map(move => move.from);
 		if(this.state.selectedCell) {
 			moves = chess.moves({square: this.state.selectedCell, verbose: true});
 			selectableCells = selectableCells.concat(moves.map(move => move.to));
 		}
-		const settings = this.settingsStorage.load({rotateChessboard: false, showLabels: true});
+		const settings = Local.get("Settings");
+
 		return (
-			<section className="Detail">
-				{!this.state.openEditTitle &&
-					<header>
-						<div>
-							<LinkButton className="left" title="Back to dashboard" to="/dashboard">
-								<img alt="dash" src={ICONS['dash']}/>
-							</LinkButton>
-							<Button className="left" title="Go back" onClick={this.props.history.goBack}>
-								<img alt="back" src={ICONS['back']}/>
-							</Button>
-							<Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)} title="Reverse chessboard">
-								<img alt="Reverse" src={ICONS['swap']}/>
-							</Button>
-							<h1 onClick={this.onClickEditTitle.bind(this)}>{game.title}</h1>
-						</div>
-					</header>
-				}
-				{this.state.openEditTitle &&
-					<header className="edit">
-						<div>
-							<Button className="left" onClick={this.onCancelEditTitle.bind(this)}>
-								<img alt="close" src={ICONS['cancel']}/>
-							</Button>
-							<h1>
-								<input type="text" value={this.state.editTitle} onChange={(e)=>this.setState({editTitle: e.target.value})} onBlur={this.onConfirmEditTitle.bind(this)} autoFocus/>
-							</h1>
-						</div>
-					</header>
-				}
-				<main>
-					<div>
-						<div className="column column-2">
-							<Chessboard side={settings.rotateChessboard ? chess.turn() : this.state.side} fen={line.fen} onClick={this.onClickCell.bind(this)} onDrop={this.onDropCell.bind(this)} selectedCell={this.state.selectedCell} selectableCells={selectableCells} showLabels={settings.showLabels}/>
-						</div>
-						<div className="column column-2">
-							<Notebook gameId={game.id} lines={game.lines} selectedId={lineId} history={this.props.history} onClickDelete={this.onClickDelete.bind(this)}/>
-						</div>
-					</div>
-				</main>
-				{
-					this.state.requestPromotion &&
-					<Modal className="ChoosePiece" onClose={this.onCancelPromotion.bind(this)}>
-						<h1>Choose a piece…</h1>
-						{
-							'qrnb'.split('').map(piece =>
-								<div
-									className="piece"
-									key={piece}
-									onClick={this.onConfirmPromotion.bind(this, piece)}>
-									<img alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece} src={PIECES[(this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece)]}/>
-								</div>
-							)
-						}
-					</Modal>
-				}
-			</section>
+			<div>
+				<AppBar position="static">
+					<Toolbar>
+						<IconButton
+							onClick={()=>this.props.history.goBack()}>
+							<ArrowBackIcon/>
+						</IconButton>
+						<Typography variant="title" style={{flexGrow: 1}}>
+							{game.title}
+						</Typography>
+					</Toolbar>
+				</AppBar>
+				<div>
+					{
+						// <Chessboard side={settings.rotateChessboard ? chess.turn() : this.state.side} fen={line.fen} onClick={this.onClickCell.bind(this)} onDrop={this.onDropCell.bind(this)} selectedCell={this.state.selectedCell} selectableCells={selectableCells} showLabels={settings.showLabels}/>
+					}
+				</div>
+			</div>
 		);
 	}
 }
 
+/*
+<section className="Detail">
+	{!this.state.openEditTitle &&
+		<header>
+			<div>
+				{
+				// <LinkButton className="left" title="Back to dashboard" to="/dashboard">
+				// 	<img alt="dash" src=""/>
+				// </LinkButton>
+				// <Button className="left" title="Go back" onClick={this.props.history.goBack}>
+				// 	<img alt="back" src=""/>
+				// </Button>
+				// <Button className="right" disabled={settings.rotateChessboard} onClick={this.onToggleSide.bind(this)} title="Reverse chessboard">
+				// 	<img alt="Reverse" src=""/>
+				// </Button>
+				}
+				<h1 onClick={this.onClickEditTitle.bind(this)}>{game.title}</h1>
+			</div>
+		</header>
+	}
+	{this.state.openEditTitle &&
+		<header className="edit">
+			<div>
+				{
+				// 	<Button className="left" onClick={this.onCancelEditTitle.bind(this)}>
+				// 	<img alt="close" src=""/>
+				// </Button>
+				}
+				<h1>
+					<input type="text" value={this.state.editTitle} onChange={(e)=>this.setState({editTitle: e.target.value})} onBlur={this.onConfirmEditTitle.bind(this)} autoFocus/>
+				</h1>
+			</div>
+		</header>
+	}
+	<main>
+		<div>
+			<div className="column column-2">
+
+			</div>
+			<div className="column column-2">
+				{
+					// <Notebook gameId={game.id} lines={game.lines} selectedId={lineId} history={this.props.history} onClickDelete={this.onClickDelete.bind(this)}/>
+				}
+			</div>
+		</div>
+	</main>
+	{
+		// this.state.requestPromotion &&
+		// <Modal className="ChoosePiece" onClose={this.onCancelPromotion.bind(this)}>
+		// 	<h1>Choose a piece…</h1>
+		// 	{
+		// 		'qrnb'.split('').map(piece =>
+		// 			<div
+		// 				className="piece"
+		// 				key={piece}
+		// 				onClick={this.onConfirmPromotion.bind(this, piece)}>
+		// 				<img alt={this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece} src={PIECES[(this.state.requestPromotion === 'w' ? piece.toUpperCase() : piece)]}/>
+		// 			</div>
+		// 		)
+		// 	}
+		// </Modal>
+	}
+</section>
+
+ */
+
 function DetailGame(props){
+	const gameId = props.match.params.gameId;
+	// Find game in local storage
+	const game = (Local.get("Games") || [])
+		.find(item => item.id === gameId);
+	// Find "play" move
+	const line = game.lines
+		.find(item => item.play);
 	return (
-		<Redirect to={`${props.match.url}/0`}/>
+		<Redirect to={`${props.match.url}/${line.id}`}/>
 	);
 }
 
-class DetailAll extends React.Component{
+class DetailAll extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
 			edit: false,
 			editList: []
 		};
-		this.storage = new GameStorage();
 	}
 
 	onClickExitEdit() {
@@ -293,15 +314,17 @@ class DetailAll extends React.Component{
 	}
 
 	onToggleEditAll(){
-		const games = this.storage.loadGames();
+		const games = Local.get("Games") || [];
 		if(games.length === this.state.editList.length){
 			this.setState({
-				editList: []
+				editList: [],
+				u: new Date()
 			});
 		}
 		else {
 			this.setState({
-				editList: games.map(game => game.id)
+				editList: games.map(game => game.id),
+				u: new Date()
 			});
 		}
 	}
@@ -332,7 +355,67 @@ class DetailAll extends React.Component{
 	}
 
 	render(){
-		const games = this.storage.loadGames();
+		const list = Local.get('Games') || [];
+
+		return (
+			<div>
+				{!this.state.edit &&
+				<AppBar position="static">
+					<Toolbar>
+						<IconButton
+							onClick={()=>this.props.history.goBack()}>
+							<ArrowBackIcon/>
+						</IconButton>
+						<Typography variant="title" style={{flexGrow: 1}}>
+							Detail
+						</Typography>
+					</Toolbar>
+				</AppBar>}
+
+				{this.state.edit &&
+				<AppBar position="static" color="default">
+					<Toolbar>
+						<IconButton
+							onClick={()=>this.onClickExitEdit()}>
+							<CloseIcon/>
+						</IconButton>
+						<Checkbox
+							checked={list.length === this.state.editList.length}
+							onClick={()=>this.onToggleEditAll()}/>
+						<Typography variant="title" style={{flexGrow: 1}}>
+							Edit <small>({this.state.editList.length})</small>
+						</Typography>
+						<IconButton
+							onClick={()=>this.setState({edit: false})}>
+							<DeleteForeverIcon/>
+						</IconButton>
+					</Toolbar>
+				</AppBar>}
+
+				<GridList>
+					{
+						list.map((item, i) =>
+							<GridListTile key={i}>
+								<div style={{
+										width: "100%",
+										height: "100%"
+									}}>
+									<Chessboard
+										fen={item.fen}/>
+								</div>
+								<GridListTileBar
+									title={item.title}
+									actionIcon={
+										<Checkbox
+											checked={!!this.state.editList.find(id => id === item.id)}
+											onClick={()=>this.onToggleEditGame(item.id)}/>
+									}/>
+							</GridListTile>)
+					}
+				</GridList>
+			</div>
+		)
+		/*const games = this.storage.loadGames();
 		return (
 			<section className="DetailAll">
 				{!this.state.edit &&
@@ -392,32 +475,10 @@ class DetailAll extends React.Component{
 					</Modal>
 				}
 			</section>
-		);
-	}
-
-	renderGame(game, i) {
-		return (
-			<li key={i}>
-				<Button className="right" onClick={this.onToggleEditGame.bind(this, game.id)} title="Check game">
-					{this.state.editList.find(id => id === game.id) ? <img alt="checked" src={ICONS['boxChecked']}/> : <img alt="checked" src={ICONS['box']}/>}
-				</Button>
-				<SearchResult {...game}/>
-			</li>
-		)
+		);*/
 	}
 }
 
-// <Link to={`${this.props.match.url}/${game.id}`}>
-// 	<div className="thumbnail">
-// 		<Chessboard
-// 			fen={play.fen}
-// 			side={game.side}
-// 			showLabels={false}/>
-// 	</div>
-// 	<h3>{game.title}</h3>
-// 	<p>{play.comment}</p>
-// 	<div className="clear"></div>
-// </Link>
 
 
 export default function Detail(props) {
