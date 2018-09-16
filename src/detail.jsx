@@ -22,6 +22,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 // import InfoIcon from '@material-ui/icons/Info';
 import CheckIcon from '@material-ui/icons/Check';
 import EditIcon from '@material-ui/icons/Edit';
+import SwapVertIcon from '@material-ui/icons/SwapVert';
 
 import uuid from 'uuid/v1';
 import {Link, Route, Redirect, Switch} from 'react-router-dom';
@@ -48,19 +49,33 @@ class DetailLine extends Component{
 			selectedCell: null,
 			targetCell: null,
 			requestPromotion: null,
-			editTitle: game.title
+			editTitle: false
 		};
 	}
 
 	onToggleSide(){
-		const side = this.state.side === 'w' ? 'b' : 'w'
-		this.setState({
-			side: side
-		});
-		const gameId = +this.props.match.params.gameId;
-		const game = this.gameStorage.loadGame(gameId);
-		game.side = side;
-		this.gameStorage.saveGame(game);
+		const {rotateChessboard} = Local.get("Settings") || {};
+		if(!rotateChessboard) {
+			const side = this.state === 'w' ? 'b' : 'w';
+
+			this.setState({side});
+
+			let games = Local.get("Games");
+
+			const gameId = this.props.match.params.gameId;
+			let game = games
+				.find(item => item.id === gameId);
+			const gameIndex = games
+				.findIndex(item => item.id === gameId);
+
+			game.side = side;
+			games[gameIndex] = {
+				...game,
+				side
+			};
+
+			Local.set("Games", games);
+		}
 	}
 
 	onClickCell(coords) {
@@ -179,6 +194,26 @@ class DetailLine extends Component{
 		return output;
 	}
 
+	handleEditTitle(){
+		let games = Local.get("Games");
+
+		const gameId = this.props.match.params.gameId;
+		let game = games.find(item => item.id === gameId);
+		const gameIndex = games.findIndex(item => item.id === gameId);
+
+		games[gameIndex] = {
+			...game,
+			title: this.state.editTitle
+		};
+
+		Local.set("Games", games);
+
+		this.setState({
+			title: this.state.editTitle,
+			editTitle: false
+		})
+	}
+
 	render(){
 		const gameId = this.props.match.params.gameId;
 		const lineId = this.props.match.params.lineId;
@@ -200,6 +235,8 @@ class DetailLine extends Component{
 			moves = chess.moves({square: this.state.selectedCell, verbose: true});
 			selectableCells = selectableCells.concat(moves.map(move => move.to));
 		}
+
+		// Load app settings
 		const settings = Local.get("Settings");
 
 		return (
@@ -219,6 +256,12 @@ class DetailLine extends Component{
 							<IconButton
 								onClick={()=>this.setState({editTitle: game.title})}>
 								<EditIcon/>
+							</IconButton>
+
+							<IconButton
+								disabled={settings.rotateChessboard}
+								onClick={()=>this.onToggleSide()}>
+								<SwapVertIcon/>
 							</IconButton>
 						</Toolbar>
 					</AppBar>}

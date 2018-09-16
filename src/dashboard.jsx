@@ -211,7 +211,7 @@ class DashboardContent extends Component {
 							filter.length !== 0 &&
 							<GridList>
 								{filter.map((item, i) =>
-									<GridListTile><DashboardTile
+									<GridListTile key={i}><DashboardTile
 										key={i}
 										game={item}
 										onClick={()=>this.handleItemDetailClick(item)}
@@ -235,7 +235,7 @@ class DashboardContent extends Component {
 								last.length !== 0 &&
 								<GridList>
 									{last.map((item, i) =>
-										<GridListTile><DashboardTile
+										<GridListTile key={i}><DashboardTile
 											key={i}
 											game={item}
 											onClick={()=>this.handleItemDetailClick(item)}
@@ -265,22 +265,29 @@ function DashboardTile (props) {
 		|| game.lines[0];
 
 	// TODO: Check line
+	// TODO: use side or turn
+
+	const {rotateChessboard} = Local.get("Settings") || {};
+	const side = rotateChessboard
+		? line.fen.split(" ")[1]
+		: game.side;
 
 	return (
-			<div style={{
-					width: "100%",
-					height: "100%"
-				}}>
-				<Chessboard
-					fen={line.fen}/>
-				<GridListTileBar
-					title={game.title}
-					actionIcon={
-						<IconButton
-							onClick={props.onClick}>
-							<InfoIcon />
-						</IconButton>
-					}/>
-			</div>
+		<div style={{
+				width: "100%",
+				height: "100%"
+			}}>
+			<Chessboard
+				fen={line.fen}
+				side={side}/>
+			<GridListTileBar
+				title={game.title}
+				actionIcon={
+					<IconButton
+						onClick={props.onClick}>
+						<InfoIcon />
+					</IconButton>
+				}/>
+		</div>
 	)
 }

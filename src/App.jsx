@@ -15,6 +15,7 @@ import Settings from './settings';
 import Info from './info';
 import NewGame from './newgame';
 import NotFound from './404.jsx';
+import Test from './Pages/Test';
 
 import {Local} from './Storage';
 
@@ -61,6 +62,7 @@ function App () {
 					<Route path="/settings" component={Settings}/>
 					<Route path="/info" component={Info}/>
 					<Route path="/404" component={NotFound}/>
+					<Route path="/test" component={Test}/>
 					<Redirect to="/"/>
 				</Switch>
 			</BrowserRouter>
