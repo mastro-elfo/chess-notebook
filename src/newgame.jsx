@@ -20,7 +20,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import uuid from 'uuid/v1';
 import Chess from 'chess.js/chess.min.js';
 
-import Chessboard, {Pool} from './chessboard';
+import Chessboard from './chessboard';
 import {Local} from './Storage';
 
 export default class New extends Component {

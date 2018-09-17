@@ -25,24 +25,26 @@ import EditIcon from '@material-ui/icons/Edit';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
 
 import uuid from 'uuid/v1';
-import {Link, Route, Redirect, Switch} from 'react-router-dom';
+import {Route, Redirect, Switch} from 'react-router-dom';
 
 import Chess from 'chess.js/chess.min.js';
 import Chessboard from './chessboard';
-import Notebook from './notebook';
-import {PIECES} from  './pieces';
+// import Notebook from './notebook';
+// import {PIECES} from  './pieces';
 import {OPENINGS} from './openings';
 
+
+import Notebook from './Components/Notebook';
 import {Local} from './Storage';
 
 class DetailLine extends Component{
 	constructor(props) {
 		super(props);
 
-		const gameId = this.props.match.params.gameId;
-		// const game = this.gameStorage.loadGame(gameId);
+		const gameId = ""+this.props.match.params.gameId;
+		// console.debug("GameId", gameId, Local.get("Games"));
 		const game = (Local.get("Games") || [])
-			.find(item => item.id === gameId);
+			.find(item => ""+item.id === gameId);
 
 		this.state = {
 			side: game.side || 'w',
@@ -221,10 +223,10 @@ class DetailLine extends Component{
 
 		// Find game in local storage
 		const game = (Local.get("Games") || [])
-			.find(item => item.id === gameId);
+			.find(item => ""+item.id === gameId);
 
 		const line = game.lines
-			.find(item => item.id === lineId);
+			.find(item => ""+item.id === lineId);
 
 		// let chess = new Chess(line.fen);
 		let chess = new Chess();
@@ -295,11 +297,9 @@ class DetailLine extends Component{
 						showLabels={settings.showLabels}/>
 
 					<Notebook
-						gameId={game.id}
-						lines={game.lines}
-						selectedId={lineId}
-						history={this.props.history}
-						onClickDelete={this.onClickDelete.bind(this)}/>
+						{...this.props}
+						game={game}
+						line={line}/>
 				</div>
 			</div>
 		);

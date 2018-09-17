@@ -41,8 +41,8 @@ class ChessboardCell extends Component {
 		? cellClasses.push(classes.Dark)
 		: cellClasses.push(classes.Light);
 
-		selected ? cellClasses.push(classes.Selected) : 0;
-		outline ? cellClasses.push(classes.Outline) : 0;
+		selected && cellClasses.push(classes.Selected);
+		outline && cellClasses.push(classes.Outline);
 
 		return(
 			<div
