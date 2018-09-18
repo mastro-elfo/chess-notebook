@@ -7,12 +7,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
+import Select from '@material-ui/core/Select'; // TODO: Use TextField
 import MenuItem from '@material-ui/core/MenuItem';
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -20,7 +21,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import uuid from 'uuid/v1';
 import Chess from 'chess.js/chess.min.js';
 
-import Chessboard from './chessboard';
+import Chessboard from './Components/Chessboard';
 import {Local} from './Storage';
 
 export default class New extends Component {
@@ -31,7 +32,7 @@ export default class New extends Component {
 			title: '',
 			description: '',
 			// Fen fields
-			position: 'rnbqkbnr/pppppppp/8/3p4/4P3/8/PPPPPPPP/RNBQKBNR',
+			position: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR',
 			turn: 'w',
 			whiteCastling: 'KQ',
 			blackCastling: 'kq',
@@ -40,7 +41,9 @@ export default class New extends Component {
 			totalMoves: 1,
 			// Others
 			selectedPiece: null,
-			componentSize: Math.min(window.innerHeight, window.innerWidth /2)
+			componentSize: Math.min(window.innerHeight, window.innerWidth /2),
+			// Dialogs
+			pgnDialog: false
 		};
 	}
 
@@ -113,7 +116,8 @@ export default class New extends Component {
 							Create new Game
 						</Typography>
 
-						<Button>
+						<Button
+							onClick={()=>this.setState({pgnDialog: true})}>
 							PGN
 						</Button>
 
@@ -128,6 +132,7 @@ export default class New extends Component {
 						</IconButton>
 					</Toolbar>
 				</AppBar>
+
 				<FormControl fullWidth>
 					<Typography variant="title" color="secondary">
 
@@ -150,10 +155,15 @@ export default class New extends Component {
 						Position
 					</Typography>
 
-					<Chessboard
-						side="w"
-						fen={this.toFen()}
-						selectableCells={selectableCells}/>
+					<div style={{
+							width: "100vw",
+							height: "50vh"
+						}}>
+						<Chessboard
+							side="w"
+							fen={this.toFen()}
+							selectableCells={selectableCells}/>
+					</div>
 
 					<Typography variant="title" color="secondary">
 						Turn
@@ -190,6 +200,7 @@ export default class New extends Component {
 						En passant
 					</Typography>
 					<Select
+						label="En passant"
 						value={this.state.enPassant}
 						onChange={({target})=>this.setState({enPassant: target.value})}>
 						<MenuItem value="-">None</MenuItem>
@@ -222,6 +233,31 @@ export default class New extends Component {
 						value={this.toFen()}
 						/>
 				</FormControl>
+
+				<Dialog
+					open={this.state.pgnDialog}
+					onClose={()=>this.setState({pgnDialog: false})}>
+					<DialogTitle>Import from PGN</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Paste a valid PGN in the field below
+						</DialogContentText>
+						<TextField
+							fullWidth
+							label="PGN"
+							/>
+					</DialogContent>
+					<DialogActions>
+						<Button
+							onClick={()=>this.setState({pgnDialog: false})}>
+							Cancel
+						</Button>
+						<Button
+							onClick={()=>this.setState({pgnDialog: false})}>
+							Ok
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</div>
 		);
 	}
@@ -265,174 +301,3 @@ export default class New extends Component {
 		return output;
 	}
 }
-
-/*
-<main>
-		<div>
-			<ul className="list">
-				<li>
-					<label>
-						<h3>Title</h3>
-						<input ref="title" placeholder="E.g. &quot;against the local champion&quot;" value={this.state.title} onChange={(e)=>this.setState({title: e.target.value})}/>
-					</label>
-				</li>
-			</ul>
-			<div style={{height: this.state.componentSize}}>
-				<div className="column column-4 whitePool">
-					<Pool pieces="KQRNBP" onClick={this.onClickPiece.bind(this)} selected={this.state.selectedPiece}/>
-				</div>
-				<div className="column column-2">
-					<Chessboard fen={this.toFen()} selectableCells={selectableCells} onClick={this.onClickCell.bind(this)} onDrop={this.onDropCell.bind(this)}/>
-				</div>
-				<div className="column column-4 blackPool">
-					<Pool pieces="kqrnbp" onClick={this.onClickPiece.bind(this)} selected={this.state.selectedPiece}/>
-				</div>
-			</div>
-			<div className="clear"></div>
-			<ul className="list">
-				<li>
-					<label>
-						<h3>Description</h3>
-						<textarea
-							placeholder="E.g. &quot;The best match I've ever played&quot;"
-							value={this.state.description}
-							onChange={(e)=>this.setState({description: e.target.value})}
-							></textarea>
-					</label>
-				</li>
-				<li>
-					<label>
-						<h3>Turn</h3>
-						<select
-							value={this.state.turn}
-							onChange={(e)=>this.setState({turn: e.target.value})}
-							>
-							<option value="w">White</option>
-							<option value="b">Black</option>
-						</select>
-					</label>
-				</li>
-				<li>
-					<label>
-						<h3>White castling</h3>
-						<select
-							value={this.state.whiteCastling}
-							onChange={(e)=>this.setState({whiteCastling: e.target.value})}
-							>
-							<option value="KQ">Both sides</option>
-							<option value="K">King side</option>
-							<option value="Q">Queen side</option>
-							<option value="">None</option>
-						</select>
-					</label>
-				</li>
-				<li>
-					<label>
-						<h3>Black castling</h3>
-						<select
-							value={this.state.blackCastling}
-							onChange={(e)=>this.setState({blackCastling: e.target.value})}
-							>
-							<option value="kq">Both sides</option>
-							<option value="k">King side</option>
-							<option value="q">Queen side</option>
-							<option value="">None</option>
-						</select>
-					</label>
-				</li>
-				<li>
-					<label>
-						<h3>En passant</h3>
-						<select
-							value={this.state.enPassant}
-							onChange={(e)=>this.setState({enPassant: e.target.value})}
-							>
-							<option value="-">None</option>
-							{
-								enPassantCandidates.map((cell, i) =>
-									<option key={i} value={cell}>
-										{cell}
-									</option>
-								)
-							}
-						</select>
-					</label>
-				</li>
-				<li>
-					<label>
-						<h3>Draw moves</h3>
-						<input
-							type="number"
-							min="0"
-							max={this.state.totalMoves}
-							placeholder="#"
-							value={this.state.drawMoves}
-							onChange={(e)=>this.setState({drawMoves: e.target.value})}/>
-					</label>
-				</li>
-				<li>
-					<label>
-						<h3>Total moves</h3>
-						<input
-							type="number"
-							min="1"
-							placeholder="#"
-							value={this.state.totalMoves}
-							onChange={(e)=>this.setState({totalMoves: e.target.value})}/>
-					</label>
-				</li>
-				<li>
-					<label>
-						<h3>Fen</h3>
-						<p>
-							{this.toFen()}
-						</p>
-					</label>
-				</li>
-			</ul>
-		</div>
-	</main>
-
-	{this.state.openFromPGNDialog &&
-		<Modal onClose={this.onCancelFromPGNDialog.bind(this)}>
-			<h1>Load from PGN</h1>
-			<p>Paste the PGN in this text input</p>
-
-			<textarea placeholder="" value={this.state.pastePGN} onChange={this.onChangePGN.bind(this)}></textarea>
-
-			{this.state.pastePGNValid === true && <p style={{color: 'green'}}>Valid PGN</p>}
-
-			{this.state.pastePGNValid === false && <p style={{color: 'red'}}>Not a valid PGN</p>}
-
-			{this.state.pastePGNValid !== true && this.state.pastePGNValid !== false && <p>&nbsp;</p>}
-
-			<ModalButtons>
-				<ModalButton title="Confirm" disabled={this.state.pastePGNValid !== true} onClick={this.onClickConfirmPGN.bind(this)}>
-					<img src={ICONS['boxChecked']} alt="ok"/> Confirm
-				</ModalButton>
-				<ModalButton title="Cancel" onClick={()=>this.setState({openFromPGNDialog: false})}>
-					<img src={ICONS['delete']} alt="x"/> Cancel
-				</ModalButton>
-			</ModalButtons>
-		</Modal>
-	}
-
-	{this.state.requestTitle &&
-		<Modal onClose={()=>this.setState({requestTitle: false})}>
-			<h1>Title required</h1>
-			<p>Title and description are useful to search games.</p>
-			<p>
-				<input placeholder="Write a title" value={this.state.title} onChange={(e)=>this.setState({title: e.target.value})}/>
-			</p>
-			<ModalButtons>
-				<ModalButton title="Confirm" disabled={this.state.title.trim() === ''} onClick={this.onClickPlayGame.bind(this)}>
-					<img src={ICONS['boxChecked']} alt="ok"/> Confirm
-				</ModalButton>
-				<ModalButton title="Cancel" onClick={()=>this.setState({requestTitle: false})}>
-					<img src={ICONS['delete']} alt="x"/> Cancel
-				</ModalButton>
-			</ModalButtons>
-		</Modal>
-	}
-</section>
- */

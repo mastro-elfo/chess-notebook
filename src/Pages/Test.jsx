@@ -6,7 +6,13 @@ import Chessboard from '../Components/Chessboard';
 class Test extends Component {
 	render(){
 		return(
-			<Chessboard/>
+			<div style={{
+					width: "100%",
+					height: "100%",
+					position: "absolute"
+				}}>
+				<Chessboard/>
+			</div>
 		)
 	}
 }

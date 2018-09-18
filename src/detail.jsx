@@ -14,6 +14,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 // import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 // import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -26,13 +27,11 @@ import SwapVertIcon from '@material-ui/icons/SwapVert';
 
 import uuid from 'uuid/v1';
 import {Route, Redirect, Switch} from 'react-router-dom';
+// import elementResizeEvent from 'element-resize-event';
 
 import Chess from 'chess.js/chess.min.js';
-import Chessboard from './chessboard';
-// import Notebook from './notebook';
-// import {PIECES} from  './pieces';
+import Chessboard from './Components/Chessboard';
 import {OPENINGS} from './openings';
-
 
 import Notebook from './Components/Notebook';
 import {Local} from './Storage';
@@ -51,14 +50,15 @@ class DetailLine extends Component{
 			selectedCell: null,
 			targetCell: null,
 			requestPromotion: null,
-			editTitle: false
+			editTitle: false,
+			gridHeight: "auto"
 		};
 	}
 
 	onToggleSide(){
 		const {rotateChessboard} = Local.get("Settings") || {};
 		if(!rotateChessboard) {
-			const side = this.state === 'w' ? 'b' : 'w';
+			const side = this.state.side === 'w' ? 'b' : 'w';
 
 			this.setState({side});
 
@@ -66,9 +66,9 @@ class DetailLine extends Component{
 
 			const gameId = this.props.match.params.gameId;
 			let game = games
-				.find(item => item.id === gameId);
+				.find(item => ""+item.id === gameId);
 			const gameIndex = games
-				.findIndex(item => item.id === gameId);
+				.findIndex(item => ""+item.id === gameId);
 
 			game.side = side;
 			games[gameIndex] = {
@@ -216,6 +216,19 @@ class DetailLine extends Component{
 		})
 	}
 
+	componentDidMount(){
+		// elementResizeEvent(this.refs.Grid, this.onResize.bind(this));
+		window.addEventListener("resize", this.onResize.bind(this));
+		this.onResize();
+	}
+
+	onResize(){
+		console.debug(window.innerHeight, this.refs.Grid.getBoundingClientRect())
+		this.setState({
+			gridHeight: window.innerHeight - this.refs.Grid.getBoundingClientRect().top -16
+		})
+	}
+
 	render(){
 		const gameId = this.props.match.params.gameId;
 		const lineId = this.props.match.params.lineId;
@@ -228,8 +241,8 @@ class DetailLine extends Component{
 		const line = game.lines
 			.find(item => ""+item.id === lineId);
 
-		// let chess = new Chess(line.fen);
-		let chess = new Chess();
+		let chess = new Chess(line.fen);
+		// let chess = new Chess();
 
 		let moves = chess.moves({verbose: true});
 		let selectableCells = moves.map(move => move.from);
@@ -286,20 +299,32 @@ class DetailLine extends Component{
 							</IconButton>
 						</Toolbar>
 					</AppBar>}
-				<div>
-					<Chessboard
-						side={settings.rotateChessboard ? chess.turn() : this.state.side}
-						fen={line.fen}
-						onClick={this.onClickCell.bind(this)}
-						onDrop={this.onDropCell.bind(this)}
-						selectedCell={this.state.selectedCell}
-						selectableCells={selectableCells}
-						showLabels={settings.showLabels}/>
+				<div ref="Grid">
+					<Grid container
+						style={{
+							height: this.state.gridHeight
+						}}
+						alignItems="stretch">
+						<Grid item
+							xs={12}
+							sm={6}>
+							<Chessboard
+								side={settings.rotateChessboard ? chess.turn() : this.state.side}
+								fen={line.fen}
+								selectedCell={this.state.selectedCell}
+								selectableCells={selectableCells}
+								showLabels={settings.showLabels}/>
+						</Grid>
 
-					<Notebook
-						{...this.props}
-						game={game}
-						line={line}/>
+						<Grid item
+							xs={12}
+							sm={6}>
+							<Notebook
+								{...this.props}
+								game={game}
+								line={line}/>
+						</Grid>
+					</Grid>
 				</div>
 			</div>
 		);

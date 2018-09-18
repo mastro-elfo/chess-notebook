@@ -2,6 +2,9 @@ import React from 'react';
 
 import Chip from '@material-ui/core/Chip';
 
+// import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+// import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+
 export default function NotebookNextMove (props) {
 	const {
 		game,
@@ -10,7 +13,11 @@ export default function NotebookNextMove (props) {
 		history
 	} = props;
 
-	const {fen, move} = line;
+	const {
+		fen,
+		move,
+		value
+	} = line;
 	const split = fen.split(" ");
 	const count = split[5];
 	const turn = split[1];
@@ -18,10 +25,10 @@ export default function NotebookNextMove (props) {
 	if(withChip){
 		if(turn === "b"){
 			return ([
-				<span key="a">{" "+count+"."}</span>,
+				<strong key="a">&nbsp;{count+"."}</strong>,
 				<Chip
 					key="b"
-					label={move}
+					label={move+(value||"")}
 					onClick={()=>history.replace("/detail/"+game.id+"/"+line.id)}
 					/>
 			]);
@@ -29,7 +36,7 @@ export default function NotebookNextMove (props) {
 		else {
 			return(
 				<Chip
-					label={move}
+					label={move+(value||"")}
 					onClick={()=>history.replace("/detail/"+game.id+"/"+line.id)}
 					/>
 			);

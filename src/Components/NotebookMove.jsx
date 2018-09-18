@@ -17,7 +17,10 @@ import NotebookFirstMove from './NotebookFirstMove';
 
 class NotebookMove extends Component {
 	render(){
-		const {line} = this.props;
+		const {
+			line,
+			classes
+		} = this.props;
 		// console.debug(line)
 
 		const {
@@ -42,6 +45,7 @@ class NotebookMove extends Component {
 					{move &&
 						<FormControl>
 							<Select
+								className={classes.Select}
 								value={value || false}>
 								<MenuItem value="!!">!!</MenuItem>
 								<MenuItem value="!">!</MenuItem>
@@ -55,31 +59,43 @@ class NotebookMove extends Component {
 					{move &&
 						<FormControl>
 							<Select
+								className={classes.Select}
 								value={positionValue || false}>
-								<MenuItem value="OK"><ThumbUpIcon/></MenuItem>
+								<MenuItem value="OK">
+									<ThumbUpIcon color="inherit"/>
+								</MenuItem>
+
 								<MenuItem value={false}>None</MenuItem>
-								<MenuItem value="KO"><ThumbDownIcon/></MenuItem>
+
+								<MenuItem value="KO">
+									<ThumbDownIcon/>
+								</MenuItem>
 							</Select>
 							<FormHelperText>Position value</FormHelperText>
 						</FormControl>}
+				</Toolbar>
 
-					<FormControl>
+				<Toolbar>
+					<FormControl fullWidth>
 						<TextField
 							multiline
 							fullWidth
+							rows={2}
+							variant="outlined"
 							value={comment}
+							label="Comment"
 							/>
-						<FormHelperText>Comment</FormHelperText>
 					</FormControl>
 				</Toolbar>
-
 			</div>
 		);
 	}
 }
 
 const styles = theme => ({
-
+	Select: {
+		marginLeft: theme.spacing.unit
+	}
 });
 
 export default withStyles(styles, {withTheme: true})(NotebookMove);

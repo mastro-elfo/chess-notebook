@@ -190,12 +190,6 @@ export default class Settings extends Component {
 }
 
 /*
-import React from 'react';
-import {SettingsStorage} from './storage';
-import {ICONS} from './icons';
-import './settings.css';
-import {Button} from './Button';
-import Modal, {ModalButtons, ModalButton} from './modal';
 
 export default class Settings extends React.Component {
 	constructor(props){

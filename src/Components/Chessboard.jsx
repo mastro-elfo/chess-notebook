@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import elementResizeEvent from 'element-resize-event';
+
 import ChessboardRow from './ChessboardRow';
 
 class Chessboard extends Component {
@@ -14,7 +16,13 @@ class Chessboard extends Component {
 
 	state = {
 		selected: false,
-		outline: []
+		outline: [],
+		size: 0
+	}
+
+	componentDidMount(){
+		elementResizeEvent(this.refs.ChessboardContainer, this.onContainerResize.bind(this));
+		this.onContainerResize();
 	}
 
 	render(){
@@ -25,7 +33,7 @@ class Chessboard extends Component {
 			showRowLabels
 		} = this.props;
 
-		console.debug(showRowLabels, showColumnLabels);
+		// console.debug(showRowLabels, showColumnLabels);
 
 		const {selected, outline} = this.state;
 
@@ -34,24 +42,39 @@ class Chessboard extends Component {
 
 		const {classes} = this.props;
 		const ClassDisabled = disabled ? classes.Disabled : null;
+
 		return (
-			<div className={`${classes.Chessboard}  ${ClassDisabled}`}>
-				{
-					rows.map((row, i) =>
-						<ChessboardRow
-							key={i}
-							row={row}
-							rowIndex={8-i}
-							selected={selected}
-							onSelect={(a)=>this.handleToggleSelect(a)}
-							outline={outline}
-							showColumnLabels={showColumnLabels}
-							showRowLabels={showRowLabels}
-							/>
-					)
-				}
+			<div ref="ChessboardContainer"
+				className={classes.Container}>
+				<div className={`${classes.Chessboard} ${ClassDisabled}`}
+					style={{
+						width: this.state.size,
+						height: this.state.size
+					}}>
+					{
+						rows.map((row, i) =>
+							<ChessboardRow
+								key={i}
+								row={row}
+								rowIndex={8-i}
+								selected={selected}
+								onSelect={(a)=>this.handleToggleSelect(a)}
+								outline={outline}
+								showColumnLabels={showColumnLabels}
+								showRowLabels={showRowLabels}
+								/>
+						)
+					}
+				</div>
 			</div>
 		);
+	}
+
+	onContainerResize(){
+		const size = Math.min(
+			this.refs.ChessboardContainer.clientWidth,
+			this.refs.ChessboardContainer.clientHeight);
+		this.setState({size});
 	}
 
 	handleToggleSelect(coord) {
@@ -83,20 +106,25 @@ class Chessboard extends Component {
 
 const styles = theme => ({
 	Chessboard: {
-		width: 64 *theme.spacing.unit,
-		height: 64 *theme.spacing.unit,
+		width: "100%",
+		height: "100%",
+		margin: "auto",
+		boxShadow: "0 0 "+theme.shape.borderRadius+"px rgba(0,0,0,0.5)",
 		borderRadius: theme.shape.borderRadius,
-		overflow: "hidden",
-		boxShadow: "0 0 "+theme.spacing.unit+"px rgba(0,0,0,0.5)"
+		overflow: "hidden"
 	},
 	Disabled: {
 		position: "relative",
 		"&:after": {
 			content: '""',
 			position: "absolute",
-			top: 0, left: 0, right: 0, bottom: 0,
-			zIndex: 1
+			top: 0, bottom: 0, left: 0, right: 0,
+			margin: 0, paddin: 0, opacity: 0
 		}
+	},
+	Container: {
+		width: "100%",
+		height: "100%"
 	}
 });
 

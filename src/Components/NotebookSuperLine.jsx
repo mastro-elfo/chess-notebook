@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+
 import NotebookFirstMove from './NotebookFirstMove';
 import NotebookNextMove from './NotebookNextMove';
 
@@ -18,7 +21,7 @@ class NotebookSuperLine extends Component {
 			: [];
 
 		return (
-			<div>
+			<List><ListItem>
 				{
 					(list.length > 0) &&
 					<NotebookFirstMove
@@ -38,7 +41,7 @@ class NotebookSuperLine extends Component {
 							withChip
 							/>)
 				}
-			</div>
+			</ListItem></List>
 		);
 	}
 

@@ -13,7 +13,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import Input from '@material-ui/core/Input';
+import Input from '@material-ui/core/Input'; // TODO: Use TextField
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
@@ -27,7 +27,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 
 import {Local} from './Storage';
-import Chessboard from './chessboard';
+import Chessboard from './Components/Chessboard';
 
 class Dashboard extends Component {
 	constructor(props){
@@ -279,7 +279,10 @@ function DashboardTile (props) {
 			}}>
 			<Chessboard
 				fen={line.fen}
-				side={side}/>
+				side={side}
+				disabled={true}
+				showRowLabels={[]}
+				showColumnLabels={[]}/>
 			<GridListTileBar
 				title={game.title}
 				actionIcon={

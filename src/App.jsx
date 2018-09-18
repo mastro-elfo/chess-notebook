@@ -4,7 +4,9 @@ import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 // Customize main theme
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
-import pink from '@material-ui/core/colors/pink';
+
+// import pink from '@material-ui/core/colors/pink';
+import blue from '@material-ui/core/colors/blue';
 
 // Import the Robot typeface
 import 'typeface-roboto';
@@ -14,7 +16,7 @@ import Detail from './detail';
 import Settings from './settings';
 import Info from './info';
 import NewGame from './newgame';
-import NotFound from './404.jsx';
+import NotFound from './Pages/404.jsx';
 import Test from './Pages/Test';
 
 import {Local} from './Storage';
@@ -22,7 +24,7 @@ import {Local} from './Storage';
 const THEME = createMuiTheme({
 	palette: {
 		primary: green,
-		secondary: pink
+		secondary: blue
 	}
 });
 
@@ -30,7 +32,7 @@ function App () {
 	// Check storage version
 	const storageVersion = Local.get('Version');
 	if(!storageVersion || storageVersion < 1) {
-		let games = Local.get("Games") || [];
+		let games = Local.get("games") || [];
 		// Transform id into string
 		games = games.map(item => ({
 			...item,
@@ -42,7 +44,8 @@ function App () {
 			...game,
 			lines: game.lines.map(item => ({
 				...item,
-				id: ""+item.id
+				id: ""+item.id,
+				parent: ""+item.parent
 			}))
 		}));
 
@@ -55,7 +58,6 @@ function App () {
 		<MuiThemeProvider theme={THEME}>
 			<BrowserRouter basename="/chess-notebook">
 				<Switch>
-					<Route path="/" exact component={Dashboard}/>
 					<Route path="/dashboard" component={Dashboard}/>
 					<Route path="/new-game" component={NewGame}/>
 					<Route path="/detail" component={Detail}/>
@@ -63,7 +65,7 @@ function App () {
 					<Route path="/info" component={Info}/>
 					<Route path="/404" component={NotFound}/>
 					<Route path="/test" component={Test}/>
-					<Redirect to="/"/>
+					<Redirect to="/dashboard"/>
 				</Switch>
 			</BrowserRouter>
 		</MuiThemeProvider>
@@ -71,3 +73,5 @@ function App () {
 }
 
 export default App;
+
+// <Route path="/" exact component={Dashboard}/>

@@ -10,7 +10,12 @@ export default function NotebookFirstMove (props) {
 		history
 	} = props;
 
-	const {fen, move} = line;
+	const {
+		fen,
+		move,
+		value
+	} = line;
+
 	const split = fen.split(" ");
 	const count = split[5];
 	const turn = split[1];
@@ -18,20 +23,20 @@ export default function NotebookFirstMove (props) {
 	if(withChip){
 		if(turn === "b"){
 			return ([
-				<span key="a">{count+"."}</span>,
+				<strong key="a">{count+"."}</strong>,
 				<Chip
 					key="b"
-					label={move}
+					label={move+(value||"")}
 					onClick={()=>history.replace("/detail/"+game.id+"/"+line.id)}
 					/>
 			]);
 		}
 		else {
 			return([
-				<span key="a">{(count -1)+". … "}</span>,
+				<strong key="a">{(count -1)+". … "}</strong>,
 				<Chip
 					key="b"
-					label={move}
+					label={move+(value||"")}
 					onClick={()=>history.replace("/detail/"+game.id+"/"+line.id)}
 					/>
 			]);
