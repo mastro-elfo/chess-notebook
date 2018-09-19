@@ -11,7 +11,7 @@ import blue from '@material-ui/core/colors/blue';
 // Import the Robot typeface
 import 'typeface-roboto';
 
-import Dashboard from './dashboard';
+import Dashboard from './Pages/Dashboard';
 import Detail from './detail';
 import Settings from './settings';
 import Info from './info';
