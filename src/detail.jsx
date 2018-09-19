@@ -223,7 +223,7 @@ class DetailLine extends Component{
 	}
 
 	onResize(){
-		console.debug(window.innerHeight, this.refs.Grid.getBoundingClientRect())
+		// console.debug(window.innerHeight, this.refs.Grid.getBoundingClientRect())
 		this.setState({
 			gridHeight: window.innerHeight - this.refs.Grid.getBoundingClientRect().top -16
 		})
