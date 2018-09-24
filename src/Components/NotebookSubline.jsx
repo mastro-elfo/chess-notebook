@@ -13,17 +13,24 @@ class NotebookSubline extends Component {
 			line
 		} = this.props;
 
+		const {
+			classes,
+			...other
+		} = this.props;
+
 		const children = game.lines.filter(item => item.parent === line.id);
 
 		return (
 			<div>
 				{children.length > 0 &&
-					<List>
+					<List
+						className={classes.overflow}>
 						{children.map((item, i) =>
 							<NotebookSublineListitem
+								{...other}
 								key={i}
-								{...this.props}
 								line={item}
+								divider={i < children.length -1}
 								/>)}
 					</List>
 				}
@@ -33,7 +40,9 @@ class NotebookSubline extends Component {
 }
 
 const styles = theme => ({
-
+	overflow: {
+		overflowX: "auto"
+	}
 });
 
 export default withStyles(styles, {withTheme: true})(NotebookSubline);

@@ -11,14 +11,16 @@ class NotebookSublineListitem extends Component {
 	render(){
 		const {
 			game,
-			line
+			line,
+			divider
 		} = this.props;
 
 		const list = this.getSubline(game, line);
 		// console.debug(list, list.length);
 
 		return (
-			<ListItem>
+			<ListItem
+				divider={divider}>
 				<NotebookFirstMove
 					{...this.props}
 					withChip

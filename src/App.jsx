@@ -12,10 +12,10 @@ import blue from '@material-ui/core/colors/blue';
 import 'typeface-roboto';
 
 import Dashboard from './Pages/Dashboard';
-import Detail from './detail';
+import Detail from './Pages/Detail';
 import Settings from './settings';
-import Info from './info';
-import NewGame from './newgame';
+import Info from './Pages/Info';
+import NewGame from './Pages/NewGame';
 import NotFound from './Pages/404.jsx';
 import Test from './Pages/Test';
 
@@ -45,7 +45,7 @@ function App () {
 			lines: game.lines.map(item => ({
 				...item,
 				id: ""+item.id,
-				parent: ""+item.parent
+				parent: item.parent === null ? item.parent : ""+item.parent
 			}))
 		}));
 

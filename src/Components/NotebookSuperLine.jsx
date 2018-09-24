@@ -12,7 +12,8 @@ class NotebookSuperLine extends Component {
 	render(){
 		const {
 			game,
-			line
+			line,
+			classes
 		} = this.props;
 
 		const superLine = game.lines.find(item => item.id === line.parent);
@@ -21,32 +22,35 @@ class NotebookSuperLine extends Component {
 			: [];
 
 		return (
-			<List><ListItem>
-				{
-					(list.length > 0) &&
-					<NotebookFirstMove
-						{...this.props}
-						line={list[0]}
-						withChip
-						/>
-				}
-
-				{
-					(list.length > 1) &&
-					list.slice(1).map((item, i)=>
-						<NotebookNextMove
-							key={i}
+			<List
+				className={classes.overflow}>
+				<ListItem>
+					{
+						(list.length > 0) &&
+						<NotebookFirstMove
 							{...this.props}
-							line={item}
+							line={list[0]}
 							withChip
-							/>)
-				}
-			</ListItem></List>
+							/>
+					}
+
+					{
+						(list.length > 1) &&
+						list.slice(1).map((item, i)=>
+							<NotebookNextMove
+								key={i}
+								{...this.props}
+								line={item}
+								withChip
+								/>)
+					}
+				</ListItem>
+			</List>
 		);
 	}
 
 	getSuperLine(game, line) {
-		if(line.parent === null) {
+		if(line === undefined || line.parent === null || line.move === null) {
 			return [];
 		}
 		else {
@@ -57,7 +61,9 @@ class NotebookSuperLine extends Component {
 }
 
 const styles = theme => ({
-
+	overflow: {
+		overflowX: "auto"
+	}
 });
 
 export default withStyles(styles, {withTheme: true})(NotebookSuperLine);

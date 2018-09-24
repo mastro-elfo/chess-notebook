@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
+import withWidth from '@material-ui/core/withWidth';
 import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -11,11 +12,19 @@ import AddIcon from '@material-ui/icons/Add';
 import {Local} from '../Utils/Storage';
 import DashboardTileContent from './DashboardTileContent';
 
+const GridListCols = {
+	"xs": 1,
+	"sm": 2,
+	"md": 3
+};
+
 // TODO: Use function
 class DashboardContent extends Component {
 	render(){
 		const {
 			classes,
+			theme,
+			width,
 			history,
 			location: {search}
 		} = this.props;
@@ -34,7 +43,8 @@ class DashboardContent extends Component {
 				.indexOf(searchEntry.toLowerCase()) !== -1);
 
 		return (
-			<div>
+			<main
+				className={classes.main}>
 				<Button
 					className={classes.FabButton}
 					variant="fab"
@@ -62,7 +72,9 @@ class DashboardContent extends Component {
 
 						{
 							searchResult.length > 0 &&
-							<GridList>
+							<GridList
+								cols={GridListCols[width] || 4}
+								spacing={theme.spacing.unit}>
 								{
 									searchResult.map((item, i) =>{
 										const {classes, ...other} = this.props;
@@ -92,7 +104,9 @@ class DashboardContent extends Component {
 
 						{
 							lastPlayedGames.length > 0 &&
-							<GridList>
+							<GridList
+								cols={GridListCols[width] || 4}
+								spacing={theme.spacing.unit}>
 								{
 									lastPlayedGames.map((item, i) =>{
 										const {classes, ...other} = this.props;
@@ -110,7 +124,7 @@ class DashboardContent extends Component {
 						}
 					</div>
 				}
-			</div>
+			</main>
 		);
 	}
 }
@@ -120,7 +134,13 @@ const styles = theme => ({
 		position: "absolute",
 		bottom: theme.spacing.unit *2,
 		right: theme.spacing.unit *2
+	},
+	main: {
+		paddingTop: theme.spacing.unit *2,
+		paddingLeft: theme.spacing.unit,
+		paddingRight: theme.spacing.unit,
+		paddingBottom: theme.spacing.unit
 	}
 });
 
-export default withStyles(styles)(DashboardContent);
+export default withWidth()(withStyles(styles, {withTheme: true})(DashboardContent));

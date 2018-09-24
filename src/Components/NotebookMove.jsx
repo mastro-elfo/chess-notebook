@@ -75,18 +75,16 @@ class NotebookMove extends Component {
 						</FormControl>}
 				</Toolbar>
 
-				<Toolbar>
-					<FormControl fullWidth>
-						<TextField
-							multiline
-							fullWidth
-							rows={2}
-							variant="outlined"
-							value={comment}
-							label="Comment"
-							/>
-					</FormControl>
-				</Toolbar>
+				<FormControl
+					fullWidth>
+					<TextField
+						multiline
+						rows={2}
+						variant="outlined"
+						value={comment}
+						label="Comment"
+						/>
+				</FormControl>
 			</div>
 		);
 	}
