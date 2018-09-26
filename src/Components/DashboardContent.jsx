@@ -30,17 +30,17 @@ class DashboardContent extends Component {
 		} = this.props;
 
 		const searchEntry = search.substring(1);
+		const searchEntryLowerCase = searchEntry.toLowerCase();
 
 		const {lastEditLimit = 5} = Local.get("Settings") || {};
 		const listOfGames = Local.get('Games') || [];
+
 		const lastPlayedGames = listOfGames
 			.sort((a,b) => a.edit - b.edit)
 			.slice(0, lastEditLimit);
+
 		const searchResult = listOfGames
-			.filter(item =>
-				item.title
-				.toLowerCase()
-				.indexOf(searchEntry.toLowerCase()) !== -1);
+			.filter(item => this.searchFilter(item, searchEntryLowerCase));
 
 		return (
 			<main
@@ -126,6 +126,15 @@ class DashboardContent extends Component {
 				}
 			</main>
 		);
+	}
+
+	searchFilter(item, entry) {
+		// Search `entry` in `title`
+		if(item.title.toLowerCase().indexOf(entry) !== -1) {
+			return true;
+		}
+		// For each line, search `entry` in `comment`
+		return !!item.lines.find(line => line.comment.toLowerCase().indexOf(entry) !== -1)
 	}
 }
 

@@ -4,8 +4,6 @@ import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 // Customize main theme
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
-
-// import pink from '@material-ui/core/colors/pink';
 import blue from '@material-ui/core/colors/blue';
 
 // Import the Robot typeface
@@ -24,7 +22,10 @@ import {Local} from './Storage';
 const THEME = createMuiTheme({
 	palette: {
 		primary: green,
-		secondary: blue
+		secondary: blue,
+		common: {
+			green: green[500]
+		}
 	}
 });
 

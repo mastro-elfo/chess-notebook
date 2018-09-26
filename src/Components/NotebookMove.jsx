@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Select from '@material-ui/core/Select';
+import Select from '@material-ui/core/Select'; // TODO: Use TextField
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import FormHelperText from '@material-ui/core/FormHelperText'; // TODO: Use TextField
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
@@ -79,7 +79,7 @@ class NotebookMove extends Component {
 					fullWidth>
 					<TextField
 						multiline
-						rows={2}
+						rows={3}
 						variant="outlined"
 						value={comment}
 						label="Comment"

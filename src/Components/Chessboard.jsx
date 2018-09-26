@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import classNames from 'classnames';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import elementResizeEvent from 'element-resize-event';
@@ -8,10 +10,11 @@ import ChessboardRow from './ChessboardRow';
 
 class Chessboard extends Component {
 	static defaultProps = {
+		side: "w",
 		fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR",
 		disabled: false,
-		showColumnLabels: "abcdefgh".split('').map(i=>i+"1"),
-		showRowLabels: "12345678".split('').map(i=>"a"+i)
+		showLabels: true,
+		onRequestMove: ()=>{}
 	}
 
 	state = {
@@ -29,39 +32,52 @@ class Chessboard extends Component {
 		const {
 			fen,
 			disabled,
-			showColumnLabels,
-			showRowLabels
+			side,
+			classes,
+			...other
 		} = this.props;
-
-		// console.debug(showRowLabels, showColumnLabels);
 
 		const {selected, outline} = this.state;
 
 		const position = fen.split(" ")[0];
 		const rows = position.split("/");
 
-		const {classes} = this.props;
-		const ClassDisabled = disabled ? classes.Disabled : null;
-
 		return (
 			<div ref="ChessboardContainer"
 				className={classes.Container}>
-				<div className={`${classes.Chessboard} ${ClassDisabled}`}
+				<div className={classNames(classes.Chessboard, {[classes.Disabled]: disabled})}
 					style={{
 						width: this.state.size,
 						height: this.state.size
 					}}>
-					{
+					{side === "w" &&
 						rows.map((row, i) =>
 							<ChessboardRow
+								{...other}
 								key={i}
 								row={row}
 								rowIndex={8-i}
+								side={side}
 								selected={selected}
-								onSelect={(a)=>this.handleToggleSelect(a)}
+								onSelect={this.handleToggleSelect.bind(this)}
 								outline={outline}
-								showColumnLabels={showColumnLabels}
-								showRowLabels={showRowLabels}
+								onDrop={this.handleDrop.bind(this)}
+								/>
+						)
+					}
+
+					{side === "b" &&
+						rows.reverse().map((row, i) =>
+							<ChessboardRow
+								{...other}
+								key={i}
+								row={row}
+								rowIndex={1+i}
+								side={side}
+								selected={selected}
+								onSelect={this.handleToggleSelect.bind(this)}
+								outline={outline}
+								onDrop={this.handleDrop.bind(this)}
 								/>
 						)
 					}
@@ -79,12 +95,14 @@ class Chessboard extends Component {
 
 	handleToggleSelect(coord) {
 		const {selected} = this.state;
+		const {onRequestMove} = this.props;
 		if(selected === coord){
 			this.setState({
 				selected: false
 			})
 		}
 		else {
+			onRequestMove(selected, coord);
 			this.setState({
 				selected: coord
 			})
@@ -102,6 +120,15 @@ class Chessboard extends Component {
 		}
 		this.setState({outline});
 	}
+
+	handleClick(coord) {
+
+	}
+
+	handleDrop(start, end){
+		// console.debug("Drop", start, end);
+		this.props.onRequestMove(start, end);
+	}
 }
 
 const styles = theme => ({
@@ -111,7 +138,16 @@ const styles = theme => ({
 		margin: "auto",
 		boxShadow: "0 0 "+theme.shape.borderRadius+"px rgba(0,0,0,0.5)",
 		borderRadius: theme.shape.borderRadius,
-		overflow: "hidden"
+		overflow: "hidden",
+		"& .Label": {
+			display: "none"
+		},
+		"& > * > :first-child > .RowLabel": {
+			display: "inline"
+		},
+		"& > :last-child > * > .ColLabel": {
+			display: "inline"
+		}
 	},
 	Disabled: {
 		position: "relative",

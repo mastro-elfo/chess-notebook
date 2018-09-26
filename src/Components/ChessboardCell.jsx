@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
-import PieceToIcon from './PieceToIcon';
+import PieceToIcon from '../Utils/PieceToIcon';
 
 class ChessboardCell extends Component {
 	static defaultProps = {
@@ -12,10 +13,10 @@ class ChessboardCell extends Component {
 		colIndex: "0",
 		selected: false,
 		outline: false,
-		showColumnLabels: true,
-		showRowLabels: true,
+		showLabels: true,
 
-		onSelect: ()=>{}
+		onSelect: ()=>{},
+		onDrop: ()=>{}
 	}
 
 	state = {}
@@ -27,50 +28,65 @@ class ChessboardCell extends Component {
 			colIndex,
 			selected,
 			outline,
-			showColumnLabels,
-			showRowLabels
+			showLabels,
+			classes,
+			// ...other
 		} = this.props;
 
-		// const coord = colIndex+rowIndex;
-
-		const {classes} = this.props;
-		let cellClasses = [classes.Cell];
-
-		('aceg'.indexOf(colIndex) !== -1 && (rowIndex % 2 === 1))
-		|| ('bdfh'.indexOf(colIndex) !== -1 && (rowIndex % 2 === 0))
-		? cellClasses.push(classes.Dark)
-		: cellClasses.push(classes.Light);
-
-		selected && cellClasses.push(classes.Selected);
-		outline && cellClasses.push(classes.Outline);
+		const isDark = (('aceg'.indexOf(colIndex) !== -1 && (rowIndex % 2 === 1)) || ('bdfh'.indexOf(colIndex) !== -1 && (rowIndex % 2 === 0)));
 
 		return(
 			<div
-				className={cellClasses.join(' ')}
-				onClick={()=>this.handleClick()}>
+				className={
+					classNames(classes.Cell, {
+						[classes.Dark]: isDark,
+						[classes.Light]: !isDark,
+						[classes.Selected]: selected,
+						[classes.Outline]: outline
+					})}
+				onClick={()=>this.handleClick()}
+				onDrop={this.handleDrop.bind(this)}
+				onDragOver={this.handleDragOver.bind(this)}>
 				{cell &&
 					<img
 						className={classes.Piece}
 						alt={cell}
 						src={PieceToIcon(cell)}
+						draggable
+						onDragStart={(e)=>this.handleDragStart(colIndex+rowIndex, e)}
 						/>}
-				{showRowLabels &&
-					<small className={classes.RowLabel}>
-						{rowIndex}
+				{showLabels &&
+					<small className={classNames("Label", "RowLabel", classes.RowLabel)}>
+						<small>{rowIndex}</small>
 					</small>}
 
-				{showColumnLabels &&
-					<small className={classes.ColLabel}>
-						{colIndex}
+				{showLabels &&
+					<small className={classNames("Label", "ColLabel", classes.ColLabel)}>
+						<small>{colIndex}</small>
 					</small>}
 			</div>
 		)
 	}
 
 	handleClick(){
-		const {rowIndex, colIndex} = this.props;
-		const coord = colIndex+rowIndex;
-		this.props.onSelect(coord);
+		const {rowIndex, colIndex, onSelect} = this.props;
+		onSelect(colIndex+rowIndex);
+	}
+
+	handleDrop(event){
+		event.preventDefault();
+		const {rowIndex, colIndex, onDrop} = this.props;
+		// console.debug("Drop", colIndex, rowIndex);
+		onDrop(event.dataTransfer.getData("text"), colIndex+rowIndex);
+	}
+
+	handleDragOver(event){
+		event.preventDefault();
+	}
+
+	handleDragStart(coord, event){
+		console.debug("Drag start", coord);
+		event.dataTransfer.setData("text", coord);
 	}
 }
 

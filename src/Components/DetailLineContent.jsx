@@ -17,40 +17,43 @@ function DetailLineContent (props) {
 
 	const {
 		classes,
+		theme,
 		...other
 	} = props;
 
 	const turn = fen.split(" ")[1];
 
 	return (
-		<Grid container
-			alignItems="stretch"
-			classes={{
-				container: classes.container
-			}}>
-			<Grid item
-				xs={12} sm={6}>
-				<Chessboard
-					{...other}
-					fen={fen}
-					side={rotateChessboard ? turn : side}
-					/>
-			</Grid>
+		<main className={classes.main}>
+			<Grid container
+				spacing={theme.spacing.unit}
+				className={classes.container}>
+				<Grid item
+					xs={12} sm={6}>
+					<div style={{height: "20em"}}>
+						<Chessboard
+							{...other}
+							fen={fen}
+							side={rotateChessboard ? turn : side}
+							/>
+					</div>
+				</Grid>
 
-			<Grid item
-				xs={12} sm={6}>
-				<Notebook
-					{...other}
-					/>
+				<Grid item
+					xs={12} sm={6}>
+					<Notebook
+						{...other}
+						/>
+				</Grid>
 			</Grid>
-		</Grid>
+		</main>
 	);
 }
 
 const styles = theme => ({
-	container: {
+	main: {
 		padding: theme.spacing.unit
 	}
 });
 
-export default withStyles(styles)(DetailLineContent);
+export default withStyles(styles, {withTheme: true})(DetailLineContent);

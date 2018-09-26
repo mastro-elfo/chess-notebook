@@ -13,7 +13,8 @@ class ChessboardRow extends Component {
 		showColumnLabels: [],
 		showRowLabels: [],
 
-		onSelect: ()=>{}
+		onSelect: ()=>{},
+		onDrop: ()=>{}
 	}
 
 	state = {}
@@ -22,40 +23,43 @@ class ChessboardRow extends Component {
 		const {
 			row,
 			rowIndex,
+			side,
 			selected,
 			outline,
-			showRowLabels,
-			showColumnLabels
+			classes,
+			...other
 		} = this.props;
 
 		const exploded = row
 			.replace(/(\d)/g, match => ' '.repeat(+match));
+
 		const cells = exploded.split("")
 			.map(item => item === ' ' ? null : item);
+		let colIndexes = 'abcdefgh';
 
-		const {classes} = this.props;
+		if(side === "b"){
+			cells.reverse();
+			colIndexes = colIndexes.split('').reverse().join('');
+		}
+
 		return(
 			<div className={classes.Row}>
 				{
 					cells.map((cell, i) => {
-						const colIndex = 'abcdefgh'.charAt(i);
+						const colIndex = colIndexes.charAt(i);
 						const coord =colIndex+rowIndex;
 
 						return (
 							<ChessboardCell
+								{...other}
 								key={i}
 								cell={cell}
 								rowIndex={rowIndex}
 								colIndex={colIndex}
 								selected={selected === coord}
-								onSelect={this.props.onSelect}
 								outline={!!outline
 									.find(item=>item===coord)
 								}
-								showColumnLabels={!!showColumnLabels
-									.find(item=>item===coord)}
-								showRowLabels={!!showRowLabels
-									.find(item=>item===coord)}
 								/>
 						);
 					})

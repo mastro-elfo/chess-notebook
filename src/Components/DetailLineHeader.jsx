@@ -16,6 +16,8 @@ import FastRewindIcon from '@material-ui/icons/FastRewind';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import CheckIcon from '@material-ui/icons/Check';
 
+import {Local} from '../Utils/Storage';
+
 class DetailLineHeader extends Component {
 	render(){
 		const {
@@ -28,8 +30,13 @@ class DetailLineHeader extends Component {
 			handleToggleEditTitle,
 			handleToggleEditLines,
 			handleChangeTitle,
-			handleConfirmEditTitle
+			handleConfirmEditTitle,
+			handleSwapChessboard,
+			handleRewindPosition,
+			handlePlayMove
 		} = this.props;
+
+		const {rotateChessboard = false} = Local.get("Settings") || {};
 
 		if(editTitle) {
 			return (
@@ -100,19 +107,24 @@ class DetailLineHeader extends Component {
 							variant="title"
 							color="inherit"
 							className={classes.grow}
+							noWrap
 							onClick={()=>handleToggleEditTitle(true)}>
-							{game.title}
+							{game.title || "\u00A0"}
 						</Typography>
 
-						<IconButton>
+						<IconButton
+							onClick={handleSwapChessboard}
+							disabled={rotateChessboard}>
 							<SwapVertIcon/>
 						</IconButton>
 
-						<IconButton>
+						<IconButton
+							onClick={handleRewindPosition}>
 							<FastRewindIcon/>
 						</IconButton>
 
-						<IconButton>
+						<IconButton
+							onClick={handlePlayMove}>
 							<PlayArrowIcon/>
 						</IconButton>
 					</Toolbar>
