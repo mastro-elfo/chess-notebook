@@ -12,7 +12,8 @@ import DetailAllTileContent from './DetailAllTileContent';
 const GridListCols = {
 	"xs": 1,
 	"sm": 2,
-	"md": 3
+	"md": 3,
+	"lg": 4
 };
 
 function DetailAllContent (props) {
@@ -28,7 +29,7 @@ function DetailAllContent (props) {
 		<main
 			className={classes.main}>
 			<GridList
-				cols={GridListCols[width] || 4}
+				cols={GridListCols[width] || 5}
 				spacing={theme.spacing.unit}>
 				{
 					listOfGames.map((item, i) => {
