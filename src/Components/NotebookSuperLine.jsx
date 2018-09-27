@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Chip from '@material-ui/core/Chip';
 
 import NotebookFirstMove from './NotebookFirstMove';
 import NotebookNextMove from './NotebookNextMove';
@@ -13,6 +14,7 @@ class NotebookSuperLine extends Component {
 		const {
 			game,
 			line,
+			history,
 			classes
 		} = this.props;
 
@@ -20,11 +22,18 @@ class NotebookSuperLine extends Component {
 		const list = superLine
 			? this.getSuperLine(game, superLine)
 			: [];
+		const firstLine = game.lines.find(item => item.parent === null);
 
 		return (
 			<List
 				className={classes.overflow}>
 				<ListItem>
+					<Chip
+						variant="outlined"
+						label="Start"
+						color="secondary"
+						onClick={()=>history.replace("/detail/"+game.id+"/"+firstLine.id)}
+						/>&nbsp;
 					{
 						(list.length > 0) &&
 						<NotebookFirstMove

@@ -14,15 +14,18 @@ export default class Dashboard extends Component {
 			<div>
 				<DashboardHeader
 					{...this.props}
-					handleToggleDrawer={(drawer)=>this.setState({drawer})}/>
-
-				<DashboardContent
-					{...this.props}/>
+					handleToggleDrawer={(drawer)=>this.setState({drawer})}
+					/>
 
 				<DashboardDrawer
 					{...this.props}
 					drawer={this.state.drawer}
-					handleToggleDrawer={(drawer)=>this.setState({drawer})}/>
+					handleToggleDrawer={(drawer)=>this.setState({drawer})}
+					/>
+
+				<DashboardContent
+					{...this.props}
+					/>
 			</div>
 		);
 	}

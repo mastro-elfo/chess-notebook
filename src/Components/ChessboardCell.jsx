@@ -19,7 +19,9 @@ class ChessboardCell extends Component {
 		onDrop: ()=>{}
 	}
 
-	state = {}
+	state = {
+		over: false
+	}
 
 	render(){
 		const {
@@ -33,6 +35,10 @@ class ChessboardCell extends Component {
 			// ...other
 		} = this.props;
 
+		const {
+			over
+		} = this.state;
+
 		const isDark = (('aceg'.indexOf(colIndex) !== -1 && (rowIndex % 2 === 1)) || ('bdfh'.indexOf(colIndex) !== -1 && (rowIndex % 2 === 0)));
 
 		return(
@@ -42,11 +48,15 @@ class ChessboardCell extends Component {
 						[classes.Dark]: isDark,
 						[classes.Light]: !isDark,
 						[classes.Selected]: selected,
-						[classes.Outline]: outline
+						[classes.Outline]: outline,
+						[classes.OverDark]: !selected && isDark && over,
+						[classes.OverLight]: !selected && !isDark && over,
+						[classes.OverSelected]: selected && over
 					})}
 				onClick={()=>this.handleClick()}
 				onDrop={this.handleDrop.bind(this)}
-				onDragOver={this.handleDragOver.bind(this)}>
+				onDragOver={this.handleDragOver.bind(this)}
+				onDragLeave={this.handleDragLeave.bind(this)}>
 				{cell &&
 					<img
 						className={classes.Piece}
@@ -75,17 +85,23 @@ class ChessboardCell extends Component {
 
 	handleDrop(event){
 		event.preventDefault();
+		this.setState({over: false});
 		const {rowIndex, colIndex, onDrop} = this.props;
-		// console.debug("Drop", colIndex, rowIndex);
 		onDrop(event.dataTransfer.getData("text"), colIndex+rowIndex);
 	}
 
 	handleDragOver(event){
 		event.preventDefault();
+		this.setState({over: true});
+	}
+
+	handleDragLeave(event){
+		event.preventDefault();
+		this.setState({over: false});
 	}
 
 	handleDragStart(coord, event){
-		console.debug("Drag start", coord);
+		// console.debug("Drag start", coord);
 		event.dataTransfer.setData("text", coord);
 	}
 }
@@ -115,6 +131,15 @@ const styles = theme => ({
 			backgroundColor: emphasize(theme.palette.secondary.main)
 		}
 	},
+	OverDark: {
+		backgroundColor: emphasize(theme.palette.primary.main, 0.3)
+	},
+	OverLight: {
+		backgroundColor: emphasize("#fffff0")
+	},
+	OverSelected: {
+		backgroundColor: emphasize(theme.palette.secondary.main)
+	},
 	Outline: {
 		position: "relative",
 		"&:after": {
@@ -133,7 +158,8 @@ const styles = theme => ({
 		width: "80%",
 		height: "80%",
 		position: "absolute",
-		top: "10%", left: "10%"
+		top: "10%", left: "10%",
+		zIndex: 1
 	},
 	RowLabel: {
 		position: "absolute",

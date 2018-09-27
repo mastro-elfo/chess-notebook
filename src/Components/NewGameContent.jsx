@@ -23,6 +23,12 @@ class NewGameContent extends Component {
 
 		let chess = new Chess();
 
+		const chessboard =
+			<Chessboard
+				fen={position}
+				onRequestMove={onRequestMove}
+				/>
+
 		return (
 			<main className={classes.main}>
 				<Grid container>
@@ -31,9 +37,7 @@ class NewGameContent extends Component {
 							<Grid container>
 								<Grid item sm={12}>
 									<div style={{height: "20em"}}>
-										<Chessboard
-											fen={position}
-											onRequestMove={onRequestMove}/>
+										{chessboard}
 									</div>
 								</Grid>
 							</Grid>
@@ -69,9 +73,7 @@ class NewGameContent extends Component {
 									<Grid container>
 										<Grid item xs={12}>
 											<div style={{height: "20em"}}>
-												<Chessboard
-													fen={position}
-													onRequestMove={onRequestMove}/>
+												{chessboard}
 											</div>
 										</Grid>
 									</Grid>

@@ -17,7 +17,7 @@ import NewGame from './Pages/NewGame';
 import NotFound from './Pages/404.jsx';
 import Test from './Pages/Test';
 
-import {Local} from './Storage';
+import {Local} from './Utils/Storage';
 
 const THEME = createMuiTheme({
 	palette: {

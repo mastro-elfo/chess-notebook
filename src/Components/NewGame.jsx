@@ -4,7 +4,6 @@ import NewGameHeader from './NewGameHeader';
 import NewGameContent from './NewGameContent'
 
 import uuid from 'uuid/v1';
-
 import Chess from 'chess.js';
 
 import {Local} from '../Utils/Storage';
@@ -59,9 +58,10 @@ export default class NewGame extends Component {
 					move: null, parent: null, play: true,
 					value: false, positionValue: false,
 					comment: description,
-					fen: toFen(position, turn, whiteCastling, blackCastling, enPassant, drawMoves, totalMoves) // TODO: Use Utils/ToFen
+					fen: toFen(position, turn, whiteCastling, blackCastling, enPassant, drawMoves, totalMoves)
 				}
-			]
+			],
+			edit: +new Date()
 		};
 
 		// Add game object to local Storage

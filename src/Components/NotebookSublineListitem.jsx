@@ -18,6 +18,8 @@ class NotebookSublineListitem extends Component {
 		const list = this.getSubline(game, line);
 		// console.debug(list, list.length);
 
+// TODO: add check box to manage lines
+
 		return (
 			<ListItem
 				divider={divider}>

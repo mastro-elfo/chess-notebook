@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
 
 import AddIcon from '@material-ui/icons/Add';
 
@@ -15,10 +16,10 @@ import DashboardTileContent from './DashboardTileContent';
 const GridListCols = {
 	"xs": 1,
 	"sm": 2,
-	"md": 3
+	"md": 3,
+	"lg": 4
 };
 
-// TODO: Use function
 class DashboardContent extends Component {
 	render(){
 		const {
@@ -45,20 +46,23 @@ class DashboardContent extends Component {
 		return (
 			<main
 				className={classes.main}>
-				<Button
-					className={classes.FabButton}
-					variant="fab"
-					color="primary"
-					onClick={()=>history.push('/new-game')}>
-					<AddIcon/>
-				</Button>
+				<Hidden lgUp>
+					<Button
+						className={classes.FabButton}
+						variant="fab"
+						color="primary"
+						onClick={()=>history.push('/new-game')}>
+						<AddIcon/>
+					</Button>
+				</Hidden>
 
 				{
 					searchEntry &&
 					<div>
 						<Typography
 							variant="title"
-							color="primary">
+							color="primary"
+							gutterBottom>
 							Search result <small>({searchResult.length})</small>
 						</Typography>
 
@@ -73,7 +77,7 @@ class DashboardContent extends Component {
 						{
 							searchResult.length > 0 &&
 							<GridList
-								cols={GridListCols[width] || 4}
+								cols={GridListCols[width] || 5}
 								spacing={theme.spacing.unit}>
 								{
 									searchResult.map((item, i) =>{
@@ -98,14 +102,15 @@ class DashboardContent extends Component {
 					<div>
 						<Typography
 							variant="title"
-							color="primary">
+							color="primary"
+							gutterBottom>
 							Last played games
 						</Typography>
 
 						{
 							lastPlayedGames.length > 0 &&
 							<GridList
-								cols={GridListCols[width] || 4}
+								cols={GridListCols[width] || 5}
 								spacing={theme.spacing.unit}>
 								{
 									lastPlayedGames.map((item, i) =>{

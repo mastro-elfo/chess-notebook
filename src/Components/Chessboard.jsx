@@ -18,8 +18,8 @@ class Chessboard extends Component {
 	}
 
 	state = {
-		selected: false,
-		outline: [],
+		selected: false, // TODO: Move to props
+		outline: [], // TODO: Move to props
 		size: 0
 	}
 

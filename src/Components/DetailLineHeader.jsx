@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import classNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -51,7 +52,7 @@ class DetailLineHeader extends Component {
 
 						<TextField
 							placeholder="Game title"
-							value={editTitleValue}
+							value={editTitleValue||""}
 							fullWidth
 							onChange={({target})=>handleChangeTitle(target.value)}/>
 
@@ -82,7 +83,7 @@ class DetailLineHeader extends Component {
 							variant="title"
 							color="inherit"
 							className={classes.grow}>
-							Edit <small>()</small>
+							() Selected
 						</Typography>
 
 						<IconButton>
@@ -105,11 +106,12 @@ class DetailLineHeader extends Component {
 
 						<Typography
 							variant="title"
-							color="inherit"
-							className={classes.grow}
+							className={classNames(classes.grow, {
+								[classes.hint]: !game.title
+							})}
 							noWrap
 							onClick={()=>handleToggleEditTitle(true)}>
-							{game.title || "\u00A0"}
+							{game.title || "Click here to edit"}
 						</Typography>
 
 						<IconButton
@@ -137,6 +139,9 @@ class DetailLineHeader extends Component {
 const styles = theme => ({
 	grow: {
 		flexGrow: 1
+	},
+	hint: {
+		color: theme.palette.text.hint
 	}
 });
 

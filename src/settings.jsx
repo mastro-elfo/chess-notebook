@@ -1,3 +1,4 @@
+// TODO: move to pages
 import React, {Component} from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -20,7 +21,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import {Local} from './Storage';
+import {Local} from './Utils/Storage';
 
 export default class Settings extends Component {
 	constructor(props){

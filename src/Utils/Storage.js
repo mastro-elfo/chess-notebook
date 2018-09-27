@@ -1,5 +1,3 @@
-// TODO: Test
-
 export var Storage = {
 	storage: sessionStorage,
 

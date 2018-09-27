@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Select from '@material-ui/core/Select'; // TODO: Use TextField
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText'; // TODO: Use TextField
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
@@ -19,9 +17,11 @@ class NotebookMove extends Component {
 	render(){
 		const {
 			line,
-			classes
+			classes,
+			onEditComment,
+			onChangeValue,
+			onChangePositionValue
 		} = this.props;
-		// console.debug(line)
 
 		const {
 			move,
@@ -43,36 +43,38 @@ class NotebookMove extends Component {
 					</Typography>
 
 					{move &&
-						<FormControl>
-							<Select
-								className={classes.Select}
-								value={value || false}>
-								<MenuItem value="!!">!!</MenuItem>
-								<MenuItem value="!">!</MenuItem>
-								<MenuItem value={false}>None</MenuItem>
-								<MenuItem value="?">?</MenuItem>
-								<MenuItem value="??">??</MenuItem>
-							</Select>
-							<FormHelperText>Move value</FormHelperText>
-						</FormControl>}
+						<TextField
+							helperText="Move value"
+							select
+							className={classes.Select}
+							value={value || false}
+							onChange={({target})=>onChangeValue(target.value)}
+							margin="normal">
+							<MenuItem value="!!">!!</MenuItem>
+							<MenuItem value="!">!</MenuItem>
+							<MenuItem value={false}>None</MenuItem>
+							<MenuItem value="?">?</MenuItem>
+							<MenuItem value="??">??</MenuItem>
+						</TextField>}
 
 					{move &&
-						<FormControl>
-							<Select
-								className={classes.Select}
-								value={positionValue || false}>
-								<MenuItem value="OK">
-									<ThumbUpIcon color="inherit"/>
-								</MenuItem>
-
-								<MenuItem value={false}>None</MenuItem>
-
-								<MenuItem value="KO">
-									<ThumbDownIcon/>
-								</MenuItem>
-							</Select>
-							<FormHelperText>Position value</FormHelperText>
-						</FormControl>}
+						<TextField
+							select
+							helperText="Position value"
+							value={positionValue || false}
+							className={classes.Select}
+							onChange={({target})=>onChangePositionValue(target.value)}
+							margin="normal">
+							<MenuItem value="OK">
+								<ThumbUpIcon fontSize="small"/>
+							</MenuItem>
+							<MenuItem value={false}>
+								None
+							</MenuItem>
+							<MenuItem value="KO">
+								<ThumbDownIcon fontSize="small"/>
+							</MenuItem>
+						</TextField>}
 				</Toolbar>
 
 				<FormControl
@@ -83,6 +85,7 @@ class NotebookMove extends Component {
 						variant="outlined"
 						value={comment}
 						label="Comment"
+						onChange={({target})=>onEditComment(target.value)}
 						/>
 				</FormControl>
 			</div>
