@@ -36,8 +36,51 @@ function Info (props) {
 				<Typography
 					variant="title"
 					color="primary">
+					Credits
+				</Typography>
+
+				<Typography
+					variant="subheading"
+					color="secondary">
+					Chess Pieces
+				</Typography>
+
+				<Typography paragraph>
+					By jurgenwesterhof (adapted from work of Cburnett) - <a className="external free" href="http://commons.wikimedia.org/wiki/Template:SVG_chess_pieces">http://commons.wikimedia.org/wiki/Template:SVG_chess_pieces</a>, <a className="external" href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a className="external"  href="https://commons.wikimedia.org/w/index.php?curid=35634436">Link</a>
+				</Typography>
+
+				<Typography
+					variant="subheading"
+					color="secondary">
+					Main development environment
+				</Typography>
+
+				<Typography paragraph>
+					<a href="https://reactjs.org/" title="React">React</a>, <a href="https://reacttraining.com/react-router/web/guides/philosophy" title="React Router Web">React Router Web</a>, <a href="https://material-ui.com/" title="Material-UI">Material-UI</a>, <a href="https://github.com/jhlywa/chess.js" title="Chess.js">Chess.js</a>
+				</Typography>
+
+				<Typography
+					variant="title"
+					color="primary">
+					Development
+				</Typography>
+
+				<Typography paragraph>
+					<a className="external" title="Click to open Chess-Notebook repository on Github" href="https://github.com/mastro-elfo/chess-notebook">https://github.com/mastro-elfo/chess-notebook</a>
+				</Typography>
+
+				<Typography
+					variant="title"
+					color="primary">
+					About Chess-Notebook
+				</Typography>
+
+				<Typography
+					variant="subheading"
+					color="secondary">
 					License MIT
 				</Typography>
+
 				<Typography paragraph>
 					Copyright (c) 2017 mastro-elfo<br/>
 					<br/>
@@ -64,40 +107,25 @@ function Info (props) {
 				</Typography>
 
 				<Typography
-					variant="title"
-					color="primary">
-					Credits
+					variant="subheading"
+					color="secondary">
+					Version
+				</Typography>
+
+				<Typography paragraph>
+					1.0
 				</Typography>
 
 				<Typography
 					variant="subheading"
 					color="secondary">
-					Chess Pieces
-				</Typography>
-
-				<Typography paragraph>
-					By jurgenwesterhof (adapted from work of Cburnett) - <a className="external free" href="http://commons.wikimedia.org/wiki/Template:SVG_chess_pieces">http://commons.wikimedia.org/wiki/Template:SVG_chess_pieces</a>, <a className="external" href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a className="external"  href="https://commons.wikimedia.org/w/index.php?curid=35634436">Link</a>
-				</Typography>
-
-				<Typography
-					variant="title"
-					color="primary">
-					Development
-				</Typography>
-
-				<Typography paragraph>
-					<a className="external" title="Click to open Chess-Notebook repository on Github" href="https://github.com/mastro-elfo/chess-notebook">https://github.com/mastro-elfo/chess-notebook</a>
-				</Typography>
-
-				<Typography
-					variant="title"
-					color="primary">
-					Chess-Notebook
+					Openings library
 				</Typography>
 
 				<Typography paragraph>
 					There are {OPENINGS.length} openings in the library
 				</Typography>
+
 			</main>
 		</div>
 	)
@@ -108,7 +136,7 @@ const styles = theme => ({
 		flexGrow: 1
 	},
 	main: {
-		paddingTop: theme.spacing.unit *2,
+		paddingTop: theme.spacing.unit,
 		paddingLeft: theme.spacing.unit,
 		paddingRight: theme.spacing.unit,
 		paddingBottom: theme.spacing.unit

@@ -66,13 +66,13 @@ class NotebookMove extends Component {
 							onChange={({target})=>onChangePositionValue(target.value)}
 							margin="normal">
 							<MenuItem value="OK">
-								<ThumbUpIcon fontSize="small"/>
+								<ThumbUpIcon fontSize="small"/>&nbsp;Good
 							</MenuItem>
 							<MenuItem value={false}>
 								None
 							</MenuItem>
 							<MenuItem value="KO">
-								<ThumbDownIcon fontSize="small"/>
+								<ThumbDownIcon fontSize="small"/>&nbsp;Bad
 							</MenuItem>
 						</TextField>}
 				</Toolbar>

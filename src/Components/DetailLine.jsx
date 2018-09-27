@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import DetailLineHeader from './DetailLineHeader';
-import DetailLineContent from './DetailLineContent';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 
 import uuid from 'uuid/v1';
 import Chess from 'chess.js';
+
 import {Local} from '../Utils/Storage';
 import {OPENINGS} from '../Utils/Openings';
-import PieceToIcon from '../Utils/PieceToIcon';
+
+import DetailLineHeader from './DetailLineHeader';
+import DetailLineContent from './DetailLineContent';
+import DetailLinePromotionDialog from './DetailLinePromotionDialog';
+import DetailLineDeleteDialog from './DetailLineDeleteDialog';
 
 class DetailLine extends Component {
 	constructor(props) {
@@ -31,7 +30,9 @@ class DetailLine extends Component {
 			editTitleValue: "",
 			loading: true,
 			game,
-			promotion: false
+			promotion: false,
+			linesSelected: [],
+			requestDeleteLines: false
 		}
 	}
 
@@ -39,7 +40,7 @@ class DetailLine extends Component {
 		const {match: {params: {lineId}}} = this.props;
 		const {classes, ...other} = this.props;
 		const {
-			game, promotion
+			game, promotion, requestDeleteLines
 		} = this.state;
 		//
 		const line = game.lines.find(item => item.id === lineId);
@@ -51,12 +52,16 @@ class DetailLine extends Component {
 					{...this.state}
 					game={game}
 					line={line}
-					handleToggleEditTitle={this.handleToggleEditTitle.bind(this)}
-					handleChangeTitle={this.handleChangeTitle.bind(this)}
-					handleConfirmEditTitle={this.handleConfirmEditTitle.bind(this)}
-					handleSwapChessboard={this.handleSwapChessboard.bind(this)}
-					handleRewindPosition={this.handleRewindPosition.bind(this)}
-					handlePlayMove={this.handlePlayMove.bind(this)}/>
+					onToggleEditTitle={this.handleToggleEditTitle.bind(this)}
+					onToggleEditLines={this.handleToggleEditLines.bind(this)}
+					onToggleAllEditLines={this.handleToggleAllEditLines.bind(this)}
+					onChangeTitle={this.handleChangeTitle.bind(this)}
+					onConfirmEditTitle={this.handleConfirmEditTitle.bind(this)}
+					onSwapChessboard={this.handleSwapChessboard.bind(this)}
+					onRewindPosition={this.handleRewindPosition.bind(this)}
+					onPlayMove={this.handlePlayMove.bind(this)}
+					onRequestDeleteLines={()=>this.setState({requestDeleteLines: true})}
+					/>
 
 				<DetailLineContent
 					{...other}
@@ -67,42 +72,19 @@ class DetailLine extends Component {
 					onChangeValue={this.handleChangeValue.bind(this)}
 					onChangePositionValue={this.handleChangePositionValue.bind(this)}
 					onRequestMove={this.handleRequestMove.bind(this)}
+					onToggleLineSelect={this.handleToggleLineSelect.bind(this)}
 					/>
 
-				<Dialog
-					open={!!promotion}
-					onClose={()=>this.setState({promotion: false})}>
-					<DialogContent>
-						<Grid container
-							justify="center"
-							className={classes.PromotionGrid}>
-							<Grid item>
-								<IconButton
-									onClick={()=>this.handleRequestMove(promotion.start, promotion.end, "q")}>
-									<img alt="Queen" src={PieceToIcon(promotion.color === "w" ? "Q" : "q")}/>
-								</IconButton>
-							</Grid>
-							<Grid item>
-								<IconButton
-									onClick={()=>this.handleRequestMove(promotion.start, promotion.end, "r")}>
-									<img alt="Rook" src={PieceToIcon(promotion.color === "w" ? "R" : "r")}/>
-								</IconButton>
-							</Grid>
-							<Grid item>
-								<IconButton
-									onClick={()=>this.handleRequestMove(promotion.start, promotion.end, "n")}>
-									<img alt="Knight" src={PieceToIcon(promotion.color === "w" ? "N" : "n")}/>
-								</IconButton>
-							</Grid>
-							<Grid item>
-								<IconButton
-									onClick={()=>this.handleRequestMove(promotion.start, promotion.end, "b")}>
-									<img alt="Bishop" src={PieceToIcon(promotion.color === "w" ? "B" : "b")}/>
-								</IconButton>
-							</Grid>
-						</Grid>
-					</DialogContent>
-				</Dialog>
+				<DetailLinePromotionDialog
+					promotion={promotion}
+					onClose={()=>this.setState({promotion: false})}
+					onRequestMove={this.handleRequestMove.bind(this)}/>
+
+				<DetailLineDeleteDialog
+					requestDeleteLines={requestDeleteLines}
+					onClose={()=>this.setState({requestDeleteLines: false})}
+					onCancelDeleteLines={this.handleCancelDeleteLines.bind(this)}
+					onDeleteLines={this.handleDeleteLines.bind(this)}/>
 			</div>
 		);
 	}
@@ -273,8 +255,87 @@ class DetailLine extends Component {
 		Local.set("Games", games);
 	}
 
+	handleCancelDeleteLines(){
+		this.setState({
+			linesSelected: [],
+			editLines: false,
+			requestDeleteLines: false
+		});
+	}
+
+	handleDeleteLines(){
+		const {game, linesSelected} = this.state;
+
+		function recursiveFilter(lines) {
+			let output = [];
+			lines.forEach(line => {
+				const subLines = game.lines.filter(item => item.parent === line.id);
+				output = output.concat(subLines, recursiveFilter(subLines));
+			})
+			return output;
+		}
+
+		let linesToFilter = game.lines.slice()
+			.filter(item => linesSelected.find(id => id === item.id));
+		linesToFilter = linesToFilter.concat(recursiveFilter(linesToFilter));
+
+		const linesToKeep = game.lines.filter(item => !linesToFilter.find(line => line.id === item.id));
+
+		game.lines = linesToKeep;
+		// Update state
+		this.setState({game});
+		// Load games
+		let games = Local.get("Games") || [];
+		// Find the game
+		const gameIndex = games.findIndex(item => item.id === game.id);
+		// Update games
+		games[gameIndex] = game;
+		// Save to local storage
+		Local.set("Games", games);
+		//
+		this.setState({
+			linesSelected: [],
+			editLines: false,
+			requestDeleteLines: false
+		});
+	}
+
 	handleToggleEditLines(editLines){
-		this.setState({editLines});
+		this.setState({
+			editLines,
+			linesSelected: []
+		});
+	}
+
+	handleToggleAllEditLines(){
+		const {match: {params: {lineId}}} = this.props;
+		const {game, linesSelected} = this.state;
+		const subLines = game.lines.filter(item => item.parent === lineId);
+		if(subLines.length === linesSelected.length) {
+			this.setState({
+				linesSelected: []
+			});
+		}
+		else {
+			this.setState({
+				linesSelected: subLines.map(item => item.id)
+			});
+		}
+	}
+
+	handleToggleLineSelect(lineId) {
+		let {linesSelected} = this.state;
+		const lineIndex = linesSelected.findIndex(item => item === lineId);
+		if(lineIndex !== -1) {
+			linesSelected.splice(lineIndex, 1);
+		}
+		else {
+			linesSelected.push(lineId);
+		}
+		this.setState({
+			editLines: true,
+			linesSelected
+		})
 	}
 
 	handleSwapChessboard(){
@@ -306,7 +367,6 @@ class DetailLine extends Component {
 	}
 
 	handlePlayMove(){
-		// TODO: add feedback
 		const {match: {params: {lineId}}} = this.props;
 		const {game} = this.state;
 		// Find play line
@@ -316,11 +376,11 @@ class DetailLine extends Component {
 		const lineActiveIndex = game.lines.findIndex(item => item.id === lineId);
 		const lineActive = game.lines[lineActiveIndex];
 		// Set play line false
-		linePlay.play = false;
+		linePlay && (linePlay.play = false);
 		// Set play line true
 		lineActive.play = true;
 		// Update game.lines
-		game.lines[linePlayIndex] = linePlay;
+		linePlay && (game.lines[linePlayIndex] = linePlay);
 		game.lines[lineActiveIndex] = lineActive;
 		game.edit = +new Date();
 		// Update state
@@ -364,9 +424,6 @@ const styles = theme => ({
 		position: "fixed",
 		top: 0, left: 0, right: 0, bottom: 0,
 		overflowY: "auto"
-	},
-	PromotionGrid: {
-
 	}
 });
 

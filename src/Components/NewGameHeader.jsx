@@ -94,7 +94,7 @@ class NewGameHeader extends Component {
 					<DialogActions>
 						<Button
 							color="primary"
-							onClose={this.handleClosePGNDialog.bind(this)}>
+							onClick={this.handleClosePGNDialog.bind(this)}>
 							Cancel
 						</Button>
 						<Button

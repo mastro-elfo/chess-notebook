@@ -101,7 +101,6 @@ class ChessboardCell extends Component {
 	}
 
 	handleDragStart(coord, event){
-		// console.debug("Drag start", coord);
 		event.dataTransfer.setData("text", coord);
 	}
 }
@@ -158,8 +157,7 @@ const styles = theme => ({
 		width: "80%",
 		height: "80%",
 		position: "absolute",
-		top: "10%", left: "10%",
-		zIndex: 1
+		top: "10%", left: "10%"
 	},
 	RowLabel: {
 		position: "absolute",

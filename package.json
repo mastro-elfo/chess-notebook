@@ -8,6 +8,7 @@
     "@material-ui/icons": "^3.0.1",
     "chess.js": "^0.10.2",
     "element-resize-event": "^2.0.9",
+    "prefix-si": "^1.2.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-router-dom": "^4.3.1",
@@ -23,7 +24,6 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
-    "babel-plugin-transform-decorators": "^6.24.1",
     "gh-pages": "^2.0.0"
   }
 }

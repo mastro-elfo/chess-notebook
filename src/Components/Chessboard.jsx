@@ -126,7 +126,6 @@ class Chessboard extends Component {
 	}
 
 	handleDrop(start, end){
-		// console.debug("Drop", start, end);
 		this.props.onRequestMove(start, end);
 	}
 }

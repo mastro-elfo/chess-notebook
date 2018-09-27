@@ -19,22 +19,23 @@ function DashboardTileContent (props) {
 
 	const line = game.lines.find(item => item.play);
 	const turn = line.fen.split(" ")[1];
-	
+
 	const {rotateChessboard = false} = Local.get("Settings") || {};
 
 	return (
-		<div className={classes.TileContent}>
+		<div
+			className={classes.TileContent}
+			onClick={()=>history.push("/detail/"+game.id)}>
 			<Chessboard
 				fen={line.fen}
 				disabled={true}
 				showLabels={false}
 				side={rotateChessboard ? turn : side}/>
 			<GridListTileBar
-				title={game.title}
-				subtitle={line.comment}
+				title={game.title || '\u00A0'}
+				subtitle={line.comment || '\u00A0'}
 				actionIcon={
 					<IconButton
-						onClick={()=>history.push("/detail/"+game.id)}
 						color="inherit">
 						<InfoIcon />
 					</IconButton>
@@ -46,7 +47,8 @@ function DashboardTileContent (props) {
 const styles = theme => ({
 	TileContent: {
 		width: "100%",
-		height: "100%"
+		height: "100%",
+		cursor: "pointer"
 	}
 });
 

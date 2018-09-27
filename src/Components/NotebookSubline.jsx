@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
-
 import List from '@material-ui/core/List';
 
 import NotebookSublineListitem from './NotebookSublineListitem';

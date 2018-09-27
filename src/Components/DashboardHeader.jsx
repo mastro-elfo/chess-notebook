@@ -22,8 +22,6 @@ function DashboardHeader (props){
 		handleToggleDrawer
 	} = props;
 
-	// console.debug(this.props);
-
 	const searchEntry = search.substring(1);
 
 	return (

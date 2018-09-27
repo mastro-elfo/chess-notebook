@@ -37,7 +37,7 @@ class DashboardContent extends Component {
 		const listOfGames = Local.get('Games') || [];
 
 		const lastPlayedGames = listOfGames
-			.sort((a,b) => a.edit - b.edit)
+			.sort((a,b) => b.edit - a.edit)
 			.slice(0, lastEditLimit);
 
 		const searchResult = listOfGames
@@ -147,13 +147,14 @@ const styles = theme => ({
 	FabButton: {
 		position: "absolute",
 		bottom: theme.spacing.unit *2,
-		right: theme.spacing.unit *2
+		right: theme.spacing.unit *2,
+		zIndex: 1
 	},
 	main: {
-		paddingTop: theme.spacing.unit *2,
+		paddingTop: theme.spacing.unit,
 		paddingLeft: theme.spacing.unit,
 		paddingRight: theme.spacing.unit,
-		paddingBottom: theme.spacing.unit
+		paddingBottom: theme.spacing.unit *9
 	}
 });
 

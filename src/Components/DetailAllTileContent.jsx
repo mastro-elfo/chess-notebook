@@ -34,8 +34,8 @@ function DetailAllTileContent (props) {
 				side={rotateChessboard ? turn : side}/>
 
 			<GridListTileBar
-				title={game.title}
-				subtitle={line.comment}
+				title={game.title || '\u00A0'}
+				subtitle={line.comment || '\u00A0'}
 				actionIcon={
 					<IconButton
 						onClick={()=>history.push("/detail/"+game.id)}

@@ -1,3 +1,6 @@
+// TODO: Use of chessboard.jsx ??
+// https://www.chessboardjsx.com/
+// https://www.npmjs.com/package/chessboardjsx
 import React from 'react';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 
@@ -11,7 +14,7 @@ import 'typeface-roboto';
 
 import Dashboard from './Pages/Dashboard';
 import Detail from './Pages/Detail';
-import Settings from './settings';
+import Settings from './Pages/Settings';
 import Info from './Pages/Info';
 import NewGame from './Pages/NewGame';
 import NotFound from './Pages/404.jsx';

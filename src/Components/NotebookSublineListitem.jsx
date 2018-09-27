@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import NotebookFirstMove from './NotebookFirstMove';
 import NotebookNextMove from './NotebookNextMove';
@@ -12,13 +14,15 @@ class NotebookSublineListitem extends Component {
 		const {
 			game,
 			line,
-			divider
+			divider,
+			linesSelected,
+			onToggleLineSelect
 		} = this.props;
 
 		const list = this.getSubline(game, line);
-		// console.debug(list, list.length);
 
-// TODO: add check box to manage lines
+		// TODO: add check box to manage lines
+		const isChecked = !!linesSelected.find(item => item === line.id);
 
 		return (
 			<ListItem
@@ -35,7 +39,6 @@ class NotebookSublineListitem extends Component {
 							return <span key={i}>(+{item})</span>;
 						}
 						else {
-							// console.debug(item.move)
 							return (
 								<NotebookNextMove
 									{...this.props}
@@ -47,18 +50,22 @@ class NotebookSublineListitem extends Component {
 						}
 					})
 				}
+
+				<ListItemSecondaryAction
+					onClick={() => onToggleLineSelect(line.id)}>
+					<Checkbox
+						checked={isChecked}/>
+				</ListItemSecondaryAction>
 			</ListItem>
 		);
 	}
 
 	getSubline(game, line) {
 		const children = game.lines.filter(item => item.parent === line.id);
-		// console.debug(line, children, children.length);
 		if(children.length === 0) {
 			return [];
 		}
 		else if(children.length === 1) {
-			// console.debug(line, children, children.length);
 			return children.concat(this.getSubline(game, children[0]));
 		}
 		else {
